@@ -4,7 +4,12 @@ import { Suspense } from "react";
 import CameraRig from "./CameraRig.jsx";
 import IslandsScene from "./IslandsScene.jsx";
 
-export default function UniverseCanvas({ onIslandClick, cameraTarget }) {
+export default function UniverseCanvas({
+  onIslandClick,
+  cameraTarget,
+  activeIslandId,
+  showLabels, // 👈 on reçoit juste la valeur
+}) {
   return (
     <Canvas
       className="w-full h-full"
@@ -16,7 +21,11 @@ export default function UniverseCanvas({ onIslandClick, cameraTarget }) {
       <CameraRig target={cameraTarget} />
 
       <Suspense fallback={null}>
-        <IslandsScene onIslandClick={onIslandClick} />
+        <IslandsScene
+          onIslandClick={onIslandClick}
+          activeIslandId={activeIslandId}
+          showLabels={showLabels}   // 👈 on la transmet
+        />
       </Suspense>
     </Canvas>
   );

@@ -19,7 +19,7 @@ export const webProjects = [
     id: "site-e-commerce-crystal-drop",
     title: "Site e-commerce Crystal Drop",
     year: "2024",
-    context: "Projet personnel",
+    context: "Projet universitaire",
     short: "Boutique en ligne de flacons d'elixir de cosplay avec catalogue et panier.",
     details:
       "Développement d’un site e-commerce fictif avec catalogue de produits, filtres, gestion du panier et formulaire de commande.",
@@ -54,21 +54,107 @@ export const webProjects = [
     ],
     
   },
+  {
+    id: "site-bible-explorer",
+    title: "Site Bible Explorer",
+    year: "2025",
+    context: "Projet universitaire",
+    short: "Site de consultation et d’exploration de textes bibliques.",
+    details:
+      "Site utilisant une API de textes bibliques pour permettre la recherche, la lecture et l’exploration de livres, chapitres et versets.",
+    tech: ["HTML", "CSS", "React-Three-Fiber", "Vite", "Netlify", "API sécurisée", "UX lecture"],
+    link: "https://angele-kaloi-bible-explorer.netlify.app/",
+
+    // 👉 chemin vers une image dans /public
+    thumb: "/projects/site-bible-explorer-thumb.png",
+  },
+  {
+    id: "site-lancee-de-des",
+    title: "Site Lancé de dés",
+    year: "2025",
+    context: "Projet universitaire",
+    short: "Site de lancement de dés en ligne.",
+    details:
+      "Site permettant aux utilisateurs de lancer un dé 3D virtuel, d'obtenir des résultats aléatoires et de visualiser les lancers précédents.",
+    tech: ["HTML", "CSS", "React-Three-Fiber", "Vite", "Netlify"],
+    link: "https://lanceurdes3d.netlify.app/",
+
+    // 👉 chemin vers une image dans /public
+    thumb: "/projects/site-lancee-de-des-thumb.png",
+  },
 
 ];
 
 // 🟣 UX / UI
 export const uxProjects = [
   {
-    id: "opt-home-ux",
-    title: "Refonte de la page d’accueil OPT-NC",
+    id: "bible-explorer-ux",
+    title: "Prototype Bible Explorer - Figma",
     year: "2025",
-    context: "Stage OPT-NC · Projet de mémoire",
-    short: "Conception d’une page d’accueil centrée sur l’orientation client OPT 2025.",
+    context: "Projet universitaire",
+    short: "Conception d’une page de lecture et d’exploration de textes bibliques.",
     details:
-      "Analyse de l’existant, benchmark, ateliers avec les parties prenantes, rédaction du cahier des charges fonctionnel, zoning et wireframes Figma, priorisation des contenus et parcours utilisateurs vers les sites métiers.",
+      "Recherche UX, wireframes, maquettes haute-fidélité et prototype interactif d’une interface de lecture et d’exploration de textes bibliques, avec fonctionnalités de recherche, navigation et personnalisation de l’affichage.",
     tech: ["UX Research", "Ateliers", "Figma", "Accessibilité", "Design système"],
-    thumb: "/projects/opt-home-ux-thumb.jpg",
+    thumb: "/projects/bible-explorer-ux-thumb.png",
+    link: "https://www.figma.com/proto/6ruEy6yuZKrwo6SGjhPKG3/Bible-Explorer?page-id=0%3A1&node-id=1-11&p=f&viewport=87%2C163%2C0.32&t=h8B7oZbl3ecixS1m-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A11",
+
+    media: [
+      {
+        id: "video2",
+        type: "video",
+        // soit un lien YouTube, soit un mp4
+        href: "https://www.youtube.com/embed/qgxW9xdCOE0",
+        thumbnail: "/projects/bible-explorer-ux-thumb.png",
+        label: "Prototype interactif",
+      },
+    ],
+  },
+  {
+    id: "anr-siti-ux",
+    title: "Prototype ANR SITI - Figma",
+    year: "2024",
+    context: "Projet scientifique ANR SITI",
+    short: "Conception d'un prototype Figma pour un site de communication scientifique.",
+    details:
+      "Prototype résultant d'une longue recherche et répondant aux besoins de communication scientifique pour un projet pluridisciplinaire SITI.",
+    tech: ["UX Research", "Ateliers", "Figma", "Accessibilité", "Design système"],
+    thumb: "/projects/anr-siti-ux-thumb.png",
+    link: "https://www.figma.com/proto/jFnWIrILYKSO7BRZM51Bvd/SITI-Template?page-id=0%3A1&node-id=1-3&viewport=376%2C215%2C0.29&t=n5etyAbzlJZeDXat-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A3&show-proto-sidebar=1",
+
+    media: [
+      {
+        id: "figma1",
+        type: "figma",
+        // soit un lien YouTube, soit un mp4
+        href: "https://embed.figma.com/proto/jFnWIrILYKSO7BRZM51Bvd/SITI-Template?page-id=0%3A1&node-id=1-3&viewport=376%2C215%2C0.29&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A3&show-proto-sidebar=1&embed-host=share",
+        thumbnail: "/projects/anr-siti-ux-thumb.png",
+        label: "Interface Client",
+      },
+    ],
+  },
+  {
+    id: "Lwc-prototype-ux",
+    title: "Prototype application mobile LWC - Figma",
+    year: "2024",
+    context: "Projet universitaire",
+    short: "Conception d'un prototype Figma pour une application mobile de jeu de société Lexic War of Clan's.",
+    details:
+      "Prototype ayant amorcé le développement de l'application Lexic War of Clan's accompagnant un jeu de société sur les langues vernaculaires kanak.",
+    tech: ["UX Research", "Ateliers", "Figma", "Accessibilité", "Design système"],
+    thumb: "/projects/lwc-prototype-ux-thumb.png",
+    link: "https://youtu.be/wuoNrkqJCRA",
+
+    media: [
+      {
+        id: "video",
+        type: "video",
+        // soit un lien YouTube, soit un mp4
+        href: "https://www.youtube.com/embed/wuoNrkqJCRA",
+        thumbnail: "/projects/lwc-prototype-ux-thumb.png",
+        label: "Prototype Figma",
+      },
+    ],
   },
   // tu pourras ajouter d’autres projets UX ici
 ];
@@ -82,9 +168,54 @@ export const xrProjects = [
     context: "Projet Unity XR",
     short: "Parcours immersif en VR avec hub central et 6 zones thématiques.",
     details:
-      "Conception d’une expérience VR interactive : hub central, salles thématiques, objets Blender, vidéos intégrées, voix off, système de quiz, interactions avec les contrôleurs, adaptation pour WebGL et Meta Quest.",
-    tech: ["Unity", "XR Interaction Toolkit", "Meta Quest", "Level design"],
+      "Conception d’une expérience VR interactive : hub central, salles thématiques, objets Blender, vidéos intégrées, voix off, système de quiz, interactions avec les contrôleurs, usage Meta Quest.",
+    tech: ["Unity", "XR Interaction Toolkit", "Meta Quest 3", "Level design"],
     thumb: "/projects/paeco-xr-thumb.jpg",
+     media: [
+      {
+        id: "screen1",
+        type: "image",
+        src: "/projects/salle_accueil.png",
+        label: "Salle d'accueil",
+      },
+      {
+        id: "screen2",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/salle_ens-art.png",
+        label: "Salle Enseignements artistiques",
+      },
+      {
+        id: "screen3",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/salle_galerie.png",
+        label: "Salle Galerie d'art",
+      },
+      {
+        id: "screen4",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/salle_impro.png",
+        label: "Salle d'Improvisation",
+      },
+      {
+        id: "screen5",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/salle_theatre-entreprise.png",
+        label: "Salle Théâtre d'entreprise",
+      },
+      {
+        id: "screen6",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/salle_theatre-forum.png",
+        label: "Salle Théâtre Forum",
+      },
+    ],
+
+
   },
   {
     id: "xr-gallery-google",
@@ -96,6 +227,21 @@ export const xrProjects = [
       "Expérimentation autour d’une navigation spatiale de résultats Google : ingestion d’APIs, disposition des cartes dans l’espace, réflexion UX sur la lisibilité et l’orientation de l’utilisateur en environnement 3D.",
     tech: ["Unity", "C#", "API web", "UX 3D"],
     thumb: "/projects/xr-gallery-thumb.jpg",
+    media: [
+      {
+        id: "video1",
+        type: "video",
+        href: "",
+        label: "Salle d'accueil",
+      },
+      {
+        id: "screen2",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/salle_ens-art.png",
+        label: "Salle Enseignements artistiques",
+      },
+    ],
   },
 ];
 

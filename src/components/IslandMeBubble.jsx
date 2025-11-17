@@ -47,7 +47,7 @@ export default function IslandMeBubble({ onClick }) {
   const textToShow = phase === "dots" ? dots : displayed || "";
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-24 md:top-28 flex justify-center z-20 px-4">
+    <div className="pointer-events-none absolute inset-x-0 top-32 md:top-40 flex justify-center z-20 px-4">
       <button
         type="button"
         onClick={onClick}
