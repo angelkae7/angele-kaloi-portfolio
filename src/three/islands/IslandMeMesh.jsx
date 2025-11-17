@@ -1,7 +1,7 @@
 // src/three/IslandMesh.jsx
 import { Float } from "@react-three/drei";
 
-export default function IslandMesh({ position = [0, 0, 0], onClick }) {
+export default function IslandMeMesh({ position = [0, 0, 0], onClick }) {
   // Couleurs inspirées de ton image
   const sandColor = "#F2C66B";
   const waterColor = "#63C8D0";

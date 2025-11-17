@@ -1,9 +1,10 @@
+// src/three/UniverseCanvas.jsx
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import CameraRig from "./CameraRig.jsx";
 import IslandsScene from "./IslandsScene.jsx";
 
-export default function UniverseCanvas({ onMeIslandClick }) {
+export default function UniverseCanvas({ onIslandClick, cameraTarget }) {
   return (
     <Canvas
       className="w-full h-full"
@@ -12,10 +13,10 @@ export default function UniverseCanvas({ onMeIslandClick }) {
       <ambientLight intensity={0.7} />
       <directionalLight position={[10, 20, 10]} intensity={1.2} />
 
-      <CameraRig />
+      <CameraRig target={cameraTarget} />
 
       <Suspense fallback={null}>
-        <IslandsScene onMeIslandClick={onMeIslandClick} />
+        <IslandsScene onIslandClick={onIslandClick} />
       </Suspense>
     </Canvas>
   );
