@@ -38,8 +38,6 @@ Développé avec **React**, **React-Three-Fiber** et **Three.js**, ce portfolio 
 
 ## 📁 Structure du projet
 
-## 📁 Structure du projet
-
 ```txt
 src/
  ├── components/        # UI : Overlays, Lightbox, Labels
