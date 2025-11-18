@@ -246,6 +246,7 @@ button:focus-visible {
 }
 
 /* ---------- Carte overlay (canva) ---------- */
+/* ---------- Carte overlay (canva) ---------- */
 
 .overlay-card {
   position: relative;
@@ -257,7 +258,32 @@ button:focus-visible {
     rgba(15, 23, 42, 0.95);
   box-shadow: 0 26px 80px rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(26px);
+
+  /* 🔥 nouveau : hauteur max + scroll interne */
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 0.5rem; /* un peu de place pour la scrollbar */
 }
+
+/* Scrollbar custom pour toutes les overlays */
+.overlay-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overlay-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overlay-card::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.55);
+  border-radius: 999px;
+}
+
+.overlay-card::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.9);
+}
+
+
 
 /* ouverture depuis la zone de la bulle (en haut) */
 @keyframes overlayEnterFromBubble {
@@ -358,3 +384,96 @@ button:focus-visible {
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(18px);
 }
+
+/* ---- Scroll interne du parcours ---- */
+.parcours-scroll {
+  max-height: 58vh;          /* ajuste si besoin */
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+/* Scrollbar custom (WebKit) */
+.parcours-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.parcours-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.parcours-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.55);
+  border-radius: 999px;
+}
+
+.parcours-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.85);
+}
+
+/* Firefox */
+.parcours-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.6) transparent;
+}
+
+/* ---- Timeline ---- */
+.timeline-line {
+  position: absolute;
+  left: 0.4rem;
+  top: 0.2rem;
+  bottom: 0.4rem;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(148, 163, 184, 0.8),
+    rgba(148, 163, 184, 0.2)
+  );
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -0.1rem;
+  top: 0.25rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: #0ea5e9; /* sky-500 */
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+}
+
+.timeline-year {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+.timeline-title {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #cbd5f5;
+}
+
+.timeline-text {
+  font-size: 0.8rem;
+  color: #cbd5f5;
+  max-width: 32rem; /* lignes plus courtes */
+}
+
+/* ---- Tags compétences ---- */
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  color: #e5e7eb;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+}
+

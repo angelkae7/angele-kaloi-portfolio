@@ -1,6 +1,44 @@
 // src/components/IslandMeOverlay.jsx
 import { useState, useRef, useEffect } from "react";
 
+const TIMELINE = [
+  {
+    id: "alt-opt",
+    years: "2025–2026",
+    title: "Alternance — OPT-NC",
+    role: "Dev web & UX · Refonte du site institutionnel.",
+    details:
+      "Nouvelle page d’accueil, intégration front (Drupal), accessibilité, performance & collaboration avec la DSI et la communication.",
+    isCurrent: true, // 🔥 seul celui-ci sera vraiment allumé
+  },
+  {
+    id: "stage-isea",
+    years: "2024 · Stage (6 mois)",
+    title: "ISEA",
+    role: "Chargée de communication & création visuelle.",
+    details:
+      "Outils visuels pour un projet de recherche scientifique, identité visuelle & supports graphiques pour vulgariser les résultats.",
+    isCurrent: false,
+  },
+  {
+    id: "stage-canal",
+    years: "2023 · Stage (3 mois)",
+    title: "CANAL+ Calédonie",
+    role: "Contenus graphiques & vidéo.",
+    details:
+      "Communication interne & externe, habillages d’émissions, visuels d’antenne et montages vidéo pour des formats TV.",
+    isCurrent: false,
+  },
+  {
+    id: "but-mmi",
+    years: "2022–2025",
+    title: "BUT MMI — Université de la Nouvelle-Calédonie",
+    role: "Parcours Dév web & dispositifs interactifs.",
+    details: "Focus front-end, UX/UI, 3D/XR et gestion de projet.",
+    isCurrent: false,
+  },
+];
+
 export default function IslandMeOverlay({ onClose }) {
   const [isClosing, setIsClosing] = useState(false);
   const cvVideoUrl = "https://www.youtube.com/embed/FV59sY5XE2E";
@@ -94,125 +132,92 @@ export default function IslandMeOverlay({ onClose }) {
                 />
               </div>
               <p className="text-xs md:text-sm text-slate-300/90">
-                1 minute pour entendre ma voix, mon énergie et la façon dont je
+                2 minutes pour entendre ma voix, mon énergie et la façon dont je
                 présente mon parcours.
               </p>
             </section>
 
-            {/* Mini fiche identité */}
-            <section className="grid gap-3 text-xs md:text-[0.8rem] text-slate-300 md:grid-cols-3">
-              <div>
-                <p className="font-semibold text-slate-100">Rôle actuel</p>
-                <p>Alternante dev web & UX — OPT-NC</p>
-              </div>
-              <div>
-                <p className="font-semibold text-slate-100">Formation</p>
-                <p>BUT MMI — Dév web & dispositifs interactifs</p>
-              </div>
-              <div>
-                <p className="font-semibold text-slate-100">Territoire</p>
-                <p>Nouvelle-Calédonie · projets orientés usages locaux</p>
-              </div>
-            </section>
-
-            {/* Parcours compact + timeline */}
-            <section className="pt-3 border-t border-[rgba(148,163,184,0.35)] space-y-4">
+            {/* --- PARCOURS --- */}
+            <section className="mt-2 md:mt-4">
               <h3 className="text-sm md:text-base font-semibold text-slate-100">
                 Parcours
               </h3>
 
-              <div className="grid gap-4 md:grid-cols-[1.05fr,1.4fr]">
-                {/* Timeline verticale */}
-                <div className="relative pl-5 text-xs md:text-[0.8rem] text-slate-300">
-                  {/* ligne verticale */}
-                  <div className="absolute left-1 top-1 bottom-1 w-px bg-[rgba(148,163,184,0.35)]" />
-
-                  <div className="relative mb-3 pl-3">
-                    <div className="absolute left-0 top-1 w-2 h-2 rounded-full bg-sky-400" />
-                    <p className="font-semibold text-slate-100">
-                      2023–2025 · Alternance
+              <div className="parcours-scroll mt-4 space-y-5">
+                {/* 1) Bandeau d’infos clés */}
+                <div className="grid gap-3 md:gap-4 md:grid-cols-3">
+                  <div className="rounded-2xl border border-[rgba(148,163,184,0.5)] bg-[rgba(15,23,42,0.9)] px-3.5 py-3">
+                    <p className="text-[0.65rem] uppercase tracking-[0.22em] text-slate-400 mb-1">
+                      Rôle actuel
                     </p>
-                    <p>OPT-NC — Dev web & UX</p>
+                    <p className="text-xs md:text-sm font-semibold text-sky-200">
+                      Alternante dev web & UX — OPT-NC
+                    </p>
+                    <p className="mt-0.5 text-[0.7rem] md:text-xs text-slate-300/90">
+                      Refonte du site institutionnel, page d’accueil, design
+                      system & intégration front.
+                    </p>
                   </div>
 
-                  <div className="relative mb-3 pl-3">
-                    <div className="absolute left-0 top-1 w-2 h-2 rounded-full bg-sky-400/80" />
-                    <p className="font-semibold text-slate-100">
-                      2024 · Stage (3 mois)
+                  <div className="rounded-2xl border border-[rgba(148,163,184,0.4)] bg-[rgba(15,23,42,0.9)] px-3.5 py-3">
+                    <p className="text-[0.65rem] uppercase tracking-[0.22em] text-slate-400 mb-1">
+                      Formation
                     </p>
-                    <p>ISEA — Chargée de communication & création visuelle</p>
+                    <p className="text-xs md:text-sm font-semibold text-sky-200">
+                      2022–2025 · BUT MMI — UNC
+                    </p>
+                    <p className="mt-0.5 text-[0.7rem] md:text-xs text-slate-300/90">
+                      Dév web & dispositifs interactifs : front-end, UX/UI,
+                      3D/XR, audiovisuel & gestion de projet.
+                    </p>
                   </div>
 
-                  <div className="relative mb-3 pl-3">
-                    <div className="absolute left-0 top-1 w-2 h-2 rounded-full bg-sky-400/70" />
-                    <p className="font-semibold text-slate-100">
-                      2023 · Stage (6 mois)
+                  <div className="rounded-2xl border border-[rgba(148,163,184,0.4)] bg-[rgba(15,23,42,0.9)] px-3.5 py-3">
+                    <p className="text-[0.65rem] uppercase tracking-[0.22em] text-slate-400 mb-1">
+                      Territoire
                     </p>
-                    <p>CANAL+ Calédonie — Créatrice de contenus graphiques & vidéo</p>
-                  </div>
-
-                  <div className="relative mb-3 pl-3">
-                    <div className="absolute left-0 top-1 w-2 h-2 rounded-full bg-sky-400/60" />
-                    <p className="font-semibold text-slate-100">
-                      2022–2025 · BUT MMI
+                    <p className="text-xs md:text-sm font-semibold text-sky-200">
+                      Nouvelle-Calédonie
                     </p>
-                    <p>Université de la Nouvelle-Calédonie</p>
-                  </div>
-
-                  <div className="relative pl-3">
-                    <div className="absolute left-0 top-1 w-2 h-2 rounded-full bg-sky-400/50" />
-                    <p className="font-semibold text-slate-100">
-                      2021 · Baccalauréat général
-                    </p>
-                    <p>
-                      Spécialités HGGSP / AMC — Lycée Blaise Pascal, Nouméa.
+                    <p className="mt-0.5 text-[0.7rem] md:text-xs text-slate-300/90">
+                      Projets orientés usages locaux & services publics.
                     </p>
                   </div>
                 </div>
 
-                {/* Détail compact des expériences clés */}
-                <div className="space-y-3 text-xs md:text-sm text-slate-200">
-                  {/* Alternance OPT-NC */}
-                  <div className="rounded-xl border border-[rgba(148,163,184,0.55)] bg-[rgba(15,23,42,0.9)] px-3.5 py-3">
-                    <p className="text-[0.7rem] uppercase tracking-[0.22em] text-slate-400 mb-1.5">
-                      Expérience principale
-                    </p>
-                    <p className="text-xs font-semibold text-sky-200">
-                      2023–2025 · Alternance — OPT-NC
-                    </p>
-                    <p className="mt-1 leading-snug">
-                      Refonte du site institutionnel : nouvelle page d’accueil,
-                      intégration front (Drupal), accessibilité, performance et
-                      collaboration avec la DSI & la Communication.
-                    </p>
-                  </div>
+                {/* 2) Timeline rangée + un seul point allumé */}
+                <div className="mt-5">
+                  <p className="text-[0.7rem] uppercase tracking-[0.22em] text-slate-400 mb-3">
+                    Chronologie
+                  </p>
 
-                  {/* Stages */}
-                  <div className="rounded-xl border border-[rgba(148,163,184,0.45)] bg-[rgba(15,23,42,0.9)] px-3.5 py-3 space-y-2">
-                    <p className="text-[0.7rem] uppercase tracking-[0.22em] text-slate-400 mb-1">
-                      Stages & missions
-                    </p>
+                  <div className="relative pl-5">
+                    {/* ligne verticale */}
+                    <div className="absolute left-[0.35rem] top-1 bottom-1 w-px bg-[rgba(148,163,184,0.35)]" />
 
-                    <div>
-                      <p className="text-xs font-semibold text-sky-200">
-                        2024 · ISEA — Chargée de communication
-                      </p>
-                      <p className="text-[0.78rem] leading-snug">
-                        Création d’outils visuels pour la recherche scientifique,
-                        d'identité visuelle & supports graphiques pour un projet de recherche ANR.
-                      </p>
-                    </div>
+                    {TIMELINE.map((item) => (
+                      <div key={item.id} className="relative mb-4 last:mb-0">
+                        {/* point sur la ligne */}
+                        <span
+                          className={
+                            "absolute -left-[0.25rem] mt-1 h-2 w-2 rounded-full " +
+                            (item.isCurrent
+                              ? "bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.9)]"
+                              : "bg-slate-500/80")
+                          }
+                        />
 
-                    <div>
-                      <p className="text-xs font-semibold text-sky-200">
-                        2023 · CANAL+ Calédonie — Contenus graphiques & vidéo
-                      </p>
-                      <p className="text-[0.78rem] leading-snug">
-                        Communication interne & externe, visuels d’émissions,
-                        montages vidéo (Premiere Pro, After Effects), identité
-                        graphique pour des formats TV.
-                      </p>
-                    </div>
+                        <p className="text-[0.8rem] font-semibold text-slate-200">
+                          {item.years} · {item.title}
+                        </p>
+                        <p className="text-[0.8rem] font-semibold text-slate-100">
+                          {item.role}
+                        </p>
+                        <p className="mt-1 text-[0.78rem] text-slate-300 leading-relaxed">
+                          {item.details}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

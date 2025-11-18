@@ -1,45 +1,46 @@
 // src/three/IslandsScene.jsx
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import IslandMeMesh from "./islands/IslandMeMesh.jsx";
-import IslandFloatingLabel from "../components/IslandFloatingLabel.jsx";
+
 import IslandWebMesh from "./islands/IslandWebMesh.jsx";
 import IslandUxMesh from "./islands/IslandUxMesh.jsx";
 import IslandXrMesh from "./islands/IslandXrMesh.jsx";
 import IslandVideoMesh from "./islands/IslandVideoMesh.jsx";
 
-const ISLANDS = [
+// 👇 on exporte pour le réutiliser dans l'UI
+export const ISLANDS = [
   {
     id: "me",
     type: "me",
-    label: "Île : Moi",
+    label: "Moi",
     position: [0, 0, 0],
     Component: IslandMeMesh,
   },
   {
     id: "web",
     type: "web",
-    label: "Île : Web interactif",
+    label: "Web interactif",
     position: [-18, 0, -6],
     Component: IslandWebMesh,
   },
   {
     id: "ux",
     type: "ux",
-    label: "Île : UX / UI",
+    label: "UX / UI",
     position: [16, 0, 8],
     Component: IslandUxMesh,
   },
   {
     id: "xr",
     type: "xr",
-    label: "Île : XR / VR",
+    label: "XR / VR",
     position: [-10, -2, 15],
     Component: IslandXrMesh,
   },
   {
     id: "video",
     type: "video",
-    label: "Île : Vidéo / arts numériques",
+    label: "Vidéo / Arts",
     position: [20, 0, -12],
     Component: IslandVideoMesh,
   },
@@ -48,7 +49,6 @@ const ISLANDS = [
 export default function IslandsScene({
   onIslandClick,
   activeIslandId,
-  showLabels = true, // 👈 NOUVEAU
 }) {
   return (
     <>
@@ -83,10 +83,7 @@ export default function IslandsScene({
               </mesh>
             )}
 
-            {/* label flottant UNIQUEMENT si showLabels */}
-            {showLabels && (
-              <IslandFloatingLabel position={[0, 5.5, 0]} label={label} />
-            )}
+           
           </group>
         );
       })}

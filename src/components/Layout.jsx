@@ -121,10 +121,16 @@ export default function Layout() {
       <HelpChip />
 
       {/* Nom de l'île active */}
-      {/* Nom de l'île seulement quand aucun overlay n'est ouvert */}
-      {!activeOverlay && (
-        <IslandNameBar label={selectedIsland.label} />
-      )}
+      // AVANT
+{!activeOverlay && (
+  <IslandNameBar label={selectedIsland.label} />
+)}
+
+// ➜ APRÈS : la barre s’affiche *seulement* quand un overlay est ouvert
+{activeOverlay && (
+  <IslandNameBar label={selectedIsland.label} />
+)}
+
 
       {/* Bulle de présentation uniquement sur l’île Moi quand aucun overlay n’est ouvert */}
       {showBubble && !activeOverlay && selectedIsland.id === "me" && (
@@ -174,12 +180,15 @@ export default function Layout() {
         />
       )}
 
-      {/* 🚀 Navigation / progression entre les îles */}
+            {/* 🚀 Navigation / progression entre les îles 
+          → cachée quand un overlay est ouvert pour laisser respirer le contenu */}
       <IslandNavigator
         steps={ISLAND_STEPS}
         activeId={selectedIsland.id}
         onSelect={handleSelectIslandFromNav}
+        dense={!!activeOverlay}  // 👈 plus fine quand un overlay est ouvert
       />
+
     </div>
   );
 }

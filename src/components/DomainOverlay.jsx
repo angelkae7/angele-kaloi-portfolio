@@ -1,4 +1,10 @@
 // src/components/DomainOverlay.jsx
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSquareGithub } from '@fortawesome/free-brands-svg-icons' 
+import { faWindowMaximize } from '@fortawesome/free-solid-svg-icons'
+
+
 import { useState, useEffect, useRef } from "react";
 
 export default function DomainOverlay({ title, tagline, projects, onClose }) {
@@ -226,17 +232,36 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                               </p>
                             )}
 
-                            {project.link && (
-                              <a
-                                href={project.link}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex text-[0.8rem] text-sky-300 underline decoration-sky-400/70 hover:text-sky-200"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                Voir le projet
-                              </a>
-                            )}
+                            {(project.link || project.github) && (
+  <div className="mt-2 flex flex-wrap gap-3">
+    {project.link && (
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-1 text-[0.8rem] text-sky-300 underline decoration-sky-400/70 hover:text-sky-200"
+      >
+        <span>Voir la démo</span>
+        <span className="text-xs"><FontAwesomeIcon icon={faWindowMaximize} /></span>
+      </a>
+      
+    )}
+
+    {project.github && (
+      <a
+        href={project.github}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-1 text-[0.8rem] text-sky-300 underline decoration-sky-400/70 hover:text-sky-200"
+      >
+        {/* petit “logo” GitHub textuel simple */}
+        <span>Voir sur GitHub</span>
+        <span className="text-xs"><FontAwesomeIcon icon={faSquareGithub} /></span>
+      </a>
+    )}
+  </div>
+)}
+
 
                             {/* GALERIE DE MÉDIAS */}
                             {project.media && project.media.length > 0 && (

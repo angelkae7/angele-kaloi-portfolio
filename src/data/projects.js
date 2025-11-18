@@ -12,8 +12,7 @@ export const webProjects = [
 
     // 👉 chemin vers une image dans /public
     thumb: "/projects/opt-map-thumb.png",
-
-    
+    github: "https://github.com/angelkae7/opt-agences",
   },
   {
     id: "site-e-commerce-crystal-drop",
@@ -28,6 +27,7 @@ export const webProjects = [
 
     // 👉 chemin vers une image dans /public
     thumb: "/projects/site-e-commerce-crystal-drop-thumb.png",
+    
         media: [
       {
         id: "screen1",
@@ -64,6 +64,7 @@ export const webProjects = [
       "Site utilisant une API de textes bibliques pour permettre la recherche, la lecture et l’exploration de livres, chapitres et versets.",
     tech: ["HTML", "CSS", "React-Three-Fiber", "Vite", "Netlify", "API sécurisée", "UX lecture"],
     link: "https://angele-kaloi-bible-explorer.netlify.app/",
+    github: "https://github.com/angelkae7/bible-explorer",
 
     // 👉 chemin vers une image dans /public
     thumb: "/projects/site-bible-explorer-thumb.png",
@@ -163,14 +164,15 @@ export const uxProjects = [
 export const xrProjects = [
   {
     id: "paeco-xr",
-    title: "Galerie VR pour la compagnie de théâtre PAECO",
-    year: "2024",
+    title: "Immersion VR pour la compagnie de théâtre PAECO",
+    year: "2025",
     context: "Projet Unity XR",
     short: "Parcours immersif en VR avec hub central et 6 zones thématiques.",
     details:
       "Conception d’une expérience VR interactive : hub central, salles thématiques, objets Blender, vidéos intégrées, voix off, système de quiz, interactions avec les contrôleurs, usage Meta Quest.",
     tech: ["Unity", "XR Interaction Toolkit", "Meta Quest 3", "Level design"],
     thumb: "/projects/paeco-xr-thumb.jpg",
+    github: "https://github.com/angelkae7/paecohub",
      media: [
       {
         id: "screen1",
@@ -226,21 +228,29 @@ export const xrProjects = [
     details:
       "Expérimentation autour d’une navigation spatiale de résultats Google : ingestion d’APIs, disposition des cartes dans l’espace, réflexion UX sur la lisibilité et l’orientation de l’utilisateur en environnement 3D.",
     tech: ["Unity", "C#", "API web", "UX 3D"],
-    thumb: "/projects/xr-gallery-thumb.jpg",
+    thumb: "/projects/dispositif_vr-2.png",
+    github: "https://github.com/angelkae7/xr-gallery-google", // lien vers le repo GitHub du projet
     media: [
       {
-        id: "video1",
-        type: "video",
-        href: "",
+        id: "screen1",
+        type: "image",
+        src: "/projects/dispositif_vr-1.png",
         label: "Salle d'accueil",
       },
       {
         id: "screen2",
         type: "image",
-        // soit un lien YouTube, soit un mp4
-        src: "/projects/salle_ens-art.png",
-        label: "Salle Enseignements artistiques",
+        src: "/projects/dispositif_vr-2.png",
+        label: "Salle d'accueil",
       },
+      {
+        id: "video1",
+        type: "video",
+        href: "https://www.youtube.com/embed/ZavQ3cfbS_E",
+        label: "Demonstration vidéo",
+        thumbnail: "/projects/dispositif_vr-2.png",
+      },
+      
     ],
   },
 ];
@@ -271,6 +281,19 @@ export const videoProjects = [
 
     link: "https://youtu.be/BZscvfVuy0g",
     thumb: "/projects/making-of-clip-gea-thumb.png",
+  },
+   {
+    id: "motion-design-ils-nous",
+    title: "Motion design Ils Nous — 2 minutes",
+    year: "2025",
+    context: "Projet universitaire",
+    short: "Vidéo de mise en valeur des archives historiques sur After Effects.",
+    details:
+      "Création d’une vidéo en motion design pour présenter et valoriser des archives historiques , en utilisant des techniques d’animation et de montage sur After Effects afin de captiver l’audience et de transmettre efficacement le contenu.",
+    tech: ["Adobe After Effects", "Adobe Photoshop", "CapCut"],
+
+    link: "https://youtu.be/19OkwEXUpfU",
+    thumb: "/projects/motion-design-ils-nous-thumb.png",
   },
   // tu peux rajouter du motion, des vidéos Paeco, etc.
 ];
