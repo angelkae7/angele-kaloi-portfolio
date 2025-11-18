@@ -1,228 +1,381 @@
 // src/components/IslandMeOverlay.jsx
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 
-const TIMELINE = [
-  {
-    id: "alt-opt",
-    years: "2025–2026",
-    title: "Alternance — OPT-NC",
-    role: "Dev web & UX · Refonte du site institutionnel.",
-    details:
-      "Nouvelle page d’accueil, intégration front (Drupal), accessibilité, performance & collaboration avec la DSI et la communication.",
-    isCurrent: true, // 🔥 seul celui-ci sera vraiment allumé
-  },
-  {
-    id: "stage-isea",
-    years: "2024 · Stage (6 mois)",
-    title: "ISEA",
-    role: "Chargée de communication & création visuelle.",
-    details:
-      "Outils visuels pour un projet de recherche scientifique, identité visuelle & supports graphiques pour vulgariser les résultats.",
-    isCurrent: false,
-  },
-  {
-    id: "stage-canal",
-    years: "2023 · Stage (3 mois)",
-    title: "CANAL+ Calédonie",
-    role: "Contenus graphiques & vidéo.",
-    details:
-      "Communication interne & externe, habillages d’émissions, visuels d’antenne et montages vidéo pour des formats TV.",
-    isCurrent: false,
-  },
-  {
-    id: "but-mmi",
-    years: "2022–2025",
-    title: "BUT MMI — Université de la Nouvelle-Calédonie",
-    role: "Parcours Dév web & dispositifs interactifs.",
-    details: "Focus front-end, UX/UI, 3D/XR et gestion de projet.",
-    isCurrent: false,
-  },
-];
+const VIDEO_URL = "https://www.youtube.com/embed/XXXXXXXXXXX"; // 👈 remplace par ton embed
 
 export default function IslandMeOverlay({ onClose }) {
-  const [isClosing, setIsClosing] = useState(false);
-  const cvVideoUrl = "https://www.youtube.com/embed/FV59sY5XE2E";
+  const [tab, setTab] = useState("intro"); // "intro" | "parcours" | "skills" | "chrono"
 
-  // Ref sur la carte pour contrôler le scroll interne
-  const cardRef = useRef(null);
-
-  // Quand l’overlay s’ouvre, on remonte tout en haut de la carte
-  useEffect(() => {
-    if (cardRef.current) {
-      cardRef.current.scrollTop = 0;
-    }
-  }, []);
-
-  const handleClose = () => {
-    if (isClosing) return;
-    setIsClosing(true);
-    setTimeout(() => {
-      onClose();
-    }, 280); // doit matcher .overlay-exit
-  };
+  const tabs = [
+    { id: "intro", label: "À propos" },
+    { id: "parcours", label: "Parcours" },
+    { id: "skills", label: "Compétences" },
+    { id: "chrono", label: "Chronologie" },
+  ];
 
   return (
-    <div className="fixed inset-0 z-30 flex items-center justify-center px-4 pointer-events-none">
-      {/* Backdrop cliquable */}
-      <div
-        className="absolute inset-0 bg-[rgba(2,6,23,0.7)] backdrop-blur-sm pointer-events-auto"
-        onClick={handleClose}
-      />
-
-      {/* Carte centrale */}
-      <div className="relative max-w-4xl w-full pointer-events-auto">
-        <div
-          ref={cardRef}
-          className={
-            "overlay-card relative max-h-[80vh] overflow-y-auto p-6 md:p-8 " +
-            (isClosing ? "overlay-exit" : "overlay-enter")
-          }
-        >
+    <div className="fixed inset-0 z-30 flex items-center justify-center bg-slate-950/50 backdrop-blur-xl">
+      <div className="relative max-w-5xl w-full mx-4 md:mx-8 max-h-[90vh] rounded-3xl bg-gradient-to-br from-slate-900/90 via-slate-900/80 to-slate-950/90 border border-slate-700/50 shadow-[0_40px_120px_rgba(0,0,0,0.7)] overflow-hidden">
+        {/* Scroll interne */}
+        <div className="overflow-y-auto max-h-[90vh] px-6 sm:px-10 py-8 sm:py-10">
           {/* Bouton fermer */}
           <button
             type="button"
-            onClick={handleClose}
-            className="overlay-close-icon-btn"
-            aria-label="Fermer la présentation"
+            className="absolute right-5 top-5 rounded-full bg-slate-900/80 border border-slate-600/60 w-8 h-8 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-800 transition"
+            onClick={onClose}
           >
             ✕
           </button>
 
-          {/* CONTENU CLAMPÉ POUR LA LECTURE */}
-          <div className="max-w-3xl mx-auto space-y-6 md:space-y-7">
-            {/* Header */}
-            <header className="space-y-2">
-              <p className="text-[0.7rem] md:text-xs uppercase tracking-[0.22em] text-sky-200">
-                Île centrale — À propos
-              </p>
-              <h2 className="text-2xl md:text-3xl font-semibold text-slate-50">
-                Je crée des expériences numériques qui se ressentent.
-              </h2>
-              <p className="text-sm md:text-base text-slate-200 leading-relaxed">
-                Je suis <span className="font-medium">Angèle Kaloï</span>,
-                développeuse web & créatrice d’expériences interactives. Je
-                navigue entre front, UX/UI, 3D et VR pour concevoir des
-                expériences qui restent claires même quand la technologie
-                devient complexe.
-              </p>
-            </header>
+          {/* Étiquette */}
+          <p className="text-[11px] tracking-[0.28em] uppercase text-sky-300 mb-4">
+            Île centrale — À propos
+          </p>
 
-            {/* Chip univers en îles */}
-            <p className="text-sm md:text-[0.95rem] text-slate-200/95 leading-relaxed overlay-chip">
-              Ce portfolio est un univers en îles : chaque îlot présente une
-              facette de mon travail — web interactif, UX/UI, XR, vidéo, arts
-              numériques — avec toujours la même priorité : ce que vit
-              l’utilisateur.
-            </p>
+          {/* Titre principal */}
+          <h1 className="text-3xl sm:text-4xl font-bold text-white leading-tight mb-6">
+            Je crée des expériences numériques qui se ressentent.
+          </h1>
 
-            {/* Vidéo */}
-            <section className="space-y-3">
-              <p className="text-[0.7rem] md:text-xs uppercase tracking-[0.22em] text-sky-200">
-                CV vidéo
-              </p>
-              <div className="relative aspect-video rounded-3xl overflow-hidden border border-[rgba(148,163,184,0.6)] bg-[rgba(15,23,42,0.85)]">
-                <iframe
-                  className="w-full h-full"
-                  src={cvVideoUrl}
-                  title="CV vidéo d'Angèle Kaloï"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
+          {/* Sous-titre d’intro */}
+          <p className="text-slate-200 leading-relaxed text-base sm:text-lg max-w-3xl mb-8">
+            Je suis <span className="font-semibold text-white">Angèle Kaloï</span>, développeuse web & créatrice
+            d’expériences interactives. Je navigue entre front, UX/UI, 3D et VR
+            pour concevoir des expériences qui restent claires même quand la
+            technologie devient complexe.
+          </p>
+
+          {/* Onglets */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {tabs.map(({ id, label }) => {
+              const isActive = tab === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setTab(id)}
+                  className={[
+                    "px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition",
+                    isActive
+                      ? "bg-sky-500 text-white shadow-lg shadow-sky-500/30"
+                      : "bg-slate-800/70 text-slate-300 hover:bg-slate-700/80",
+                  ].join(" ")}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* 🔹 ONGLET 1 — À PROPOS */}
+          {tab === "intro" && (
+            <div className="space-y-10">
+              {/* Capsule univers en îles */}
+              <div className="max-w-2xl rounded-2xl bg-slate-800/40 border border-slate-600/40 px-5 py-4 text-slate-200 leading-relaxed">
+                Ce portfolio est un univers en îles : chaque îlot présente une
+                facette de mon travail — web interactif, UX/UI, XR, vidéo, arts
+                numériques — avec toujours la même priorité&nbsp;: ce que vit
+                l’utilisateur.
               </div>
-              <p className="text-xs md:text-sm text-slate-300/90">
-                2 minutes pour entendre ma voix, mon énergie et la façon dont je
-                présente mon parcours.
-              </p>
-            </section>
 
-            {/* --- PARCOURS --- */}
-            <section className="mt-2 md:mt-4">
-              <h3 className="text-sm md:text-base font-semibold text-slate-100">
-                Parcours
-              </h3>
+              {/* Bloc CV vidéo */}
+              <section>
+                <h2 className="text-[11px] tracking-[0.28em] text-slate-300 uppercase mb-3">
+                  CV vidéo
+                </h2>
 
-              <div className="parcours-scroll mt-4 space-y-5">
-                {/* 1) Bandeau d’infos clés */}
-                <div className="grid gap-3 md:gap-4 md:grid-cols-3">
-                  <div className="rounded-2xl border border-[rgba(148,163,184,0.5)] bg-[rgba(15,23,42,0.9)] px-3.5 py-3">
-                    <p className="text-[0.65rem] uppercase tracking-[0.22em] text-slate-400 mb-1">
-                      Rôle actuel
+                <p className="text-sm text-slate-300 mb-4">
+                  2 minutes pour entendre ma voix, mon énergie et la façon dont
+                  je présente mon parcours.
+                </p>
+
+                <div className="rounded-2xl overflow-hidden border border-slate-700/70 shadow-xl shadow-black/50 mb-3">
+                  <iframe
+                    className="w-full h-[220px] sm:h-[280px] md:h-[320px]"
+                    src={VIDEO_URL}
+                    title="CV vidéo Angèle K."
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+
+                <p className="text-xs text-slate-400">
+                  Si la vidéo ne s’affiche pas, vous pouvez la{" "}
+                  <a
+                    href={VIDEO_URL.replace("embed/", "watch?v=")}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sky-300 hover:text-sky-200 underline-offset-2 hover:underline"
+                  >
+                    regarder directement sur YouTube
+                  </a>
+                  .
+                </p>
+              </section>
+            </div>
+          )}
+
+          {/* 🔹 ONGLET 2 — PARCOURS (plus léger & ludique) */}
+          {tab === "parcours" && (
+            <div className="space-y-10">
+              <section>
+                <h2 className="text-[11px] tracking-[0.28em] text-slate-300 uppercase mb-4">
+                  Parcours en bref
+                </h2>
+                <p className="text-sm text-slate-300 mb-6 max-w-3xl">
+                  Un fil rouge : passer de la communication visuelle à la
+                  conception d’expériences interactives complètes, du prototype
+                  à la mise en production.
+                </p>
+
+                {/* 3 cartes synthétiques */}
+                <div className="grid gap-4 md:grid-cols-3">
+                  <div className="rounded-2xl bg-slate-900/70 border border-slate-700/60 px-5 py-4 flex flex-col gap-2">
+                    <p className="text-[11px] tracking-[0.26em] uppercase text-slate-400">
+                      Aujourd’hui
                     </p>
-                    <p className="text-xs md:text-sm font-semibold text-sky-200">
-                      Alternante dev web & UX — OPT-NC
+                    <p className="text-sm font-semibold text-slate-50">
+                      Dev web & UX — OPT-NC
                     </p>
-                    <p className="mt-0.5 text-[0.7rem] md:text-xs text-slate-300/90">
-                      Refonte du site institutionnel, page d’accueil, design
-                      system & intégration front.
+                    <p className="text-xs text-slate-300">
+                      Alternance sur la refonte du site institutionnel et sa
+                      page d’accueil.
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-[rgba(148,163,184,0.4)] bg-[rgba(15,23,42,0.9)] px-3.5 py-3">
-                    <p className="text-[0.65rem] uppercase tracking-[0.22em] text-slate-400 mb-1">
+                  <div className="rounded-2xl bg-slate-900/70 border border-slate-700/60 px-5 py-4 flex flex-col gap-2">
+                    <p className="text-[11px] tracking-[0.26em] uppercase text-slate-400">
                       Formation
                     </p>
-                    <p className="text-xs md:text-sm font-semibold text-sky-200">
-                      2022–2025 · BUT MMI — UNC
+                    <p className="text-sm font-semibold text-slate-50">
+                      BUT MMI — UNC
                     </p>
-                    <p className="mt-0.5 text-[0.7rem] md:text-xs text-slate-300/90">
-                      Dév web & dispositifs interactifs : front-end, UX/UI,
-                      3D/XR, audiovisuel & gestion de projet.
+                    <p className="text-xs text-slate-300">
+                      Dév web, UX/UI, XR et audiovisuel pour des dispositifs
+                      interactifs complets.
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-[rgba(148,163,184,0.4)] bg-[rgba(15,23,42,0.9)] px-3.5 py-3">
-                    <p className="text-[0.65rem] uppercase tracking-[0.22em] text-slate-400 mb-1">
-                      Territoire
+                  <div className="rounded-2xl bg-slate-900/70 border border-slate-700/60 px-5 py-4 flex flex-col gap-2">
+                    <p className="text-[11px] tracking-[0.26em] uppercase text-slate-400">
+                      Terrain de jeu
                     </p>
-                    <p className="text-xs md:text-sm font-semibold text-sky-200">
+                    <p className="text-sm font-semibold text-slate-50">
                       Nouvelle-Calédonie
                     </p>
-                    <p className="mt-0.5 text-[0.7rem] md:text-xs text-slate-300/90">
-                      Projets orientés usages locaux & services publics.
+                    <p className="text-xs text-slate-300">
+                      Projets ancrés dans les usages locaux, le service public
+                      et l’expérience usager.
                     </p>
                   </div>
                 </div>
+              </section>
 
-                {/* 2) Timeline rangée + un seul point allumé */}
-                <div className="mt-5">
-                  <p className="text-[0.7rem] uppercase tracking-[0.22em] text-slate-400 mb-3">
-                    Chronologie
-                  </p>
-
-                  <div className="relative pl-5">
-                    {/* ligne verticale */}
-                    <div className="absolute left-[0.35rem] top-1 bottom-1 w-px bg-[rgba(148,163,184,0.35)]" />
-
-                    {TIMELINE.map((item) => (
-                      <div key={item.id} className="relative mb-4 last:mb-0">
-                        {/* point sur la ligne */}
-                        <span
-                          className={
-                            "absolute -left-[0.25rem] mt-1 h-2 w-2 rounded-full " +
-                            (item.isCurrent
-                              ? "bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.9)]"
-                              : "bg-slate-500/80")
-                          }
-                        />
-
-                        <p className="text-[0.8rem] font-semibold text-slate-200">
-                          {item.years} · {item.title}
+              {/* petite frise en 3 étapes */}
+              <section>
+                <h3 className="text-[11px] tracking-[0.26em] text-slate-300 uppercase mb-4">
+                  Évolution
+                </h3>
+                <div className="relative">
+                  <div className="hidden md:block absolute left-0 right-0 top-4 h-px bg-slate-700/60" />
+                  <div className="grid md:grid-cols-3 gap-6 md:gap-3">
+                    <div className="flex md:flex-col gap-2 md:items-center">
+                      <div className="w-8 h-8 rounded-full bg-slate-900 border border-slate-600 flex items-center justify-center text-xs text-slate-200 shadow-md">
+                        1
+                      </div>
+                      <div className="md:text-center">
+                        <p className="text-xs font-semibold text-slate-50">
+                          Communication & image
                         </p>
-                        <p className="text-[0.8rem] font-semibold text-slate-100">
-                          {item.role}
-                        </p>
-                        <p className="mt-1 text-[0.78rem] text-slate-300 leading-relaxed">
-                          {item.details}
+                        <p className="text-[11px] text-slate-300">
+                          Graphisme, vidéo, habillage et narration visuelle.
                         </p>
                       </div>
-                    ))}
+                    </div>
+                    <div className="flex md:flex-col gap-2 md:items-center">
+                      <div className="w-8 h-8 rounded-full bg-slate-900 border border-slate-600 flex items-center justify-center text-xs text-slate-200 shadow-md">
+                        2
+                      </div>
+                      <div className="md:text-center">
+                        <p className="text-xs font-semibold text-slate-50">
+                          UX & interfaces
+                        </p>
+                        <p className="text-[11px] text-slate-300">
+                          Parcours, maquettes, prototypes centrés sur l’usage.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex md:flex-col gap-2 md:items-center">
+                      <div className="w-8 h-8 rounded-full bg-sky-500 border border-sky-200 flex items-center justify-center text-xs text-white shadow-md">
+                        3
+                      </div>
+                      <div className="md:text-center">
+                        <p className="text-xs font-semibold text-slate-50">
+                          Développement & XR
+                        </p>
+                        <p className="text-[11px] text-slate-300">
+                          Implémentation front, 3D, VR et déploiement en ligne.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>
-          </div>
+              </section>
+            </div>
+          )}
+
+          {/* 🔹 ONGLET 3 — COMPÉTENCES */}
+          {tab === "skills" && (
+            <div className="space-y-10">
+              <section>
+                <h2 className="text-[11px] tracking-[0.28em] text-slate-300 uppercase mb-4">
+                  Compétences clés
+                </h2>
+                <p className="text-sm text-slate-300 mb-6 max-w-3xl">
+                  Un profil hybride : développement front, UX/UI et création
+                  visuelle, avec une attention particulière à ce que vit
+                  l’utilisateur.
+                </p>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  {/* Hard skills */}
+                  <div className="rounded-2xl bg-slate-900/70 border border-slate-700/60 px-5 py-4">
+                    <p className="text-[11px] tracking-[0.26em] uppercase text-slate-400 mb-2">
+                      Hard skills
+                    </p>
+                    <ul className="text-xs text-slate-200 space-y-1.5">
+                      <li>• Dév front : JavaScript, React, Vite, Tailwind.</li>
+                      <li>
+                        • Intégration web & accessibilité : HTML/CSS, design
+                        system, composants réutilisables.
+                      </li>
+                      <li>
+                        • Drupal : intégration front, templates, mise en page de
+                        contenus.
+                      </li>
+                      <li>
+                        • Expériences 3D & XR : Unity, WebGL, React Three Fiber.
+                      </li>
+                      <li>
+                        • Audiovisuel : tournage, montage, mise en scène vidéo.
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Soft skills */}
+                  <div className="rounded-2xl bg-slate-900/70 border border-slate-700/60 px-5 py-4">
+                    <p className="text-[11px] tracking-[0.26em] uppercase text-slate-400 mb-2">
+                      Soft skills
+                    </p>
+                    <ul className="text-xs text-slate-200 space-y-1.5">
+                      <li>
+                        • Empathie utilisateur : écouter, reformuler et
+                        transformer les besoins en interfaces.
+                      </li>
+                      <li>
+                        • Gestion de projet : cadrage, priorisation, suivi des
+                        étapes & livrables.
+                      </li>
+                      <li>
+                        • Travail en équipe : collaboration avec développeurs,
+                        designers, communication & DSI.
+                      </li>
+                      <li>
+                        • Vulgarisation : rendre compréhensibles des sujets
+                        techniques ou complexes.
+                      </li>
+                      <li>
+                        • Autonomie & curiosité : veille, tests et prototypage
+                        pour proposer des solutions.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </section>
+            </div>
+          )}
+
+          {/* 🔹 ONGLET 4 — CHRONOLOGIE (alignement clean) */}
+          {tab === "chrono" && (
+            <div className="space-y-8">
+              <section>
+                <h2 className="text-[11px] tracking-[0.28em] text-slate-300 uppercase mb-6">
+                  Chronologie
+                </h2>
+
+                <p className="text-sm text-slate-300 mb-6 max-w-3xl">
+                  Un parcours qui relie communication, design et développement
+                  pour aller progressivement vers des expériences interactives
+                  complètes : du concept à la mise en ligne.
+                </p>
+
+                <div className="relative pl-10">
+                  {/* ligne verticale */}
+                  <div className="absolute left-4 top-1 bottom-1 w-px bg-slate-700/60" />
+
+                  <ul className="space-y-7">
+                    {/* ACTUEL */}
+                    <li className="relative">
+                      <div className="absolute left-3 top-2 w-3.5 h-3.5 rounded-full bg-sky-400 shadow-[0_0_0_4px_rgba(56,189,248,0.35)] border-2 border-sky-100" />
+                      <div className="ml-6">
+                        <p className="text-[11px] uppercase tracking-[0.2em] text-sky-300 mb-1">
+                          Actuellement
+                        </p>
+                        <p className="text-xs text-slate-400 mb-1">
+                          2025–2026 · Alternance — OPT-NC
+                        </p>
+                        <p className="text-sm font-semibold text-slate-50">
+                          Dev web & UX — Refonte du site institutionnel
+                        </p>
+                        <p className="text-xs text-slate-300 leading-relaxed mt-1.5">
+                          Nouvelle page d’accueil, intégration front (Drupal),
+                          optimisation accessibilité & performance, co-construction
+                          avec la DSI et la communication, mise en place d’un
+                          design system réutilisable.
+                        </p>
+                      </div>
+                    </li>
+
+                    {/* 2024 ISEA */}
+                    <li className="relative">
+                      <div className="absolute left-3 top-3 w-3 h-3 rounded-full bg-sky-400/80" />
+                      <div className="ml-6">
+                        <p className="text-xs text-slate-400 mb-1">
+                          2024 · Stage (6 mois) — ISEA
+                        </p>
+                        <p className="text-sm font-semibold text-slate-50">
+                          Chargée de communication & création visuelle
+                        </p>
+                        <p className="text-xs text-slate-300 leading-relaxed mt-1.5">
+                          Conception d’outils visuels pour un projet de
+                          recherche scientifique, identité visuelle & supports
+                          graphiques pour vulgariser les résultats.
+                        </p>
+                      </div>
+                    </li>
+
+                    {/* 2023 CANAL+ */}
+                    <li className="relative">
+                      <div className="absolute left-3 top-3 w-3 h-3 rounded-full bg-sky-400/60" />
+                      <div className="ml-6">
+                        <p className="text-xs text-slate-400 mb-1">
+                          2023 · Stage (3 mois) — CANAL+ Calédonie
+                        </p>
+                        <p className="text-sm font-semibold text-slate-50">
+                          Contenus graphiques & vidéo
+                        </p>
+                        <p className="text-xs text-slate-300 leading-relaxed mt-1.5">
+                          Communication interne & externe, habillages
+                          d’émissions, visuels d’antenne et montages vidéo pour
+                          des formats TV.
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          )}
         </div>
       </div>
     </div>

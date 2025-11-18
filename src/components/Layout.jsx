@@ -1,6 +1,7 @@
 // src/components/Layout.jsx
 import { useEffect, useState } from "react";
 import UniverseCanvas from "../three/UniverseCanvas.jsx";
+
 import IslandMeOverlay from "./IslandMeOverlay.jsx";
 import IslandMeBubble from "./IslandMeBubble.jsx";
 import HelpChip from "./HelpChip.jsx";
@@ -37,15 +38,13 @@ const ISLAND_STEPS = [
   },
 ];
 
-
 export default function Layout() {
   const [showBubble, setShowBubble] = useState(false);
   const [activeOverlay, setActiveOverlay] = useState(null); // "me" | "web" | "ux" | "xr" | "video" | null
   const [selectedIsland, setSelectedIsland] = useState(ISLAND_STEPS[0]);
   const [cameraTarget, setCameraTarget] = useState(CAMERA_TARGETS.me);
-  const hasOverlay = activeOverlay !== null;
 
-
+  // apparition de la bulle de présentation
   useEffect(() => {
     const timer = setTimeout(() => setShowBubble(true), 650);
     return () => clearTimeout(timer);
@@ -61,82 +60,55 @@ export default function Layout() {
     setActiveOverlay(island.type); // "me", "web", "ux", "xr", "video"
   };
 
+  // clic sur l’île 3D → ouvre l’overlay
   const handleIslandClick = (island) => {
     openOverlayForIsland(island);
   };
 
   const handleCloseOverlay = () => {
     setActiveOverlay(null);
+
     if (selectedIsland.id === "me") {
       setTimeout(() => setShowBubble(true), 250);
     }
   };
 
-  // 👉 appelé par le menu de navigation
+  // navigation via la barre / flèches → déplace seulement la caméra
   const handleSelectIslandFromNav = (id) => {
     const island = ISLAND_STEPS.find((step) => step.id === id);
     if (!island) return;
 
-    // Si on clique une première fois sur une île différente :
-    // -> on déplace juste la caméra, sans overlay
-    if (selectedIsland.id !== id) {
-      setSelectedIsland(island);
-      setActiveOverlay(null);
+    setSelectedIsland(island);
+    setActiveOverlay(null);
 
-      const target = CAMERA_TARGETS[island.id] || CAMERA_TARGETS.me;
-      setCameraTarget(target);
+    const target = CAMERA_TARGETS[island.id] || CAMERA_TARGETS.me;
+    setCameraTarget(target);
 
-      // bulle seulement sur l'île Moi, si aucun overlay
-      if (island.id === "me") {
-        setShowBubble(true);
-      } else {
-        setShowBubble(false);
-      }
-      return;
-    }
-
-    // Si on reclique sur l'île déjà sélectionnée ET qu'il n'y a pas encore d'overlay :
-    // -> cette fois on ouvre l'overlay
-    if (!activeOverlay) {
-      openOverlayForIsland(island);
-      return;
-    }
-
-    // Si l'overlay est déjà ouvert et qu'on reclique sur la même île via le menu,
-    // tu peux soit fermer, soit ne rien faire. Là on ne fait rien.
+    setShowBubble(island.id === "me");
   };
 
+  const showLabels = !activeOverlay;
 
   return (
     <div className="relative w-screen h-screen bg-slate-950 overflow-hidden">
+      {/* Scène 3D */}
       <UniverseCanvas
         onIslandClick={handleIslandClick}
         cameraTarget={cameraTarget}
         activeIslandId={selectedIsland.id}
-        showLabels={!hasOverlay}
+        showLabels={showLabels}
       />
 
-
+      {/* HUD fixe */}
       <HudTopBar />
       <HelpChip />
 
-      {/* Nom de l'île active */}
-      // AVANT
-{!activeOverlay && (
-  <IslandNameBar label={selectedIsland.label} />
-)}
+      {/* Nom de l’île active (uniquement quand aucun overlay n’est ouvert) */}
+      {!activeOverlay && <IslandNameBar label={selectedIsland.label} />}
 
-// ➜ APRÈS : la barre s’affiche *seulement* quand un overlay est ouvert
-{activeOverlay && (
-  <IslandNameBar label={selectedIsland.label} />
-)}
-
-
-      {/* Bulle de présentation uniquement sur l’île Moi quand aucun overlay n’est ouvert */}
+      {/* Bulle de présentation, seulement sur l’île Moi et sans overlay */}
       {showBubble && !activeOverlay && selectedIsland.id === "me" && (
-        <IslandMeBubble
-          onClick={() => openOverlayForIsland(ISLAND_STEPS[0])}
-        />
+        <IslandMeBubble onClick={() => openOverlayForIsland(ISLAND_STEPS[0])} />
       )}
 
       {/* Overlays */}
@@ -180,15 +152,13 @@ export default function Layout() {
         />
       )}
 
-            {/* 🚀 Navigation / progression entre les îles 
-          → cachée quand un overlay est ouvert pour laisser respirer le contenu */}
+      {/* Navigation / progression entre les îles */}
       <IslandNavigator
         steps={ISLAND_STEPS}
         activeId={selectedIsland.id}
         onSelect={handleSelectIslandFromNav}
-        dense={!!activeOverlay}  // 👈 plus fine quand un overlay est ouvert
+        compact={!!activeOverlay} // plus fin quand un overlay est ouvert
       />
-
     </div>
   );
 }

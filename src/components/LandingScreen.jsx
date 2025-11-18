@@ -3,9 +3,9 @@ export default function LandingScreen({ onEnter }) {
     <div className="w-screen h-screen flex items-center justify-center bg-slate-950 text-slate-50">
       <div className="text-center px-4">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4 leading-relaxed">
-          Bozu sè User ! Ici, les îles ne coulent pas.
+          Bozu së <em>User</em> ! Je te présente mon île
           <br />
-          Juste parfois… un bug.
+          Comme celle d'où je viens, celle-ci n'existe pas seule.
         </h1>
         <p className="text-slate-400 max-w-md mx-auto mb-6">
           Clique pour entrer dans mon univers et découvrir mes îles.
