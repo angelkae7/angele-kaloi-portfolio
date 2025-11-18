@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from "react";
 export default function DomainOverlay({ title, tagline, projects, onClose }) {
   const [expandedId, setExpandedId] = useState(null);
   const [isClosing, setIsClosing] = useState(false);
-
   const [lightbox, setLightbox] = useState(null);
+
   const cardRef = useRef(null);
 
-  // Au montage : remonter au haut de la carte
+  // Scroll en haut quand l’overlay s’ouvre
   useEffect(() => {
     if (cardRef.current) {
       cardRef.current.scrollTop = 0;
@@ -18,14 +18,14 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
   const handleClose = () => {
     if (isClosing) return;
     setIsClosing(true);
-    setTimeout(() => onClose(), 260);
+    setTimeout(() => onClose(), 260); // match .overlay-exit
   };
 
   const toggleProject = (id) => {
     setExpandedId((current) => (current === id ? null : id));
   };
 
-  // slider lightbox
+  // ---- Lightbox : navigation ----
   const showPrevMedia = () => {
     setLightbox((current) => {
       if (!current) return null;
@@ -46,7 +46,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
 
   const closeLightbox = () => setLightbox(null);
 
-  // Échap / flèches dans la lightbox
+  // Échap + flèches clavier dans le lightbox
   useEffect(() => {
     const handleKey = (e) => {
       if (!lightbox) return;
@@ -59,7 +59,10 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
   }, [lightbox]);
 
   return (
-    <div className="fixed inset-0 z-30 flex items-center justify-center px-4 pointer-events-none">
+    // APRÈS
+
+  <div className="fixed inset-0 z-30 flex items-center justify-center px-4">
+
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-[rgba(2,6,23,0.7)] backdrop-blur-sm pointer-events-auto"
@@ -85,7 +88,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
             ✕
           </button>
 
-          {/* HEADER — bento 1 */}
+          {/* HEADER */}
           <header className="pb-3 md:pb-4 border-b border-[rgba(148,163,184,0.35)]">
             <p className="text-[0.7rem] md:text-xs uppercase tracking-[0.22em] text-sky-200 mb-1">
               {title}
@@ -101,7 +104,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
             </p>
           </header>
 
-          {/* CONTENU SCROLLABLE — bento 2 : la liste de projets */}
+          {/* LISTE DE PROJETS */}
           <div className="mt-4 flex-1 overflow-y-auto pr-1 custom-scroll space-y-3 md:space-y-4">
             {projects.map((project) => {
               const isExpanded = expandedId === project.id;
@@ -166,7 +169,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
 
                     {/* Colonne texte */}
                     <div className="flex-1 flex flex-col gap-3">
-                      {/* Ligne titre + badge/date */}
+                      {/* Titre + badge date */}
                       <div className="flex items-start justify-between gap-4">
                         <div className="min-w-0">
                           <p className="text-sm md:text-base font-semibold text-slate-50 truncate">
@@ -199,7 +202,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                       {/* ligne pointillée */}
                       <div className="mt-1 h-px w-full border-t border-dashed border-[rgba(148,163,184,0.4)]" />
 
-                      {/* DÉTAILS ÉTENDUS */}
+                      {/* DÉTAILS étendus */}
                       {isExpanded && (
                         <div className="mt-2 space-y-3">
                           {project.details && (
@@ -218,71 +221,63 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                             </p>
                           )}
 
+                          {/* Liens : site / repo / figma */}
                           {/* Liens bento : site / GitHub / Figma */}
-                          {(project.link ||
-                            project.repo ||
-                            project.figma) && (
-                            <div className="flex flex-wrap gap-2 mt-1 text-[0.75rem]">
-                              {project.link && (
-                                <a
-                                  href={project.link}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="inline-flex items-center rounded-full border border-sky-400/60 px-3 py-1 text-sky-200 hover:bg-sky-500/10"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  Voir le projet
-                                </a>
-                              )}
-                              {project.repo && (
-                                <a
-                                  href={project.repo}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="inline-flex items-center rounded-full border border-slate-400/70 px-3 py-1 text-slate-200 hover:bg-slate-500/10"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  Code source GitHub
-                                </a>
-                              )}
-                              {project.figma && (
-                                <a
-                                  href={project.figma}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="inline-flex items-center rounded-full border border-purple-400/70 px-3 py-1 text-purple-100 hover:bg-purple-500/10"
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  Prototype Figma
-                                </a>
-                              )}
-                            </div>
-                          )}
+{(project.link || project.github || project.figma) && (
+  <div className="flex flex-wrap gap-2 mt-1 text-[0.75rem]">
+    {project.link && (
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center rounded-full border border-sky-400/60 px-3 py-1 text-sky-200 hover:bg-sky-500/10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        Voir le projet
+      </a>
+    )}
+
+    {project.github && (
+      <a
+        href={project.github}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center rounded-full border border-slate-400/70 px-3 py-1 text-slate-200 hover:bg-slate-500/10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        Code source GitHub
+      </a>
+    )}
+
+    {project.figma && (
+      <a
+        href={project.figma}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center rounded-full border border-purple-400/70 px-3 py-1 text-purple-100 hover:bg-purple-500/10"
+        onClick={(e) => e.stopPropagation()}
+      >
+        Prototype Figma
+      </a>
+    )}
+  </div>
+)}
+
+                          
 
                           {/* Galerie média */}
                           {project.media && project.media.length > 0 && (
                             <div className="mt-3 flex flex-wrap gap-3 md:gap-4">
                               {project.media.map((item, index) => (
-                                <div
-                                  key={item.id || index}
-                                  role="button"
-                                  tabIndex={0}
+                                <button
+                                  key={item.id ?? `${project.id}-${index}`}
+                                  type="button"
                                   onClick={(e) => {
-                                    e.stopPropagation();
+                                    e.stopPropagation(); // ne pas replier la carte
                                     setLightbox({
                                       items: project.media,
                                       index,
                                     });
-                                  }}
-                                  onKeyDown={(e) => {
-                                    if (e.key === "Enter" || e.key === " ") {
-                                      e.preventDefault();
-                                      e.stopPropagation();
-                                      setLightbox({
-                                        items: project.media,
-                                        index,
-                                      });
-                                    }
                                   }}
                                   className="group/media flex flex-col gap-1 w-24 md:w-32 text-left"
                                 >
@@ -321,7 +316,6 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                           <div className="w-full h-full bg-[rgba(15,23,42,0.9)]" />
                                         )}
 
-                                        {/* icône play */}
                                         <div className="absolute inset-0 flex items-center justify-center">
                                           <div className="w-8 h-8 rounded-full bg-[rgba(15,23,42,0.85)] border border-sky-400 flex items-center justify-center">
                                             <span className="ml-0.5 text-[0.75rem] text-sky-200">
@@ -331,6 +325,12 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                         </div>
                                       </div>
                                     )}
+
+                                    {item.type === "figma" && (
+                                      <div className="w-full h-full bg-[rgba(15,23,42,0.9)] flex items-center justify-center text-[0.7rem] text-purple-200">
+                                        Prototype Figma
+                                      </div>
+                                    )}
                                   </div>
 
                                   {item.label && (
@@ -338,7 +338,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                       {item.label}
                                     </span>
                                   )}
-                                </div>
+                                </button>
                               ))}
                             </div>
                           )}
@@ -362,120 +362,134 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
 
       {/* LIGHTBOX */}
       {lightbox && (
-  <div
-    className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(15,23,42,0.9)] backdrop-blur-md"
-    onClick={closeLightbox}
-  >
-    <div
-      className="relative max-w-5xl w-full px-4"
-      onClick={(e) => e.stopPropagation()} // ← empêche la fermeture quand on clique dans la carte
-    >
-      {/* bouton fermer */}
-      <button
-        type="button"
-        onClick={closeLightbox}
-        className="absolute right-4 top-4 z-20 h-9 w-9 rounded-full border border-[rgba(148,163,184,0.7)] bg-[rgba(15,23,42,0.95)] text-slate-100 flex items-center justify-center text-sm shadow-lg hover:bg-[rgba(15,23,42,1)]"
-        aria-label="Fermer le média"
-      >
-        ✕
-      </button>
+        <div
+          className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(15,23,42,0.9)] backdrop-blur-md"
+          onClick={closeLightbox}
+        >
+          <div
+            className="relative max-w-5xl w-full px-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* bouton fermer */}
+            <button
+              type="button"
+              onClick={closeLightbox}
+              className="absolute right-4 top-4 z-20 h-9 w-9 rounded-full border border-[rgba(148,163,184,0.7)] bg-[rgba(15,23,42,0.95)] text-slate-100 flex items-center justify-center text-sm shadow-lg hover:bg-[rgba(15,23,42,1)]"
+              aria-label="Fermer le média"
+            >
+              ✕
+            </button>
 
-      {(() => {
-        const current = lightbox.items[lightbox.index];
+            {(() => {
+              const current = lightbox.items[lightbox.index];
 
-        return (
-          <div className="bg-[rgba(15,23,42,0.96)] border border-[rgba(148,163,184,0.7)] rounded-3xl shadow-2xl overflow-hidden">
-            {/* ZONE MEDIA + FLÈCHES */}
-            <div className="relative w-full aspect-video bg-black flex items-center justify-center">
-  {/* flèche gauche */}
-  {lightbox.items.length > 1 && (
-    <button
-      type="button"
-      onClick={showPrevMedia}
-      className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-9 w-9 md:h-10 md:w-10 rounded-full bg-[rgba(15,23,42,0.75)] border border-[rgba(148,163,184,0.8)] text-slate-100 flex items-center justify-center text-lg shadow-lg hover:bg-[rgba(15,23,42,0.95)] z-10"
-    >
-      ‹
-    </button>
-  )}
+              return (
+                <div className="bg-[rgba(15,23,42,0.96)] border border-[rgba(148,163,184,0.7)] rounded-3xl shadow-2xl overflow-hidden">
+                  {/* zone média + flèches */}
+                  <div className="relative w-full aspect-video bg-black flex items-center justify-center">
+                    {/* flèche gauche */}
+                    {lightbox.items.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={showPrevMedia}
+                        className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-9 w-9 md:h-10 md:w-10 rounded-full bg-[rgba(15,23,42,0.75)] border border-[rgba(148,163,184,0.8)] text-slate-100 flex items-center justify-center text-lg shadow-lg hover:bg-[rgba(15,23,42,0.95)] z-10"
+                        aria-label="Média précédent"
+                      >
+                        ‹
+                      </button>
+                    )}
 
-  {/* contenu média : sans onClick sur le wrapper */}
-  <div className="w-full h-full pointer-events-auto">
-    {current.type === "image" && (
-      <img
-        src={current.src}
-        alt={current.label || ""}
-        className="w-full h-full object-contain"
-      />
-    )}
+                    {/* contenu média */}
+                    <div
+                      className="w-full h-full pointer-events-auto"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {current.type === "image" && (
+                        <img
+                          src={current.src}
+                          alt={current.label || ""}
+                          className="w-full h-full object-contain"
+                        />
+                      )}
 
-    {current.type === "video" && current.href && (
-      <>
-        {current.href.includes("youtube.com") ||
-        current.href.includes("youtu.be") ? (
-          <iframe
-            className="w-full h-full"
-            src={current.href}
-            title={current.label || "Vidéo"}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
-        ) : (
-          <video
-            className="w-full h-full"
-            src={current.href}
-            controls
-          />
-        )}
-      </>
-    )}
-  </div>
+                      {current.type === "video" && current.href && (
+                        <>
+                          {current.href.includes("youtube.com") ||
+                          current.href.includes("youtu.be") ? (
+                            <iframe
+                              className="w-full h-full"
+                              src={current.href}
+                              title={current.label || "Vidéo"}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                              allowFullScreen
+                            />
+                          ) : (
+                            <video
+                              className="w-full h-full"
+                              src={current.href}
+                              controls
+                            />
+                          )}
+                        </>
+                      )}
 
-  {/* flèche droite */}
-  {lightbox.items.length > 1 && (
-    <button
-      type="button"
-      onClick={showNextMedia}
-      className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 h-9 w-9 md:h-10 md:w-10 rounded-full bg-[rgba(15,23,42,0.75)] border border-[rgba(148,163,184,0.8)] text-slate-100 flex items-center justify-center text-lg shadow-lg hover:bg-[rgba(15,23,42,0.95)] z-10"
-    >
-      ›
-    </button>
-  )}
-</div>
+                      {current.type === "figma" && current.href && (
+                        <iframe
+                          className="w-full h-full"
+                          src={current.href}
+                          title={current.label || "Prototype Figma"}
+                          allowFullScreen
+                          loading="lazy"
+                          referrerPolicy="strict-origin-when-cross-origin"
+                        />
+                      )}
+                    </div>
 
+                    {/* flèche droite */}
+                    {lightbox.items.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={showNextMedia}
+                        className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 h-9 w-9 md:h-10 md:w-10 rounded-full bg-[rgba(15,23,42,0.75)] border border-[rgba(148,163,184,0.8)] text-slate-100 flex items-center justify-center text-lg shadow-lg hover:bg-[rgba(15,23,42,0.95)] z-10"
+                        aria-label="Média suivant"
+                      >
+                        ›
+                      </button>
+                    )}
+                  </div>
 
-            {/* Légende + position */}
-            <div className="px-4 py-3 md:px-5 md:py-4 flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                {current.label && (
-                  <p className="text-sm md:text-base text-slate-100 truncate">
-                    {current.label}
-                  </p>
-                )}
-              </div>
+                  {/* légende + position */}
+                  <div className="px-4 py-3 md:px-5 md:py-4 flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      {current.label && (
+                        <p className="text-sm md:text-base text-slate-100 truncate">
+                          {current.label}
+                        </p>
+                      )}
+                    </div>
 
-              <div className="flex items-center gap-3">
-                <span className="text-[0.75rem] md:text-xs text-slate-400">
-                  {lightbox.index + 1} / {lightbox.items.length}
-                </span>
-                {(current.href || current.src) && (
-                  <a
-                    href={current.href || current.src}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-[0.8rem] md:text-xs text-sky-300 underline decoration-sky-400/70 hover:text-sky-200"
-                  >
-                    Ouvrir dans un nouvel onglet
-                  </a>
-                )}
-              </div>
-            </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[0.75rem] md:text-xs text-slate-400">
+                        {lightbox.index + 1} / {lightbox.items.length}
+                      </span>
+                      {(current.href || current.src) && (
+                        <a
+                          href={current.href || current.src}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[0.8rem] md:text-xs text-sky-300 underline decoration-sky-400/70 hover:text-sky-200"
+                        >
+                          Ouvrir dans un nouvel onglet
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
-        );
-      })()}
-    </div>
-  </div>
-)}
-
+        </div>
+      )}
     </div>
   );
 }

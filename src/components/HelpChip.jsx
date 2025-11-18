@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 const HELP_TEXT =
-  "Ce portfolio est un univers en îles : chaque îlot révèle une facette de mon travail — web interactif, UX/UI, XR, vidéo, arts numériques — avec un point commun : l’attention portée à ce que vit l’utilisateur.";
+  "Ce portfolio est développé avec React, Vite, Tailwind CSS et React Three Fiber (Three.js) pour donner vie à un univers 3D interactif et fluide.";
 
 export default function HelpChip() {
   const [open, setOpen] = useState(false);

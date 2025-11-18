@@ -1,7 +1,7 @@
 // src/components/IslandMeOverlay.jsx
 import { useState } from "react";
 
-const VIDEO_URL = "https://www.youtube.com/embed/XXXXXXXXXXX"; // 👈 remplace par ton embed
+const VIDEO_URL = "https://www.youtube.com/embed/FV59sY5XE2E"; // 👈 remplace par ton embed
 
 export default function IslandMeOverlay({ onClose }) {
   const [tab, setTab] = useState("intro"); // "intro" | "parcours" | "skills" | "chrono"
@@ -295,7 +295,7 @@ export default function IslandMeOverlay({ onClose }) {
             </div>
           )}
 
-          {/* 🔹 ONGLET 4 — CHRONOLOGIE (alignement clean) */}
+          {/* 🔹 ONGLET 4 — CHRONOLOGIE (nouvelle version sans bug d’alignement) */}
           {tab === "chrono" && (
             <div className="space-y-8">
               <section>
@@ -309,69 +309,64 @@ export default function IslandMeOverlay({ onClose }) {
                   complètes : du concept à la mise en ligne.
                 </p>
 
-                <div className="relative pl-10">
-                  {/* ligne verticale */}
-                  <div className="absolute left-4 top-1 bottom-1 w-px bg-slate-700/60" />
+                <div className="space-y-4">
+                  {/* Carte actuelle */}
+                  <div className="relative rounded-2xl bg-slate-900/80 border border-sky-500/60 px-5 py-4">
+                    <div className="absolute left-0 top-4 bottom-4 w-1 rounded-full bg-gradient-to-b from-sky-400 to-sky-500" />
+                    <div className="pl-4">
+                      <p className="text-[11px] uppercase tracking-[0.2em] text-sky-300 mb-1">
+                        Actuellement
+                      </p>
+                      <p className="text-xs text-slate-400 mb-1">
+                        2025–2026 · Alternance — L'Office des postes et télécommunications de Nouvelle-Calédonie (OPT-NC)
+                      </p>
+                      <p className="text-sm font-semibold text-slate-50">
+                        Dev web & UX — Refonte du site institutionnel
+                      </p>
+                      <p className="text-xs text-slate-300 leading-relaxed mt-1.5">
+                        Nouvelle page d’accueil, intégration front (Drupal),
+                        optimisation accessibilité & performance, co-construction
+                        avec la DSI et la communication, mise en place d’un
+                        design system réutilisable.
+                      </p>
+                    </div>
+                  </div>
 
-                  <ul className="space-y-7">
-                    {/* ACTUEL */}
-                    <li className="relative">
-                      <div className="absolute left-3 top-2 w-3.5 h-3.5 rounded-full bg-sky-400 shadow-[0_0_0_4px_rgba(56,189,248,0.35)] border-2 border-sky-100" />
-                      <div className="ml-6">
-                        <p className="text-[11px] uppercase tracking-[0.2em] text-sky-300 mb-1">
-                          Actuellement
-                        </p>
-                        <p className="text-xs text-slate-400 mb-1">
-                          2025–2026 · Alternance — OPT-NC
-                        </p>
-                        <p className="text-sm font-semibold text-slate-50">
-                          Dev web & UX — Refonte du site institutionnel
-                        </p>
-                        <p className="text-xs text-slate-300 leading-relaxed mt-1.5">
-                          Nouvelle page d’accueil, intégration front (Drupal),
-                          optimisation accessibilité & performance, co-construction
-                          avec la DSI et la communication, mise en place d’un
-                          design system réutilisable.
-                        </p>
-                      </div>
-                    </li>
+                  {/* Carte ISEA */}
+                  <div className="relative rounded-2xl bg-slate-900/70 border border-slate-700/70 px-5 py-4">
+                    <div className="absolute left-0 top-4 bottom-4 w-1 rounded-full bg-slate-700/80" />
+                    <div className="pl-4">
+                      <p className="text-xs text-slate-400 mb-1">
+                        2024 · Stage (6 mois) — Institut de sciences exactes et appliquées (ISEA)
 
-                    {/* 2024 ISEA */}
-                    <li className="relative">
-                      <div className="absolute left-3 top-3 w-3 h-3 rounded-full bg-sky-400/80" />
-                      <div className="ml-6">
-                        <p className="text-xs text-slate-400 mb-1">
-                          2024 · Stage (6 mois) — ISEA
-                        </p>
-                        <p className="text-sm font-semibold text-slate-50">
-                          Chargée de communication & création visuelle
-                        </p>
-                        <p className="text-xs text-slate-300 leading-relaxed mt-1.5">
-                          Conception d’outils visuels pour un projet de
-                          recherche scientifique, identité visuelle & supports
-                          graphiques pour vulgariser les résultats.
-                        </p>
-                      </div>
-                    </li>
+                      </p>
+                      <p className="text-sm font-semibold text-slate-50">
+                        Chargée de communication & création visuelle
+                      </p>
+                      <p className="text-xs text-slate-300 leading-relaxed mt-1.5">
+                        Conception d’outils visuels pour un projet de recherche
+                        scientifique, identité visuelle & supports graphiques
+                        pour vulgariser les résultats.
+                      </p>
+                    </div>
+                  </div>
 
-                    {/* 2023 CANAL+ */}
-                    <li className="relative">
-                      <div className="absolute left-3 top-3 w-3 h-3 rounded-full bg-sky-400/60" />
-                      <div className="ml-6">
-                        <p className="text-xs text-slate-400 mb-1">
-                          2023 · Stage (3 mois) — CANAL+ Calédonie
-                        </p>
-                        <p className="text-sm font-semibold text-slate-50">
-                          Contenus graphiques & vidéo
-                        </p>
-                        <p className="text-xs text-slate-300 leading-relaxed mt-1.5">
-                          Communication interne & externe, habillages
-                          d’émissions, visuels d’antenne et montages vidéo pour
-                          des formats TV.
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
+                  {/* Carte CANAL+ */}
+                  <div className="relative rounded-2xl bg-slate-900/70 border border-slate-700/70 px-5 py-4">
+                    <div className="absolute left-0 top-4 bottom-4 w-1 rounded-full bg-slate-700/80" />
+                    <div className="pl-4">
+                      <p className="text-xs text-slate-400 mb-1">
+                        2023 · Stage (3 mois) — CANAL+ Calédonie
+                      </p>
+                      <p className="text-sm font-semibold text-slate-50">
+                        Contenus graphiques & vidéo
+                      </p>
+                      <p className="text-xs text-slate-300 leading-relaxed mt-1.5">
+                        Communication interne & externe, habillages d’émissions,
+                        visuels d’antenne et montages vidéo pour des formats TV.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </section>
             </div>

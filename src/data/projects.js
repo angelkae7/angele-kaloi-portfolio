@@ -15,6 +15,59 @@ export const webProjects = [
     github: "https://github.com/angelkae7/opt-agences",
   },
   {
+    id: "site-bible-explorer",
+    title: "Site Bible Explorer",
+    year: "2025",
+    context: "Projet universitaire",
+    short: "Site de consultation et d’exploration de textes bibliques.",
+    details:
+    "Site utilisant une API de textes bibliques pour permettre la recherche, la lecture et l’exploration de livres, chapitres et versets.",
+    tech: ["HTML", "CSS", "React-Three-Fiber", "Vite", "Netlify", "API sécurisée", "UX lecture"],
+    link: "https://angele-kaloi-bible-explorer.netlify.app/",
+    github: "https://github.com/angelkae7/bible-explorer",
+
+    // 👉 chemin vers une image dans /public
+    thumb: "/projects/site-bible-explorer-thumb.png",
+  },
+  {
+    id: "site-lancee-de-des",
+    title: "Site Lancé de dés",
+    year: "2025",
+    context: "Projet universitaire",
+    short: "Site de lancement de dés en ligne.",
+    details:
+    "Site permettant aux utilisateurs de lancer un dé 3D virtuel, d'obtenir des résultats aléatoires et de visualiser les lancers précédents.",
+    tech: ["HTML", "CSS", "React-Three-Fiber", "Vite", "Netlify"],
+    link: "https://lanceurdes3d.netlify.app/",
+
+    // 👉 chemin vers une image dans /public
+    thumb: "/projects/site-lancee-de-des-thumb.png",
+  },
+  {
+    id: "site-dataviz",
+    title: "Site DataViz",
+    year: "2024",
+    context: "Projet universitaire",
+    short: "Site de visualisation de données interactives.",
+    details:
+    "Site visait à participé au concours Pacific Dataviz Challenge et utilise une base de données de causes de décès en Nouvelle-Calédonie pour créer des visualisations interactives.",
+    tech: ["HTML", "CSS", "JavaScript", "ApexCharts", "API sécurisée", "Netlify"],
+    link: "",
+
+    // 👉 chemin vers une image dans /public
+    thumb: "/projects/SITE-DATAVIZ-THUMB.png",
+     media: [
+      {
+        id: "screen1",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/SITE-DATAVIZ-THUMB.png",
+        label: " Page d'accueil présentant les données",
+      },
+    ],
+  },
+  
+  {
     id: "site-e-commerce-crystal-drop",
     title: "Site e-commerce Crystal Drop",
     year: "2024",
@@ -24,7 +77,7 @@ export const webProjects = [
       "Développement d’un site e-commerce fictif avec catalogue de produits, filtres, gestion du panier et formulaire de commande.",
     tech: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "WAMP Server", "UX e-commerce"],
     link: "",
-
+  
     // 👉 chemin vers une image dans /public
     thumb: "/projects/site-e-commerce-crystal-drop-thumb.png",
     
@@ -54,36 +107,6 @@ export const webProjects = [
     ],
     
   },
-  {
-    id: "site-bible-explorer",
-    title: "Site Bible Explorer",
-    year: "2025",
-    context: "Projet universitaire",
-    short: "Site de consultation et d’exploration de textes bibliques.",
-    details:
-      "Site utilisant une API de textes bibliques pour permettre la recherche, la lecture et l’exploration de livres, chapitres et versets.",
-    tech: ["HTML", "CSS", "React-Three-Fiber", "Vite", "Netlify", "API sécurisée", "UX lecture"],
-    link: "https://angele-kaloi-bible-explorer.netlify.app/",
-    github: "https://github.com/angelkae7/bible-explorer",
-
-    // 👉 chemin vers une image dans /public
-    thumb: "/projects/site-bible-explorer-thumb.png",
-  },
-  {
-    id: "site-lancee-de-des",
-    title: "Site Lancé de dés",
-    year: "2025",
-    context: "Projet universitaire",
-    short: "Site de lancement de dés en ligne.",
-    details:
-      "Site permettant aux utilisateurs de lancer un dé 3D virtuel, d'obtenir des résultats aléatoires et de visualiser les lancers précédents.",
-    tech: ["HTML", "CSS", "React-Three-Fiber", "Vite", "Netlify"],
-    link: "https://lanceurdes3d.netlify.app/",
-
-    // 👉 chemin vers une image dans /public
-    thumb: "/projects/site-lancee-de-des-thumb.png",
-  },
-
 ];
 
 // 🟣 UX / UI
@@ -102,12 +125,12 @@ export const uxProjects = [
 
     media: [
       {
-        id: "video2",
-        type: "video",
+        id: "figma",
+        type: "figma",
         // soit un lien YouTube, soit un mp4
-        href: "https://www.youtube.com/embed/qgxW9xdCOE0",
+        href: "https://embed.figma.com/proto/6ruEy6yuZKrwo6SGjhPKG3/Bible-Explorer?page-id=0%3A1&node-id=1-11&p=f&viewport=87%2C163%2C0.32&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A11&embed-host=share",
         thumbnail: "/projects/bible-explorer-ux-thumb.png",
-        label: "Prototype interactif",
+        label: "Site Bible Explorer",
       },
     ],
   },
@@ -130,7 +153,7 @@ export const uxProjects = [
         // soit un lien YouTube, soit un mp4
         href: "https://embed.figma.com/proto/jFnWIrILYKSO7BRZM51Bvd/SITI-Template?page-id=0%3A1&node-id=1-3&viewport=376%2C215%2C0.29&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A3&show-proto-sidebar=1&embed-host=share",
         thumbnail: "/projects/anr-siti-ux-thumb.png",
-        label: "Interface Client",
+        label: "Site ANR SITI",
       },
     ],
   },
@@ -144,16 +167,16 @@ export const uxProjects = [
       "Prototype ayant amorcé le développement de l'application Lexic War of Clan's accompagnant un jeu de société sur les langues vernaculaires kanak.",
     tech: ["UX Research", "Ateliers", "Figma", "Accessibilité", "Design système"],
     thumb: "/projects/lwc-prototype-ux-thumb.png",
-    link: "https://youtu.be/wuoNrkqJCRA",
+    link: "https://www.figma.com/proto/QtTgr6GnDKGLFf5xfozRQe/Appli-302?page-id=0%3A1&node-id=213-801&viewport=816%2C646%2C0.35&t=enUpsQftY5nPW3Cx-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=213%3A801",
 
     media: [
       {
-        id: "video",
-        type: "video",
+        id: "figma",
+        type: "figma",
         // soit un lien YouTube, soit un mp4
-        href: "https://www.youtube.com/embed/wuoNrkqJCRA",
+        href: "https://embed.figma.com/proto/QtTgr6GnDKGLFf5xfozRQe/Appli-302?page-id=0%3A1&node-id=213-801&viewport=816%2C646%2C0.35&scaling=scale-down&content-scaling=fixed&starting-point-node-id=213%3A801&embed-host=share",
         thumbnail: "/projects/lwc-prototype-ux-thumb.png",
-        label: "Prototype Figma",
+        label: "Appli mobile LWC",
       },
     ],
   },
