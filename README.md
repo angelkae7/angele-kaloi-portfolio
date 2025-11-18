@@ -38,6 +38,9 @@ Développé avec **React**, **React-Three-Fiber** et **Three.js**, ce portfolio 
 
 ## 📁 Structure du projet
 
+## 📁 Structure du projet
+
+```txt
 src/
  ├── components/        # UI : Overlays, Lightbox, Labels
  ├── three/             # Scènes, contrôles, animations
@@ -45,6 +48,7 @@ src/
  │    └── IslandScene   # Scène principale
  ├── data/              # Liste des projets par île
  └── assets/            # Images, vidéos, textures
+```
 
 
 ## 🚀 Installation & développement
