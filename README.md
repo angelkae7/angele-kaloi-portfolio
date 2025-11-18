@@ -44,11 +44,12 @@ src/
 │ ├── islands/ # Meshs 3D de chaque îlot
 │ └── IslandScene # Scène principale
 ├── data/ # Liste des projets par île
-└── assets/ # Images, vidéos, textures
+└── assets/ # Images, vidéos, textures```
 
 
 ## 🚀 Installation & développement
-
+```npm install```
+```npm run dev```
 
 Build de production :
 ```npm run build```
