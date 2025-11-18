@@ -1,4 +1,4 @@
-# 🌴 Portfolio d’Angèle KALOÏ — Univers en Îles (3D • React • R3F)
+# 🌴 Mon Portfolio - Mes Îles (3D • React • R3F)
 
 Bienvenue dans mon portfolio interactif, conçu comme un **archipel en 3D** où chaque îlot représente un domaine de mon travail : web interactif, UX/UI, XR/VR, vidéo, 3D et projets universitaires.
 
