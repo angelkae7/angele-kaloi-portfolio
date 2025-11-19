@@ -10,9 +10,16 @@ export default function HelpChip() {
   const toggle = () => setOpen((o) => !o);
 
   return (
-    <div className="pointer-events-none fixed top-3 right-3 z-20">
-      <div className="pointer-events-auto flex items-start gap-2">
-        {/* bouton i */}
+    <div className="pointer-events-none fixed top-3 right-3 md:top-4 md:right-6 z-30">
+      <div className="pointer-events-auto flex flex-col items-end gap-2">
+        {/* Panneau texte au-dessus du bouton */}
+        {open && (
+          <div className="help-panel max-w-xs sm:max-w-sm text-left sm:text-right">
+            <p className="help-panel-text">{HELP_TEXT}</p>
+          </div>
+        )}
+
+        {/* Petit rond “i” */}
         <button
           type="button"
           onClick={toggle}
@@ -27,18 +34,11 @@ export default function HelpChip() {
             shadow-[0_12px_30px_rgba(15,23,42,0.9)]
             backdrop-blur-lg
             transition-transform duration-150
-            hover:-translate-y-[1px]
+            hover:translate-y-[-1px]
           "
         >
           i
         </button>
-
-        {/* panneau info à droite du i */}
-        {open && (
-          <div className="help-panel max-w-xs sm:max-w-sm mt-1">
-            <p className="help-panel-text">{HELP_TEXT}</p>
-          </div>
-        )}
       </div>
     </div>
   );

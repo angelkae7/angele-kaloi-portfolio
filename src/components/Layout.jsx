@@ -9,6 +9,7 @@ import IslandNameBar from "./IslandNameBar.jsx";
 import HudTopBar from "./HudTopBar.jsx";
 import DomainOverlay from "./DomainOverlay.jsx";
 import IslandNavigator from "./IslandNavigator.jsx";
+import ContactDock from "./ContactDock.jsx";
 
 import {
   webProjects,
@@ -101,7 +102,8 @@ export default function Layout() {
 
       {/* HUD fixe */}
       <HudTopBar />
-      <HelpChip />
+      {/* <HelpChip /> */}
+      <ContactDock />
 
       {/* Nom de l’île active (uniquement quand aucun overlay n’est ouvert) */}
       {!activeOverlay && <IslandNameBar label={selectedIsland.label} />}
