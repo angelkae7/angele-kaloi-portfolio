@@ -75,9 +75,9 @@ button:focus-visible {
   padding: 0.75rem 1.2rem;
   border-radius: 1.2rem;
 
-  background: rgba(15, 23, 42, 0.96);
+  background: rgba(15, 23, 42, 0.7);
   border: 1px solid rgba(148, 163, 184, 0.85);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
+  box-shadow: 0 5px 10px rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(16px);
 
   display: flex;
@@ -94,8 +94,8 @@ button:focus-visible {
 
 .message-bubble:hover {
   transform: translateY(-1px);
-  box-shadow: 0 24px 50px rgba(15, 23, 42, 1);
-  background: rgba(15, 23, 42, 0.98);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.69);
+  background: rgba(15, 23, 42, 0.442);
 }
 
 /* petite queue de bulle en bas-centre */

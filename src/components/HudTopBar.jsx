@@ -1,14 +1,30 @@
 // src/components/HudTopBar.jsx
 export default function HudTopBar() {
   return (
-    <div className="pointer-events-none absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 py-4">
-      <div className="pointer-events-auto glass-panel px-4 py-2 text-sm font-medium text-slate-100">
-        Angèle Kaloï — Portfolio interactif
+    <div className="fixed top-3 left-3 z-20">
+      <div
+        className="
+          glass-panel
+          flex items-center
+          gap-1.5
+          px-3 py-1.5
+          rounded-full
+        "
+      >
+        <span className="text-[0.65rem] sm:text-xs tracking-[0.18em] uppercase text-slate-100">
+          {/* Version courte MOBILE */}
+          <span className="inline sm:hidden">
+            <span className="font-semibold">A.K</span>
+  
+          </span>
+
+          {/* Version complète TABLETTE / DESKTOP */}
+          <span className="hidden sm:inline">
+            <span className="font-semibold">Angèle Kaloï</span>
+            <span className="opacity-75"> — Portfolio</span>
+          </span>
+        </span>
       </div>
-
-
-      {/* plus de "Île : Moi" ici */}
     </div>
-    
   );
 }

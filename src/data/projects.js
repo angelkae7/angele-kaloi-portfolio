@@ -68,22 +68,22 @@ export const webProjects = [
         id: "screen2",
         type: "image",
         // soit un lien YouTube, soit un mp4
-        src: "/projects/dataviz_1.png",
-        label: " Page d'accueil présentant les données",
+        src: "/projects/datatviz_1.png",
+        label: "Visualisation interactive des données (1)",
       },
       {
         id: "screen3",
         type: "image",
         // soit un lien YouTube, soit un mp4
         src: "/projects/dataviz_2.png",
-        label: " Page d'accueil présentant les données",
+        label: "Visualisation interactive des données (2)",
       },
       {
         id: "screen4",
         type: "image",
         // soit un lien YouTube, soit un mp4
         src: "/projects/dataviz_3.png",
-        label: " Page d'accueil présentant les données",
+        label: "Visualisation interactive des données (3)",
       },
     ],
   },
@@ -279,13 +279,13 @@ export const xrProjects = [
         id: "screen1",
         type: "image",
         src: "/projects/dispositif_vr-1.png",
-        label: "Salle d'accueil",
+        label: "affichage des résultats de recherche",
       },
       {
         id: "screen2",
         type: "image",
         src: "/projects/dispositif_vr-2.png",
-        label: "Salle d'accueil",
+        label: "Styling des résultats de requête",
       },
       {
         id: "video1",
@@ -297,13 +297,41 @@ export const xrProjects = [
       
     ],
   },
+  {
+    id: "projet-blender",
+    title: "Modelisations 3D Blender",
+    year: "2024-2025",
+    context: "Projets personnels et universitaires",
+    short: "Création de modèles 3D pour divers usages.",
+    details:
+      "Modélisation, texturing et rendu de divers objets 3D (personnages, environnements, objets) pour des projets personnels et universitaires.",
+    tech: ["Blender", "Modélisation 3D", "Texturing", "Rendu"],
+    thumb: "/projects/dispositif_vr-2.png",
+    media: [
+      {
+        id: "video1",
+        type: "video",
+        href: "https://www.youtube.com/embed/9ip_9qEQ-M8",
+        label: "Frigo 3D - Technique Gpencil (Blender)",
+        thumbnail: "/projects/blender2.png",
+      },
+      {
+        id: "video2",
+        type: "video",
+        href: "https://www.youtube.com/embed/LWq-AOYdCx4",
+        label: "Chat pluie 3D - Gpencil (Blender)",
+        thumbnail: "/projects/blender1.png",
+      },
+      
+    ],
+  },
 ];
 
 // 🎬 Vidéo / arts numériques
 export const videoProjects = [
   {
     id: "cv-video",
-    title: "CV vidéo — 1 minute",
+    title: "CV vidéo — 2 minutes",
     year: "2025",
     context: "Présentation personnelle",
     short: "Format court pour ressentir mon énergie et ma façon de communiquer.",

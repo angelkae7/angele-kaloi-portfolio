@@ -43,7 +43,7 @@ export default function LandingScreen({ onEnter }) {
       {/* Contenu */}
       <div className="relative z-10 text-center px-4">
         <h1 className="text-3xl md:text-4xl font-semibold mb-4 leading-relaxed drop-shadow">
-          Bozu së <em>User</em> ! Je te présente mon île
+          Bozu së <em>User</em>, je te présente mon île !
           <br />
           Comme celle d'où je viens, celle-ci n'existe pas seule.
         </h1>
