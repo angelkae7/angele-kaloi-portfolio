@@ -1,16 +1,57 @@
-# React + Vite
+# 🌴 Mon Portfolio - Mes Îles (3D • React • R3F)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bienvenue dans mon portfolio interactif, conçu comme un **archipel en 3D** où chaque îlot représente un domaine de mon travail : web interactif, UX/UI, XR/VR, vidéo, 3D et projets universitaires.
 
-Currently, two official plugins are available:
+Développé avec **React**, **React-Three-Fiber** et **Three.js**, ce portfolio propose une expérience immersive, fluide et narrative pour explorer mes réalisations.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🔗 Démo en ligne
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+👉 **https://angela-kaloi-portfolio.netlify.app/**
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Fonctionnalités principales
+
+- 🌍 Navigation 3D dans un univers d’îles low-poly  
+- 🏝️ Îlots thématiques regroupant mes domaines de compétences  
+- 🧭 Overlay de domaine : description, compétences, liste des projets  
+- 🖼️ Lightbox multimédia (images, vidéos, prototypes Figma)  
+- 🎨 Design original & assets 3D personnalisés  
+- 📱 Version mobile optimisée (en cours d’amélioration)  
+- ⚡ Animations & post-processing pour une immersion fluide  
+
+---
+
+## 🛠️ Stack technique
+
+- React 18  
+- React-Three-Fiber (R3F)  
+- Three.js  
+- @react-three/drei  
+- Vite  
+- TailwindCSS  
+- Postprocessing (Bloom, effets visuels)
+
+---
+
+## 📁 Structure du projet
+
+```txt
+src/
+ ├── components/        # UI : Overlays, Lightbox, Labels
+ ├── three/             # Scènes, contrôles, animations
+ │    ├── islands/      # Meshs 3D de chaque îlot
+ │    └── IslandScene   # Scène principale
+ ├── data/              # Liste des projets par île
+ └── assets/            # Images, vidéos, textures
+```
+
+
+## 🚀 Installation & développement
+```npm install```
+```npm run dev```
+
+Build de production :
+```npm run build```
