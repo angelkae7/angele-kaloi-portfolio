@@ -111,7 +111,7 @@ export default function IslandNavigator({
 
       {/* petit texte explicatif sous la barre */}
       <p className="mt-1 text-[0.65rem] text-slate-400 text-center px-4">
-        Sert-toi de la barre pour naviguer et clique sur une île pour explorer mes projets.
+        Sers-toi de la barre pour naviguer et clique sur une île pour explorer mes projets.
       </p>
     </div>
   );

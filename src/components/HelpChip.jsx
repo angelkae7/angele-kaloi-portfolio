@@ -7,28 +7,35 @@ const HELP_TEXT =
 export default function HelpChip() {
   const [open, setOpen] = useState(false);
 
+  const toggle = () => setOpen((o) => !o);
+
   return (
-    <div className="pointer-events-none absolute bottom-4 right-4 md:right-6 md:bottom-6 z-20">
-      <div className="pointer-events-auto flex flex-col gap-2">
+    <div className="pointer-events-none fixed top-3 right-3 z-20">
+      <div className="pointer-events-auto flex items-start gap-2">
+        {/* bouton i */}
         <button
           type="button"
-          onClick={() => setOpen((o) => !o)}
-          className="help-trigger px-2 sm:px-3"
+          onClick={toggle}
           aria-label="À propos de cet univers"
+          aria-expanded={open}
+          className="
+            flex items-center justify-center
+            h-9 w-9 rounded-full
+            bg-[rgba(15,23,42,0.96)]
+            border border-[rgba(148,163,184,0.8)]
+            text-slate-100 text-sm
+            shadow-[0_12px_30px_rgba(15,23,42,0.9)]
+            backdrop-blur-lg
+            transition-transform duration-150
+            hover:-translate-y-[1px]
+          "
         >
-          {/* Icône seule en mobile, même style de pastille */}
-          <span className="help-trigger-icon text-[0.8rem] font-semibold">
-            i
-          </span>
-
-          {/* Label visible seulement à partir de sm */}
-          <span className="help-trigger-label hidden sm:inline">
-            À propos de cet univers
-          </span>
+          i
         </button>
 
+        {/* panneau info à droite du i */}
         {open && (
-          <div className="help-panel">
+          <div className="help-panel max-w-xs sm:max-w-sm mt-1">
             <p className="help-panel-text">{HELP_TEXT}</p>
           </div>
         )}
