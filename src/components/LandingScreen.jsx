@@ -37,7 +37,7 @@ export default function LandingScreen({ onEnter }) {
       className="relative w-screen h-screen flex items-center justify-center text-slate-50 overflow-hidden"
       style={{
         background:
-          "linear-gradient(to bottom, #74c9ff 0%, #aee4ff 60%, #d8f2ff 100%)",
+          "linear-gradient(to bottom, #020618 0%, #aee4ff 60%, #d8f2ff 100%)",
       }}
     >
       {/* Contenu */}
