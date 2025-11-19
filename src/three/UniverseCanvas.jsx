@@ -14,6 +14,10 @@ export default function UniverseCanvas({
   return (
     <Canvas
       className="w-full h-full"
+      style={{
+        background:
+          "linear-gradient(to bottom, #020618 0%, #5E62C4 45%, #d8f2ff 100%)",
+      }}
       camera={{ position: [0, 15, 30], fov: 50 }}
     >
       <ambientLight intensity={0.7} />
