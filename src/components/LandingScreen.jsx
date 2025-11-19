@@ -1,67 +1,100 @@
-// src/components/LandingScreen.jsx
-import { useMemo } from "react";
+import { useEffect, useRef } from "react";
 
 export default function LandingScreen({ onEnter }) {
-  // On génère une fois un tableau de particules
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 70 }, () => {
-        const x = Math.random() * 100;
-        const scale = 0.6 + Math.random() * 1.3;
-        const duration = 10 + Math.random() * 12;
-        const delay = Math.random() * -duration;
-        const opacity = 0.3 + Math.random() * 0.5;
-        const drift = (Math.random() - 0.5) * 20;
+  const containerRef = useRef();
 
-        return {
-          x,
-          scale,
-          duration,
-          delay,
-          opacity,
-          drift,
-        };
-      }),
-    []
-  );
+  useEffect(() => {
+    const container = containerRef.current;
+
+    const PARTICLE_COUNT = 70;
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const particle = document.createElement("span");
+      particle.className = "particle";
+
+      // random props
+      const x = Math.random() * 100;
+      const scale = 0.5 + Math.random() * 1.2;
+      const duration = 10 + Math.random() * 12;
+      const delay = Math.random() * -duration;
+      const opacity = 0.25 + Math.random() * 0.5;
+      const drift = (Math.random() - 0.5) * 20;
+
+      particle.style.setProperty("--x", x + "vw");
+      particle.style.setProperty("--scale", scale);
+      particle.style.setProperty("--duration", duration + "s");
+      particle.style.setProperty("--delay", delay + "s");
+      particle.style.setProperty("--opacity", opacity);
+      particle.style.setProperty("--drift", drift + "vw");
+
+      container.appendChild(particle);
+    }
+  }, []);
 
   return (
-    <div className="relative w-screen h-screen flex items-center justify-center bg-slate-950 text-slate-50 overflow-hidden">
-      {/* Particules */}
-      <div className="pointer-events-none absolute inset-0">
-        {particles.map((p, index) => (
-          <span
-            key={index}
-            className="particle"
-            style={{
-              "--x": `${p.x}vw`,
-              "--scale": p.scale,
-              "--duration": `${p.duration}s`,
-              "--delay": `${p.delay}s`,
-              "--opacity": p.opacity,
-              "--drift": `${p.drift}vw`,
-            }}
-          />
-        ))}
-      </div>
-
+    <div
+      ref={containerRef}
+      className="relative w-screen h-screen flex items-center justify-center text-slate-50 overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(to bottom, #74c9ff 0%, #aee4ff 60%, #d8f2ff 100%)",
+      }}
+    >
       {/* Contenu */}
       <div className="relative z-10 text-center px-4">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 leading-relaxed">
+        <h1 className="text-3xl md:text-4xl font-semibold mb-4 leading-relaxed drop-shadow">
           Bozu së <em>User</em> ! Je te présente mon île
           <br />
-          Comme celle d&apos;où je viens, celle-ci n&apos;existe pas seule.
+          Comme celle d'où je viens, celle-ci n'existe pas seule.
         </h1>
-        <p className="text-slate-400 max-w-md mx-auto mb-6">
+
+        <p className="text-slate-100/70 max-w-md mx-auto mb-6">
           Clique pour entrer dans mon univers et découvrir mes îles.
         </p>
+
         <button
           onClick={onEnter}
-          className="mt-2 px-6 py-3 rounded-2xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-medium transition shadow-lg"
+          className="mt-2 px-6 py-3 rounded-2xl bg-white/90 hover:bg-white text-sky-600 font-medium transition shadow-xl"
         >
           Entrer dans l’univers
         </button>
       </div>
+
+      {/* Injection des particules */}
+      <style>{`
+        .particle {
+          position: absolute;
+          width: 8px;
+          height: 14px;
+          background: rgba(255,255,255,0.9);
+          border-radius: 4px;
+          opacity: 0;
+          transform: translate3d(var(--x), 100vh, 0) scale(var(--scale));
+          animation: floatUp var(--duration) linear infinite;
+          animation-delay: var(--delay);
+        }
+
+        @keyframes floatUp {
+          0% {
+            opacity: 0;
+            transform: translate3d(var(--x), 105vh, 0) scale(var(--scale));
+          }
+          10% {
+            opacity: var(--opacity);
+          }
+          70% {
+            opacity: var(--opacity);
+          }
+          100% {
+            opacity: 0;
+            transform: translate3d(
+              calc(var(--x) + var(--drift)),
+              -10vh,
+              0
+            ) scale(var(--scale));
+          }
+        }
+      `}</style>
     </div>
   );
 }
