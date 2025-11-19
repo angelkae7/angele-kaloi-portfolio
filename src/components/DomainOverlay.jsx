@@ -8,10 +8,12 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
 
   const cardRef = useRef(null);
 
-  // Scroll en haut à l’ouverture
+  // Remonter en haut de la carte quand on ouvre
   useEffect(() => {
-    if (cardRef.current) cardRef.current.scrollTop = 0;
-  }, []);
+    if (cardRef.current) {
+      cardRef.current.scrollTop = 0;
+    }
+  }, [projects]);
 
   const handleClose = () => {
     if (isClosing) return;
@@ -23,7 +25,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
     setExpandedId((current) => (current === id ? null : id));
   };
 
-  // --- Lightbox navigation ---
+  // ---- LIGHTBOX ----
   const showPrevMedia = () => {
     setLightbox((current) => {
       if (!current) return null;
@@ -44,7 +46,6 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
 
   const closeLightbox = () => setLightbox(null);
 
-  // Échap / flèches clavier dans la lightbox
   useEffect(() => {
     const handleKey = (e) => {
       if (!lightbox) return;
@@ -59,19 +60,19 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
   const hasProjects = Array.isArray(projects) && projects.length > 0;
 
   return (
-    <div className="fixed inset-0 z-30 flex items-center justify-center px-3 sm:px-4 pointer-events-none">
+    <div className="fixed inset-0 z-30 flex items-center justify-center px-4 pointer-events-none">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-[rgba(2,6,23,0.7)] backdrop-blur-sm pointer-events-auto"
         onClick={handleClose}
       />
 
-      {/* Carte centrale (même logique que IslandMeOverlay) */}
-      <div className="relative w-full max-w-[min(1100px,100vw-1.5rem)] pointer-events-auto">
+      {/* Carte centrale */}
+      <div className="relative w-full max-w-5xl pointer-events-auto">
         <div
           ref={cardRef}
           className={
-            "overlay-card relative max-h-[85vh] overflow-y-auto p-5 sm:p-6 md:p-8 " +
+            "overlay-card relative mx-auto max-h-[82vh] flex flex-col p-4 sm:p-6 md:p-8 " +
             (isClosing ? "overlay-exit" : "overlay-enter")
           }
         >
@@ -86,44 +87,32 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
           </button>
 
           {/* HEADER */}
-          <header className="pb-3 sm:pb-4 border-b border-[rgba(148,163,184,0.35)]">
-            <p className="text-[0.7rem] sm:text-xs uppercase tracking-[0.22em] text-sky-200 mb-1">
+          <header className="pb-3 md:pb-4 border-b border-[rgba(148,163,184,0.35)]">
+            <p className="text-[0.7rem] md:text-xs uppercase tracking-[0.22em] text-sky-200 mb-1">
               {title}
             </p>
             {tagline && (
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-slate-50 max-w-3xl">
+              <h2 className="text-2xl md:text-3xl font-semibold text-slate-50 max-w-3xl">
                 {tagline}
               </h2>
             )}
-            <p className="mt-2 text-xs sm:text-sm text-slate-300/90 max-w-2xl">
+            <p className="mt-2 text-xs md:text-sm text-slate-300/90 max-w-2xl">
               Sélection de projets. Clique sur un projet pour voir plus de
               détails.
             </p>
           </header>
 
-          {/* CONTENU – LISTE DE PROJETS */}
+          {/* LISTE DE PROJETS */}
           {hasProjects && (
-            <div className="mt-4 space-y-3 sm:space-y-4 pb-3">
+            <div className="mt-4 flex-1 overflow-y-auto pr-1 custom-scroll space-y-3 md:space-y-4">
               {projects.map((project) => {
                 const isExpanded = expandedId === project.id;
 
                 return (
                   <article
                     key={project.id}
-                    className="
-                      group relative w-full
-                      overflow-hidden 
-                      rounded-2xl
-                      border border-[rgba(56,189,248,0.45)] 
-                      bg-[rgba(15,23,42,0.78)]
-                      backdrop-blur-xl 
-                      px-4 py-3 sm:px-5 sm:py-4 md:px-7 md:py-5
-                      transition-all duration-300
-                      hover:border-[rgba(56,189,248,0.9)]
-                      hover:bg-[rgba(15,23,42,0.9)]
-                      shadow-[0_0_32px_-14px_rgba(56,189,248,0.45)]
-                      cursor-pointer
-                    "
+                    role="button"
+                    tabIndex={0}
                     onClick={() => toggleProject(project.id)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
@@ -131,8 +120,23 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                         toggleProject(project.id);
                       }
                     }}
-                    role="button"
-                    tabIndex={0}
+                    className="
+                      group 
+                      relative 
+                      w-full
+                      overflow-hidden 
+                      rounded-2xl
+                      border border-[rgba(56,189,248,0.45)] 
+                      bg-[rgba(15,23,42,0.78)]
+                      backdrop-blur-xl 
+                      px-4 py-4 md:px-7 md:py-5
+                      text-left
+                      transition-all duration-300
+                      hover:border-[rgba(56,189,248,0.9)]
+                      hover:bg-[rgba(15,23,42,0.9)]
+                      shadow-[0_0_32px_-14px_rgba(56,189,248,0.45)]
+                      cursor-pointer
+                    "
                   >
                     {/* halo */}
                     <div
@@ -144,15 +148,16 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                       "
                     />
 
-                    <div className="relative flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 items-stretch">
+                    {/* Layout projet */}
+                    <div className="project-row relative">
                       {/* Vignette */}
                       {project.thumb && (
                         <div
                           className={
                             "overflow-hidden rounded-xl transition-all duration-300 " +
                             (isExpanded
-                              ? "w-20 h-20 sm:w-24 sm:h-24 self-start"
-                              : "w-14 h-14 sm:w-16 sm:h-16 self-start sm:self-center")
+                              ? "w-20 h-20 md:w-24 md:h-24 self-start"
+                              : "w-16 h-16 md:w-20 md:h-20 self-start md:self-center")
                           }
                         >
                           <img
@@ -163,15 +168,15 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                         </div>
                       )}
 
-                      {/* Colonne texte */}
-                      <div className="flex-1 flex flex-col gap-3">
+                      {/* Texte */}
+                      <div className="flex-1 flex flex-col gap-3 min-w-0">
                         {/* Titre + badge */}
-                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4">
-                          <div className="min-w-0">
-                            <p className="text-sm sm:text-base font-semibold text-slate-50 truncate">
+                        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 md:gap-4">
+                          <div className="w-full">
+                            <p className="text-sm md:text-base font-semibold text-slate-50">
                               {project.title}
                             </p>
-                            <p className="mt-1 text-[0.8rem] sm:text-[0.85rem] text-slate-300/90 truncate">
+                            <p className="mt-1 text-[0.8rem] md:text-[0.85rem] text-slate-300/90">
                               {project.short}
                             </p>
                           </div>
@@ -183,8 +188,8 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                 rounded-full 
                                 border border-[rgba(148,163,184,0.6)] 
                                 bg-[rgba(15,23,42,0.9)]
-                                px-3 sm:px-4 py-1.5 
-                                text-[0.7rem] sm:text-xs text-slate-100
+                                px-3 md:px-4 py-1.5 
+                                text-[0.7rem] md:text-xs text-slate-100
                                 whitespace-nowrap
                               "
                             >
@@ -195,14 +200,14 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                           )}
                         </div>
 
-                        {/* ligne pointillée */}
+                        {/* séparation */}
                         <div className="mt-1 h-px w-full border-t border-dashed border-[rgba(148,163,184,0.4)]" />
 
-                        {/* DÉTAILS ÉTENDUS */}
+                        {/* Détails (ouvert) */}
                         {isExpanded && (
                           <div className="mt-2 space-y-3">
                             {project.details && (
-                              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-3xl">
+                              <p className="text-xs md:text-sm text-slate-200 leading-relaxed">
                                 {project.details}
                               </p>
                             )}
@@ -216,8 +221,10 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                               </p>
                             )}
 
-                            {/* Liens : site / GitHub / Figma */}
-                            {(project.link || project.github || project.figma) && (
+                            {/* Liens (démo / GitHub / Figma simple) */}
+                            {(project.link ||
+                              project.github ||
+                              project.figmaLink) && (
                               <div className="flex flex-wrap gap-2 mt-1 text-[0.75rem]">
                                 {project.link && (
                                   <a
@@ -241,9 +248,9 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                     Code source GitHub
                                   </a>
                                 )}
-                                {project.figma && (
+                                {project.figmaLink && (
                                   <a
-                                    href={project.figma}
+                                    href={project.figmaLink}
                                     target="_blank"
                                     rel="noreferrer"
                                     className="inline-flex items-center rounded-full border border-purple-400/70 px-3 py-1 text-purple-100 hover:bg-purple-500/10"
@@ -257,11 +264,12 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
 
                             {/* Galerie média */}
                             {project.media && project.media.length > 0 && (
-                              <div className="mt-3 flex flex-wrap gap-3 sm:gap-4">
+                              <div className="mt-3 flex flex-wrap gap-3 md:gap-4">
                                 {project.media.map((item, index) => (
-                                  <button
+                                  <div
                                     key={item.id || index}
-                                    type="button"
+                                    role="button"
+                                    tabIndex={0}
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       setLightbox({
@@ -269,13 +277,23 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                         index,
                                       });
                                     }}
-                                    className="group/media flex flex-col gap-1 w-24 sm:w-28 md:w-32 text-left"
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter" || e.key === " ") {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setLightbox({
+                                          items: project.media,
+                                          index,
+                                        });
+                                      }
+                                    }}
+                                    className="group/media flex flex-col gap-1 w-24 md:w-32 text-left"
                                   >
                                     <div
                                       className="
                                         relative 
                                         w-full 
-                                        h-16 sm:h-20 
+                                        h-16 md:h-20 
                                         rounded-xl 
                                         overflow-hidden 
                                         bg-[rgba(15,23,42,0.9)] 
@@ -315,14 +333,20 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                           </div>
                                         </div>
                                       )}
+
+                                      {item.type === "figma" && (
+                                        <div className="w-full h-full bg-[rgba(15,23,42,0.95)] flex items-center justify-center text-[0.7rem] text-slate-200">
+                                          Prototype Figma
+                                        </div>
+                                      )}
                                     </div>
 
                                     {item.label && (
-                                      <span className="text-[0.7rem] sm:text-xs text-slate-300 truncate">
+                                      <span className="text-[0.7rem] md:text-xs text-slate-300 truncate">
                                         {item.label}
                                       </span>
                                     )}
-                                  </button>
+                                  </div>
                                 ))}
                               </div>
                             )}
@@ -348,18 +372,17 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
       {/* LIGHTBOX */}
       {lightbox && (
         <div
-          className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(15,23,42,0.9)] backdrop-blur-md"
+          className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(15,23,42,0.9)] backdrop-blur-md pointer-events-auto"
           onClick={closeLightbox}
         >
           <div
-            className="relative max-w-[min(1100px,100vw-1.5rem)] w-full px-3 sm:px-4"
+            className="relative max-w-5xl w-full px-4"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Fermer */}
             <button
               type="button"
               onClick={closeLightbox}
-              className="absolute right-3 sm:right-4 top-3 sm:top-4 z-20 h-9 w-9 rounded-full border border-[rgba(148,163,184,0.7)] bg-[rgba(15,23,42,0.95)] text-slate-100 flex items-center justify-center text-sm shadow-lg hover:bg-[rgba(15,23,42,1)]"
+              className="absolute right-4 top-4 z-20 h-9 w-9 rounded-full border border-[rgba(148,163,184,0.7)] bg-[rgba(15,23,42,0.95)] text-slate-100 flex items-center justify-center text-sm shadow-lg hover:bg-[rgba(15,23,42,1)]"
               aria-label="Fermer le média"
             >
               ✕
@@ -370,17 +393,13 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
 
               return (
                 <div className="bg-[rgba(15,23,42,0.96)] border border-[rgba(148,163,184,0.7)] rounded-3xl shadow-2xl overflow-hidden">
-                  {/* Zone média */}
                   <div className="relative w-full aspect-video bg-black flex items-center justify-center">
-                    {/* flèche gauche */}
                     {lightbox.items.length > 1 && (
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          showPrevMedia();
-                        }}
-                        className="absolute left-2 sm:left-3 md:left-4 top-1/2 -translate-y-1/2 h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-[rgba(15,23,42,0.75)] border border-[rgba(148,163,184,0.8)] text-slate-100 flex items-center justify-center text-lg shadow-lg hover:bg-[rgba(15,23,42,0.95)] z-10"
+                        onClick={showPrevMedia}
+                        className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-9 w-9 md:h-10 md:w-10 rounded-full bg-[rgba(15,23,42,0.75)] border border-[rgba(148,163,184,0.8)] text-slate-100 flex items-center justify-center text-lg shadow-lg hover:bg-[rgba(15,23,42,0.95)] z-10"
+                        aria-label="Média précédent"
                       >
                         ‹
                       </button>
@@ -428,23 +447,19 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                       )}
                     </div>
 
-                    {/* flèche droite */}
                     {lightbox.items.length > 1 && (
                       <button
                         type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          showNextMedia();
-                        }}
-                        className="absolute right-2 sm:right-3 md:right-4 top-1/2 -translate-y-1/2 h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-[rgba(15,23,42,0.75)] border border-[rgba(148,163,184,0.8)] text-slate-100 flex items-center justify-center text-lg shadow-lg hover:bg-[rgba(15,23,42,0.95)] z-10"
+                        onClick={showNextMedia}
+                        className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 h-9 w-9 md:h-10 md:w-10 rounded-full bg-[rgba(15,23,42,0.75)] border border-[rgba(148,163,184,0.8)] text-slate-100 flex items-center justify-center text-lg shadow-lg hover:bg-[rgba(15,23,42,0.95)] z-10"
+                        aria-label="Média suivant"
                       >
                         ›
                       </button>
                     )}
                   </div>
 
-                  {/* Légende + li en bas */}
-                  <div className="px-3 sm:px-4 md:px-5 py-3 md:py-4 flex items-center justify-between gap-3">
+                  <div className="px-4 py-3 md:px-5 md:py-4 flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       {current.label && (
                         <p className="text-sm md:text-base text-slate-100 truncate">

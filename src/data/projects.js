@@ -64,6 +64,27 @@ export const webProjects = [
         src: "/projects/SITE-DATAVIZ-THUMB.png",
         label: " Page d'accueil présentant les données",
       },
+      {
+        id: "screen2",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/dataviz_1.png",
+        label: " Page d'accueil présentant les données",
+      },
+      {
+        id: "screen3",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/dataviz_2.png",
+        label: " Page d'accueil présentant les données",
+      },
+      {
+        id: "screen4",
+        type: "image",
+        // soit un lien YouTube, soit un mp4
+        src: "/projects/dataviz_3.png",
+        label: " Page d'accueil présentant les données",
+      },
     ],
   },
   

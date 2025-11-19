@@ -477,3 +477,53 @@ button:focus-visible {
   border: 1px solid rgba(148, 163, 184, 0.6);
 }
 
+/* --- Layout des cartes projets dans DomainOverlay --- */
+
+.project-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+/* Sur mobile : tout en colonne, comme IslandMeOverlay */
+@media (max-width: 640px) {
+  .project-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* Particules type "confettis" qui montent du bas de l'écran */
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  opacity: 0;
+  transform: translate3d(var(--x), 100vh, 0) scale(var(--scale));
+  animation: floatUp var(--duration) linear infinite;
+  animation-delay: var(--delay);
+  filter: blur(0.5px);
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--x), 105vh, 0) scale(var(--scale));
+  }
+  10% {
+    opacity: var(--opacity);
+  }
+  70% {
+    opacity: var(--opacity);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(
+      calc(var(--x) + var(--drift)),
+      -10vh,
+      0
+    ) scale(var(--scale));
+  }
+}
