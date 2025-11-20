@@ -1,6 +1,6 @@
 // src/components/IslandNavigator.jsx
 import clsx from "clsx";
-
+import {useSound} from "../sound/SoundContext"; // 👈 TRÈS IMPORTANT : ce chemin-là
 
 export default function IslandNavigator({
   steps,
@@ -17,10 +17,22 @@ export default function IslandNavigator({
   const nextId = steps[(safeIndex + 1) % steps.length]?.id;
   const activeStep = steps[safeIndex];
 
+  const {playFx} = useSound("nav"); // 👈 TRÈS IMPORTANT : ce chemin-là
+  
+
+
+  
+
   const basePadding = compact ? "py-1.5" : "py-2.5";
 
-  const handlePrev = () => prevId && onSelect(prevId);
-  const handleNext = () => nextId && onSelect(nextId);
+  const handlePrev = () => {
+    prevId && onSelect(prevId);
+    playFx("nav"); // 👈 joue le son de navigation
+  };
+  const handleNext = () => {
+    nextId && onSelect(nextId);
+    playFx("nav"); // 👈 joue le son de navigation
+  };
 
   return (
     <div
