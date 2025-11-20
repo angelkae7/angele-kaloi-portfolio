@@ -17,7 +17,7 @@ export function SoundProvider({ children }) {
   const [ambianceOn, setAmbianceOn] = useState(false);
 
   useEffect(() => {
-    const ambiance = new Audio("/sounds/ambiance.mp3");
+    const ambiance = new Audio("/sounds/nav.mp3");
     ambiance.loop = true;
     ambiance.volume = 0.35;
     ambianceRef.current = ambiance;
@@ -26,7 +26,7 @@ export function SoundProvider({ children }) {
     click.volume = 0.8;
     clickRef.current = click;
 
-    const nav = new Audio("/sounds/nav.mp3");
+    const nav = new Audio("/sounds/hover.mp3");
     nav.volume = 0.7;
     navRef.current = nav;
 

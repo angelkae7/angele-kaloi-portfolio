@@ -5,7 +5,7 @@ import { useSound } from "../sound/SoundContext"; // 👈 TRÈS IMPORTANT : ce c
 
 export default function LandingScreen({ onEnter }) {
   const containerRef = useRef();
-  const {startAmbiance} = useSound("/sounds/ambiance.mp3", { volume: 0.35, loop: true });
+  const {startAmbiance} = useSound("/sounds/nav.mp3", { volume: 0.35, loop: true });
     const handleEnter = () => {
     startAmbiance();   // 👈 démarre la musique
     onEnter();         // 👈 passe à l’univers

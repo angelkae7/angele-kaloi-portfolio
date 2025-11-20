@@ -6,7 +6,7 @@ export default function AmbientSoundToggle() {
   const [enabled, setEnabled] = useState(false);
 
   // musique d’ambiance, volume plus bas, en boucle
-  const { play, stop, audio } = useSound("/sounds/ambiance.mp3", {
+  const { play, stop, audio } = useSound("/sounds/nav.mp3", {
     volume: 0.4,
     loop: true,
   });
