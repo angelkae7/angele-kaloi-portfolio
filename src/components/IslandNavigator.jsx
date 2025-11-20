@@ -18,11 +18,6 @@ export default function IslandNavigator({
   const activeStep = steps[safeIndex];
 
   const {playFx} = useSound("nav"); // 👈 TRÈS IMPORTANT : ce chemin-là
-  
-
-
-  
-
   const basePadding = compact ? "py-1.5" : "py-2.5";
 
   const handlePrev = () => {
@@ -133,7 +128,10 @@ export default function IslandNavigator({
               <button
                 key={step.id}
                 type="button"
-                onClick={() => onSelect(step.id)}
+                onClick={() => {
+                  onSelect(step.id);
+                  playFx("nav"); // 👈 joue le son de navigation
+                }}
                 className={clsx(
                   "relative px-4",
                   basePadding,
