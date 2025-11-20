@@ -1,7 +1,15 @@
 import { useEffect, useRef } from "react";
+// src/components/LandingScreen.jsx
+import { useSound } from "../sound/SoundContext"; // 👈 TRÈS IMPORTANT : ce chemin-là
+
 
 export default function LandingScreen({ onEnter }) {
   const containerRef = useRef();
+  const {startAmbiance} = useSound("/sounds/ambiance.mp3", { volume: 0.35, loop: true });
+    const handleEnter = () => {
+    startAmbiance();   // 👈 démarre la musique
+    onEnter();         // 👈 passe à l’univers
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -53,7 +61,7 @@ export default function LandingScreen({ onEnter }) {
         </p>
 
         <button
-          onClick={onEnter}
+          onClick={handleEnter}
           className="mt-2 px-6 py-3 rounded-2xl bg-white/90 hover:bg-white text-sky-600 font-medium transition shadow-xl"
         >
           Entrer dans l’univers

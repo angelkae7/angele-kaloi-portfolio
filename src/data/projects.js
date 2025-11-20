@@ -264,16 +264,16 @@ export const xrProjects = [
 
   },
   {
-    id: "xr-gallery-google",
-    title: "Galerie 3D de résultats de recherche",
-    year: "2024",
-    context: "Prototype Unity XR",
+    id: "bible-search-3d",
+    title: "Projet API/Unity - Windows Plateform",
+    year: "2025",
+    context: "Projet universitaire",
     short: "Visualisation spatiale de résultats web dans une galerie 3D.",
     details:
       "Expérimentation autour d’une navigation spatiale de résultats Google : ingestion d’APIs, disposition des cartes dans l’espace, réflexion UX sur la lisibilité et l’orientation de l’utilisateur en environnement 3D.",
     tech: ["Unity", "C#", "API web", "UX 3D"],
     thumb: "/projects/dispositif_vr-2.png",
-    github: "https://github.com/angelkae7/xr-gallery-google", // lien vers le repo GitHub du projet
+    github: "https://github.com/angelkae7/bible-search-3D", // lien vers le repo GitHub du projet
     media: [
       {
         id: "screen1",
@@ -306,7 +306,7 @@ export const xrProjects = [
     details:
       "Modélisation, texturing et rendu de divers objets 3D (personnages, environnements, objets) pour des projets personnels et universitaires.",
     tech: ["Blender", "Modélisation 3D", "Texturing", "Rendu"],
-    thumb: "/projects/dispositif_vr-2.png",
+    thumb: "/projects/blender2.png",
     media: [
       {
         id: "video1",

@@ -10,6 +10,7 @@ import HudTopBar from "./HudTopBar.jsx";
 import DomainOverlay from "./DomainOverlay.jsx";
 import IslandNavigator from "./IslandNavigator.jsx";
 import ContactDock from "./ContactDock.jsx";
+import AmbientSoundToggle from "./AmbientSoundToggle.jsx";
 
 import {
   webProjects,
@@ -103,6 +104,7 @@ export default function Layout() {
       {/* HUD fixe */}
       <HudTopBar />
       {/* <HelpChip /> */}
+      <AmbientSoundToggle />
       <ContactDock />
 
       {/* Nom de l’île active (uniquement quand aucun overlay n’est ouvert) */}

@@ -1,6 +1,7 @@
 // src/components/IslandNavigator.jsx
 import clsx from "clsx";
 
+
 export default function IslandNavigator({
   steps,
   activeId,
