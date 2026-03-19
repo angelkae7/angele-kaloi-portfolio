@@ -5,6 +5,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(),   // <---- AJOUT ICI !
+    tailwindcss(),
   ],
+  optimizeDeps: {
+    exclude: ['@react-three/fiber', '@react-three/drei'],
+  },
 })
