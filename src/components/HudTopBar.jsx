@@ -11,17 +11,16 @@ export default function HudTopBar() {
           rounded-full
         "
       >
-        <span className="text-[0.65rem] sm:text-xs tracking-[0.18em] uppercase text-slate-100">
+        <span className="text-xs sm:text-sm tracking-[0.12em] uppercase text-slate-100">
           {/* Version courte MOBILE */}
           <span className="inline sm:hidden">
             <span className="font-semibold">A.K</span>
-  
           </span>
 
           {/* Version complète TABLETTE / DESKTOP */}
           <span className="hidden sm:inline">
             <span className="font-semibold">Angèle Kaloï</span>
-            <span className="opacity-75"> — Portfolio</span>
+            <span className="text-slate-400"> — Portfolio</span>
           </span>
         </span>
       </div>

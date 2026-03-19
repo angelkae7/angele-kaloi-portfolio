@@ -1,5 +1,5 @@
 // src/components/Layout.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import UniverseCanvas from "../three/UniverseCanvas.jsx";
 
 import IslandMeOverlay from "./IslandMeOverlay.jsx";
@@ -9,6 +9,7 @@ import IslandNameBar from "./IslandNameBar.jsx";
 import HudTopBar from "./HudTopBar.jsx";
 import DomainOverlay from "./DomainOverlay.jsx";
 import IslandNavigator from "./IslandNavigator.jsx";
+import IslandClickHint from "./IslandClickHint.jsx";
 import ContactDock from "./ContactDock.jsx";
 import AmbientSoundToggle from "./AmbientSoundToggle.jsx";
 
@@ -45,6 +46,7 @@ export default function Layout() {
   const [activeOverlay, setActiveOverlay] = useState(null); // "me" | "web" | "ux" | "xr" | "video" | null
   const [selectedIsland, setSelectedIsland] = useState(ISLAND_STEPS[0]);
   const [cameraTarget, setCameraTarget] = useState(CAMERA_TARGETS.me);
+  const [showClickHint, setShowClickHint] = useState(false);
 
   // apparition de la bulle de présentation
   useEffect(() => {
@@ -55,6 +57,7 @@ export default function Layout() {
   const openOverlayForIsland = (island) => {
     setSelectedIsland(island);
     setShowBubble(false);
+    setShowClickHint(false);
 
     const target = CAMERA_TARGETS[island.id] || CAMERA_TARGETS.me;
     setCameraTarget(target);
@@ -62,7 +65,7 @@ export default function Layout() {
     setActiveOverlay(island.type); // "me", "web", "ux", "xr", "video"
   };
 
-  // clic sur l’île 3D → ouvre l’overlay
+  // clic sur l'île 3D → ouvre l'overlay
   const handleIslandClick = (island) => {
     openOverlayForIsland(island);
   };
@@ -75,8 +78,15 @@ export default function Layout() {
     }
   };
 
-  // navigation via la barre / flèches → déplace seulement la caméra
+  // Tab label click in navigator → opens overlay directly (fix 1)
   const handleSelectIslandFromNav = (id) => {
+    const island = ISLAND_STEPS.find((step) => step.id === id);
+    if (!island) return;
+    openOverlayForIsland(island);
+  };
+
+  // Arrow click in navigator → moves camera only, shows floating hint (fix 2)
+  const handleArrowNavigate = (id) => {
     const island = ISLAND_STEPS.find((step) => step.id === id);
     if (!island) return;
 
@@ -87,7 +97,10 @@ export default function Layout() {
     setCameraTarget(target);
 
     setShowBubble(island.id === "me");
+    setShowClickHint(true);
   };
+
+  const dismissClickHint = useCallback(() => setShowClickHint(false), []);
 
   const showLabels = !activeOverlay;
 
@@ -103,14 +116,19 @@ export default function Layout() {
 
       {/* HUD fixe */}
       <HudTopBar />
-      {/* <HelpChip /> */}
+      <HelpChip />
       <AmbientSoundToggle />
       <ContactDock />
 
-      {/* Nom de l’île active (uniquement quand aucun overlay n’est ouvert) */}
+      {/* Nom de l'île active (uniquement quand aucun overlay n'est ouvert) */}
       {!activeOverlay && <IslandNameBar label={selectedIsland.label} />}
 
-      {/* Bulle de présentation, seulement sur l’île Moi et sans overlay */}
+      {/* Floating hint after arrow navigation — disappears after 3 s or on island click */}
+      {showClickHint && !activeOverlay && (
+        <IslandClickHint onDismiss={dismissClickHint} />
+      )}
+
+      {/* Bulle de présentation, seulement sur l'île Moi et sans overlay */}
       {showBubble && !activeOverlay && selectedIsland.id === "me" && (
         <IslandMeBubble onClick={() => openOverlayForIsland(ISLAND_STEPS[0])} />
       )}
@@ -161,7 +179,8 @@ export default function Layout() {
         steps={ISLAND_STEPS}
         activeId={selectedIsland.id}
         onSelect={handleSelectIslandFromNav}
-        compact={!!activeOverlay} // plus fin quand un overlay est ouvert
+        onArrowClick={handleArrowNavigate}
+        compact={!!activeOverlay}
       />
     </div>
   );

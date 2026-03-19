@@ -7,8 +7,7 @@ import IslandUxMesh from "./islands/IslandUxMesh.jsx";
 import IslandXrMesh from "./islands/IslandXrMesh.jsx";
 import IslandVideoMesh from "./islands/IslandVideoMesh.jsx";
 
-// 👇 on exporte pour le réutiliser dans l'UI
-export const ISLANDS = [
+const ISLANDS = [
   {
     id: "me",
     type: "me",

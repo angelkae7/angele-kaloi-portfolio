@@ -1,6 +1,7 @@
 // src/hooks/useSound.js
 import { useEffect, useRef } from "react";
 
+
 export function useSound(src, options = {}) {
   const { volume = 1, loop = false } = options;
   const audioRef = useRef(null);
@@ -36,5 +37,5 @@ export function useSound(src, options = {}) {
     audio.pause();
   };
 
-  return { play, stop, audio: audioRef.current };
+  return { play, stop };
 }

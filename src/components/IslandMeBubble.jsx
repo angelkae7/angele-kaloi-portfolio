@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const FULL_TEXT =
-  "Je suis Angèle Kaloï, développeuse web & créatrice d’expériences interactives…";
+  "Je suis Angèle Kaloï, développeuse web & créatrice d'expériences interactives…";
 
 export default function IslandMeBubble({ onClick }) {
   const [phase, setPhase] = useState("dots"); // "dots" | "typing" | "done"
@@ -44,13 +44,23 @@ export default function IslandMeBubble({ onClick }) {
     return () => clearInterval(interval);
   }, [phase]);
 
+  // Fix 8 — click during animation skips to done; click when done opens overlay
+  const handleClick = () => {
+    if (phase !== "done") {
+      setDisplayed(FULL_TEXT);
+      setPhase("done");
+    } else {
+      onClick();
+    }
+  };
+
   const textToShow = phase === "dots" ? dots : displayed || "";
 
   return (
     <div className="pointer-events-none absolute inset-x-0 top-32 md:top-40 flex justify-center z-20 px-4">
       <button
         type="button"
-        onClick={onClick}
+        onClick={handleClick}
         className="pointer-events-auto message-bubble"
       >
         <p className="message-bubble-label">Île centrale — Présentation</p>
