@@ -53,6 +53,10 @@ export default function IslandsScene({
     <>
       <fog attach="fog" args={["#020617", 15, 60]} />
 
+      {/* Lumières globales — remplace les paires par île */}
+      <ambientLight intensity={0.42} />
+      <directionalLight intensity={1.2} position={[5, 8, 5]} castShadow />
+
       {ISLANDS.map(({ id, type, label, position, Component }) => {
         const isActive = !activeIslandId || activeIslandId === id;
 
