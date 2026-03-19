@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 // src/components/LandingScreen.jsx
-import { useSound } from "../sound/SoundContext"; // 👈 TRÈS IMPORTANT : ce chemin-là
+import { useSound } from "../sound/useSound";
 
 
 export default function LandingScreen({ onEnter }) {

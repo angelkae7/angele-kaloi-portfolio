@@ -1,6 +1,6 @@
 // src/components/IslandNavigator.jsx
 import clsx from "clsx";
-import { useSound } from "../sound/SoundContext";
+import { useSound } from "../sound/useSound";
 
 // Shared class for every prev/next arrow button — used in both mobile and desktop layouts
 const ARROW_BTN =
@@ -15,6 +15,8 @@ export default function IslandNavigator({
   onArrowClick,  // arrow ‹ › click → camera move only + shows floating hint
   compact = false,
 }) {
+  const { playFx } = useSound("nav");
+
   if (!steps || steps.length === 0) return null;
 
   const activeIndex = steps.findIndex((s) => s.id === activeId);
@@ -23,8 +25,6 @@ export default function IslandNavigator({
   const prevId = steps[(safeIndex - 1 + steps.length) % steps.length]?.id;
   const nextId = steps[(safeIndex + 1) % steps.length]?.id;
   const activeStep = steps[safeIndex];
-
-  const { playFx } = useSound("nav");
   const basePadding = compact ? "py-1.5" : "py-2.5";
 
   const handlePrev = () => {

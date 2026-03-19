@@ -8,7 +8,6 @@ export default function IslandWebMesh() {
   const haloOuter = "#60a5fa";     // bleu clair glow
   const rockDark = "#1e293b";      // base
   const rockMid = "#334155";       // milieu
-  const rockLight = "#475569";     // plateau haut
   const screenFrame = "#0f172a";
   const screenInner = "#eff6ff";   // plus blanc = plus visible
   const accent = "#38bdf8";

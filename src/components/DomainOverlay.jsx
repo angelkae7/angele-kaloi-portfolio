@@ -42,7 +42,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); 
 
   const hasProjects = Array.isArray(projects) && projects.length > 0;
 

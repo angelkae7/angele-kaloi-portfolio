@@ -7,8 +7,7 @@ import IslandUxMesh from "./islands/IslandUxMesh.jsx";
 import IslandXrMesh from "./islands/IslandXrMesh.jsx";
 import IslandVideoMesh from "./islands/IslandVideoMesh.jsx";
 
-// 👇 on exporte pour le réutiliser dans l'UI
-export const ISLANDS = [
+const ISLANDS = [
   {
     id: "me",
     type: "me",
@@ -54,7 +53,7 @@ export default function IslandsScene({
     <>
       <fog attach="fog" args={["#020617", 15, 60]} />
 
-      {ISLANDS.map(({ id, type, label, position, Component }) => {
+      {ISLANDS.map(({ id, type, label, position, Component: IslandMesh }) => {
         const isActive = !activeIslandId || activeIslandId === id;
 
         return (
@@ -64,7 +63,7 @@ export default function IslandsScene({
             onClick={() => onIslandClick({ id, type, label })}
           >
             {/* mesh d'île */}
-            <Component />
+            <IslandMesh />
 
             {/* halo néon */}
             {isActive && (
