@@ -53,7 +53,7 @@ export default function IslandsScene({
     <>
       <fog attach="fog" args={["#020617", 15, 60]} />
 
-      {ISLANDS.map(({ id, type, label, position, Component: IslandMesh }) => {
+      {ISLANDS.map(({ id, type, label, position, Component }) => {
         const isActive = !activeIslandId || activeIslandId === id;
 
         return (
@@ -63,7 +63,7 @@ export default function IslandsScene({
             onClick={() => onIslandClick({ id, type, label })}
           >
             {/* mesh d'île */}
-            <IslandMesh />
+            <Component />
 
             {/* halo néon */}
             {isActive && (
