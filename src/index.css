@@ -573,6 +573,24 @@ button:focus-visible {
   animation: landingFill forwards ease;
 }
 
+/* Respect prefers-reduced-motion : tout le contenu apparaît immédiatement */
+@media (prefers-reduced-motion: reduce) {
+  .landing-up,
+  .landing-fade {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .landing-draw-path {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .landing-fill-path {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* Particules type "confettis" qui montent du bas de l'écran */
 
 .particle {
