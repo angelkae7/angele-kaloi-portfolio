@@ -4,7 +4,7 @@ import UniverseCanvas from "../three/UniverseCanvas.jsx";
 
 import IslandMeOverlay from "./IslandMeOverlay.jsx";
 import IslandMeBubble from "./IslandMeBubble.jsx";
-import HelpChip from "./HelpChip.jsx";
+import TutorialOverlay from "./TutorialOverlay.jsx";
 import IslandNameBar from "./IslandNameBar.jsx";
 import HudTopBar from "./HudTopBar.jsx";
 import DomainOverlay from "./DomainOverlay.jsx";
@@ -116,7 +116,7 @@ export default function Layout() {
 
       {/* HUD fixe */}
       <HudTopBar />
-      <HelpChip />
+      <TutorialOverlay />
       <AmbientSoundToggle />
       <ContactDock />
 
