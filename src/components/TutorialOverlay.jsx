@@ -21,7 +21,7 @@ export default function TutorialOverlay() {
   // Auto-dismiss après 6s
   useEffect(() => {
     if (!visible) return;
-    const t = setTimeout(dismiss, 6000);
+    const t = setTimeout(dismiss, 12000);
     return () => clearTimeout(t);
   }, [visible]);
 
