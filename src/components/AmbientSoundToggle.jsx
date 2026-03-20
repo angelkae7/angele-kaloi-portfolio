@@ -45,7 +45,7 @@ export default function AmbientSoundToggle() {
       type="button"
       onClick={() => setEnabled((prev) => !prev)}
       className="
-        fixed bottom-4 left-6 md:left-6 z-20
+        fixed bottom-20 sm:bottom-4 left-6 md:left-6 z-20
         min-w-[2.5rem] h-10
         px-2.5
         rounded-full

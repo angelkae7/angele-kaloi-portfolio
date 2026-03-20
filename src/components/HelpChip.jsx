@@ -35,7 +35,7 @@ export default function HelpChip() {
   };
 
   return (
-    <div className="pointer-events-none fixed top-3 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
+    <div className="pointer-events-none fixed top-3 left-[31%] sm:left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
       {/* Onboarding hint panel */}
       {open && (
         <div className="pointer-events-auto help-panel max-w-xs sm:max-w-sm text-center">
