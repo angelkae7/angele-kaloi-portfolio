@@ -544,6 +544,35 @@ button:focus-visible {
   }
 }
 
+/* ---------- Landing page animations ---------- */
+
+@keyframes landingUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes landingFade {
+  to { opacity: 1; }
+}
+@keyframes landingDraw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes landingFill {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.landing-up   { opacity: 0; animation: landingUp   0.7s forwards cubic-bezier(0.22,1,0.36,1); }
+.landing-fade { opacity: 0; animation: landingFade 0.3s forwards ease; }
+
+.landing-draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: landingDraw forwards cubic-bezier(0.4,0,0.2,1);
+}
+.landing-fill-path {
+  animation: landingFill forwards ease;
+}
+
 /* Particules type "confettis" qui montent du bas de l'écran */
 
 .particle {
