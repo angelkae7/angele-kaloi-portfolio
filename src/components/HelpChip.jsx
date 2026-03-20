@@ -36,13 +36,6 @@ export default function HelpChip() {
 
   return (
     <div className="pointer-events-none fixed top-3 left-[31%] sm:left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
-      {/* Onboarding hint panel */}
-      {open && (
-        <div className="pointer-events-auto help-panel max-w-xs sm:max-w-sm text-center">
-          <p className="help-panel-text">{HELP_TEXT}</p>
-        </div>
-      )}
-
       {/* Small "i" button — always present for re-opening */}
       <button
         type="button"
@@ -64,6 +57,13 @@ export default function HelpChip() {
       >
         i
       </button>
+
+      {/* Onboarding hint panel — s'ouvre sous le bouton */}
+      {open && (
+        <div className="help-panel max-w-[200px] sm:max-w-xs text-center">
+          <p className="help-panel-text">{HELP_TEXT}</p>
+        </div>
+      )}
     </div>
   );
 }
