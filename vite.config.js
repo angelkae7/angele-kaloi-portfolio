@@ -8,6 +8,6 @@ export default defineConfig({
     tailwindcss(),
   ],
   optimizeDeps: {
-    exclude: ['@react-three/fiber', '@react-three/drei'],
+    include: ['use-sync-external-store/shim/with-selector'],
   },
 })
