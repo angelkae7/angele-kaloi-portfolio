@@ -1,6 +1,5 @@
 // src/hooks/useSound.js
-import { useEffect, useRef } from "react";
-
+import { useCallback, useEffect, useRef } from "react";
 
 export function useSound(src, options = {}) {
   const { volume = 1, loop = false } = options;
@@ -20,22 +19,19 @@ export function useSound(src, options = {}) {
     };
   }, [src, volume, loop]);
 
-  const play = () => {
+  const play = useCallback((resetTime = true) => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    // remet au début pour les petits clics
-    audio.currentTime = 0;
-    audio.play().catch(() => {
-      // si le navigateur bloque, on laisse juste tomber silencieusement
-    });
-  };
+    if (resetTime) audio.currentTime = 0;
+    audio.play().catch(() => {});
+  }, []);
 
-  const stop = () => {
+  const stop = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.pause();
-  };
+  }, []);
 
   return { play, stop };
 }

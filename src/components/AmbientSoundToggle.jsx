@@ -26,19 +26,18 @@ const IconSoundOff = () => (
 export default function AmbientSoundToggle() {
   const [enabled, setEnabled] = useState(false);
 
-  const { play, stop, audio } = useSound("/sounds/nav.mp3", {
+  const { play, stop } = useSound("/sounds/nav.mp3", {
     volume: 0.4,
     loop: true,
   });
 
   useEffect(() => {
-    if (!audio) return;
     if (enabled) {
-      play();
+      play(false);
     } else {
       stop();
     }
-  }, [enabled, audio, play, stop]);
+  }, [enabled, play, stop]);
 
   return (
     <button
