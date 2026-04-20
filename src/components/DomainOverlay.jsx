@@ -306,7 +306,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
             className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(15,23,42,0.92)] backdrop-blur-md pointer-events-auto"
             onClick={closeLightbox}
           >
-            <div className="relative max-w-5xl w-full px-4" onClick={(e) => e.stopPropagation()}>
+            <div className="relative max-w-5xl w-full px-4" role="presentation" onClick={(e) => e.stopPropagation()}>
               <button
                 type="button"
                 onClick={closeLightbox}
@@ -331,7 +331,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                     {current.type === "video" && current.href && (
                       current.href.includes("youtube.com") || current.href.includes("youtu.be")
                         ? <iframe className="w-full h-full" src={current.href} title={current.label || "Vidéo"} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
-                        : <video className="w-full h-full" src={current.href} controls />
+                        : <video className="w-full h-full" src={current.href} controls><track kind="captions" /></video>
                     )}
                     {current.type === "figma" && current.href && (
                       <iframe className="w-full h-full" src={current.href} title={current.label || "Prototype Figma"} allowFullScreen loading="lazy" referrerPolicy="strict-origin-when-cross-origin" />

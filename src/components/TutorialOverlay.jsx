@@ -35,7 +35,15 @@ export default function TutorialOverlay() {
         transition-opacity duration-400
         ${fading ? "opacity-0" : "opacity-100"}
       `}
+      role="button"
+      tabIndex={0}
       onClick={dismiss}
+      onKeyDown={(e) => {
+        if (e.key === "Escape" || e.key === "Enter") {
+          e.preventDefault();
+          dismiss();
+        }
+      }}
     >
       <div
         className="
