@@ -25,3 +25,8 @@ dist-ssr
 
 # Windows Zone.Identifier files
 *:Zone.Identifier
+
+# Agents IA
+.claude/
+.agents/
+skills-lock.json
