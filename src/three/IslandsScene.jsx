@@ -1,59 +1,31 @@
 // src/three/IslandsScene.jsx
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import IslandMeMesh from "./islands/IslandMeMesh.jsx";
-
 import IslandWebMesh from "./islands/IslandWebMesh.jsx";
 import IslandUxMesh from "./islands/IslandUxMesh.jsx";
 import IslandXrMesh from "./islands/IslandXrMesh.jsx";
 import IslandVideoMesh from "./islands/IslandVideoMesh.jsx";
+import IslandNavArrows from "./IslandNavArrows.jsx";
 
-const ISLANDS = [
-  {
-    id: "me",
-    type: "me",
-    label: "Moi",
-    position: [0, 0, 0],
-    Component: IslandMeMesh,
-  },
-  {
-    id: "web",
-    type: "web",
-    label: "Web interactif",
-    position: [-18, 0, -6],
-    Component: IslandWebMesh,
-  },
-  {
-    id: "ux",
-    type: "ux",
-    label: "UX / UI",
-    position: [16, 0, 8],
-    Component: IslandUxMesh,
-  },
-  {
-    id: "xr",
-    type: "xr",
-    label: "XR / VR",
-    position: [-10, -2, 15],
-    Component: IslandXrMesh,
-  },
-  {
-    id: "video",
-    type: "video",
-    label: "Vidéo / Arts",
-    position: [20, 0, -12],
-    Component: IslandVideoMesh,
-  },
+export const ISLANDS = [
+  { id: "me",    type: "me",    label: "Moi",              position: [0,    0,   0]  , Component: IslandMeMesh    },
+  { id: "web",   type: "web",   label: "Web interactif",   position: [-18,  0,  -6]  , Component: IslandWebMesh   },
+  { id: "ux",    type: "ux",    label: "UX / UI",          position: [16,   0,   8]  , Component: IslandUxMesh    },
+  { id: "xr",    type: "xr",    label: "XR / VR",          position: [-10, -2,  15]  , Component: IslandXrMesh    },
+  { id: "video", type: "video", label: "Vidéo / Arts",     position: [20,   0, -12]  , Component: IslandVideoMesh },
 ];
 
 export default function IslandsScene({
   onIslandClick,
   activeIslandId,
+  steps,
+  onNavArrow,
+  overlayOpen,
 }) {
   return (
     <>
       <fog attach="fog" args={["#020617", 15, 60]} />
 
-      {/* Lumières globales — remplace les paires par île */}
       <ambientLight intensity={0.42} />
       <directionalLight intensity={1.2} position={[5, 8, 5]} castShadow />
 
@@ -66,10 +38,9 @@ export default function IslandsScene({
             position={position}
             onClick={() => onIslandClick({ id, type, label })}
           >
-            {/* mesh d'île */}
             <Component />
 
-            {/* halo néon */}
+            {/* Halo néon sous l'île active */}
             {isActive && (
               <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.9, 0]}>
                 <ringGeometry args={[6.2, 7.2, 64]} />
@@ -85,13 +56,20 @@ export default function IslandsScene({
                 />
               </mesh>
             )}
-
-           
           </group>
         );
       })}
 
-      {/* 🎇 Effets de post-processing (Bloom global) */}
+      {/* Flèches 3D de navigation — masquées quand un overlay est ouvert */}
+      {!overlayOpen && (
+        <IslandNavArrows
+          islands={ISLANDS}
+          steps={steps}
+          activeId={activeIslandId}
+          onNavigate={onNavArrow}
+        />
+      )}
+
       <EffectComposer>
         <Bloom
           intensity={1}

@@ -1,12 +1,10 @@
 // src/components/AmbientSoundToggle.jsx
-import { useState, useEffect } from "react";
-import { useSound } from "../hooks/useSound";
+import { useSound } from "../sound/useSound";
 
-// SVG icons — inline, no dependency
 const IconSoundOn = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"
     stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
-    className="w-4 h-4 shrink-0">
+    className="w-4 h-4 shrink-0" aria-hidden="true">
     <polygon points="3 7.5 3 12.5 6 12.5 10 16 10 4 6 7.5" />
     <path d="M13 7a4 4 0 0 1 0 6" />
     <path d="M15.5 4.5a7 7 0 0 1 0 11" />
@@ -16,7 +14,7 @@ const IconSoundOn = () => (
 const IconSoundOff = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"
     stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
-    className="w-4 h-4 shrink-0">
+    className="w-4 h-4 shrink-0" aria-hidden="true">
     <polygon points="3 7.5 3 12.5 6 12.5 10 16 10 4 6 7.5" />
     <line x1="14" y1="7" x2="18" y2="13" />
     <line x1="18" y1="7" x2="14" y2="13" />
@@ -24,25 +22,13 @@ const IconSoundOff = () => (
 );
 
 export default function AmbientSoundToggle() {
-  const [enabled, setEnabled] = useState(false);
-
-  const { play, stop } = useSound("/sounds/nav.mp3", {
-    volume: 0.4,
-    loop: true,
-  });
-
-  useEffect(() => {
-    if (enabled) {
-      play(false);
-    } else {
-      stop();
-    }
-  }, [enabled, play, stop]);
+  // Connecté au SoundContext — même source de vérité que LandingScreen
+  const { ambianceOn, toggleAmbiance } = useSound();
 
   return (
     <button
       type="button"
-      onClick={() => setEnabled((prev) => !prev)}
+      onClick={toggleAmbiance}
       className="
         fixed bottom-20 sm:bottom-4 left-6 md:left-6 z-20
         min-w-[2.5rem] h-10
@@ -56,10 +42,10 @@ export default function AmbientSoundToggle() {
         hover:bg-[rgba(15,23,42,1)] hover:border-sky-500/50 hover:text-sky-200
         transition-all duration-200
       "
-      aria-label={enabled ? "Couper la musique" : "Activer la musique"}
-      aria-pressed={enabled}
+      aria-label={ambianceOn ? "Couper la musique" : "Activer la musique"}
+      aria-pressed={ambianceOn}
     >
-      {enabled ? <IconSoundOn /> : <IconSoundOff />}
+      {ambianceOn ? <IconSoundOn /> : <IconSoundOff />}
       <span>Son</span>
     </button>
   );

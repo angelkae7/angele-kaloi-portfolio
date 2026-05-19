@@ -1,80 +1,113 @@
-// src/components/TutorialOverlay.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const SESSION_KEY = "portfolio_tutorial_seen";
+// Nouvelle clé — force l'affichage si l'ancienne session avait dismissé
+const SESSION_KEY = "portfolio_tutorial_v2";
+const APPEAR_DELAY_MS = 1200;
+const DISMISS_MS = 11000;
 
 export default function TutorialOverlay() {
-  const [visible, setVisible] = useState(() => {
-    try { return !sessionStorage.getItem(SESSION_KEY); }
-    catch { return true; }
+  const [seen] = useState(() => {
+    try { return !!sessionStorage.getItem(SESSION_KEY); }
+    catch { return false; }
   });
+  const [visible, setVisible] = useState(false);
+  const [progress, setProgress] = useState(100);
   const [fading, setFading] = useState(false);
+  const startRef = useRef(null);
+  const rafRef = useRef(null);
+
+  // Apparaît après un délai (laisse la scène 3D se charger d'abord)
+  useEffect(() => {
+    if (seen) return;
+    const t = setTimeout(() => setVisible(true), APPEAR_DELAY_MS);
+    return () => clearTimeout(t);
+  }, [seen]);
 
   const dismiss = () => {
+    cancelAnimationFrame(rafRef.current);
     setFading(true);
     setTimeout(() => {
       setVisible(false);
       try { sessionStorage.setItem(SESSION_KEY, "1"); } catch { /* noop */ }
-    }, 400);
+    }, 320);
   };
 
-  // Auto-dismiss après 6s
+  // Progress bar animée via RAF
   useEffect(() => {
     if (!visible) return;
-    const t = setTimeout(dismiss, 12000);
-    return () => clearTimeout(t);
-  }, [visible]);
+    startRef.current = Date.now();
 
-  if (!visible) return null;
+    const tick = () => {
+      const elapsed = Date.now() - startRef.current;
+      const pct = Math.max(0, 100 - (elapsed / DISMISS_MS) * 100);
+      setProgress(pct);
+      if (pct <= 0) {
+        dismiss();
+      } else {
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [visible]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (seen || !visible) return null;
 
   return (
     <div
-      className={`
-        fixed inset-0 z-50 flex items-center justify-center
-        bg-slate-950/60 backdrop-blur-sm
-        transition-opacity duration-400
-        ${fading ? "opacity-0" : "opacity-100"}
-      `}
-      role="button"
-      tabIndex={0}
-      onClick={dismiss}
-      onKeyDown={(e) => {
-        if (e.key === "Escape" || e.key === "Enter") {
-          e.preventDefault();
-          dismiss();
-        }
-      }}
+      className={[
+        "fixed bottom-20 sm:bottom-24 left-1/2 -translate-x-1/2 z-40",
+        "pointer-events-none px-4",
+        "transition-all duration-300",
+        fading ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0",
+      ].join(" ")}
+      role="status"
+      aria-live="polite"
+      aria-label="Conseil de navigation"
     >
       <div
         className="
-          mx-6 max-w-sm w-full
-          bg-[rgba(15,23,42,0.95)] border border-slate-700/60
-          rounded-2xl px-7 py-8
-          shadow-[0_20px_60px_rgba(0,0,0,0.6)]
-          text-center
-          flex flex-col items-center gap-5
+          pointer-events-auto relative overflow-hidden
+          bg-[rgba(15,23,42,0.95)] border border-sky-500/40
+          rounded-2xl shadow-[0_8px_32px_rgba(56,189,248,0.15),0_20px_50px_rgba(0,0,0,0.6)]
+          flex items-start gap-3 px-5 py-4
+          max-w-xs w-full
         "
-        onClick={(e) => e.stopPropagation()}
       >
-        {/* Icône boussole / navigation */}
-        <div className="text-3xl select-none">🗺️</div>
+        {/* Progress bar */}
+        <div
+          className="absolute bottom-0 left-0 h-[2px] bg-sky-400/60 rounded-full"
+          style={{ width: `${progress}%`, transition: "none" }}
+          aria-hidden="true"
+        />
 
-        <p className="text-slate-200 text-sm leading-relaxed">
-          Navigue entre les îles via la barre en haut à droite ou les flèches.{" "}
-          Clique sur un onglet — ou directement sur une île — pour explorer son contenu.
-        </p>
+        <span className="text-xl shrink-0 select-none mt-0.5" aria-hidden="true">🗺️</span>
+
+        <div className="flex-1 min-w-0">
+          <p className="text-slate-100 text-sm font-medium leading-snug mb-1">
+            Comment naviguer
+          </p>
+          <ul className="text-slate-400 text-[12px] leading-relaxed space-y-0.5">
+            <li>→ Onglets ou flèches <span className="text-slate-300">en haut à droite</span></li>
+            <li>→ Flèches <span className="text-slate-300">3D gauche / droite</span> dans la scène</li>
+            <li>→ Clique sur une <span className="text-slate-300">île</span> pour l'explorer</li>
+          </ul>
+        </div>
 
         <button
           type="button"
           onClick={dismiss}
           className="
-            mt-1 px-6 py-2 rounded-full text-sm font-medium
-            bg-sky-600 hover:bg-sky-500
-            text-white
-            transition-colors duration-150
+            shrink-0 w-6 h-6 rounded-full mt-0.5
+            flex items-center justify-center
+            text-slate-500 hover:text-slate-100
+            hover:bg-slate-700/70
+            transition-colors text-[11px]
           "
+          aria-label="Fermer le conseil"
         >
-          Compris !
+          ✕
         </button>
       </div>
     </div>

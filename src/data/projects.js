@@ -269,8 +269,8 @@ export const videoProjects = [
     details:
       "J'ai assuré la captation des images, le montage et la création graphique pour valoriser le travail de l'équipe et les moments clés du tournage. L'objectif était d'offrir un regard authentique et dynamique sur la production du clip.",
     tech: ["Sony A7III", "Adobe Premiere Pro", "Adobe After Effects", "Adobe Photoshop", "Adobe Illustrator", "CapCut"],
-    link: "https://youtu.be/BZscvfVuy0g",
-    linkLabel: "Voir sur YouTube",
+    link: "https://vimeo.com/1027974643",
+    linkLabel: "Voir sur Vimeo",
     thumb: "/projects/making-of-clip-gea-thumb.png",
   },
   {

@@ -57,6 +57,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
           <Dialog.Content
             asChild
             onCloseAutoFocus={(e) => { e.preventDefault(); onClose(); }}
+            onInteractOutside={(e) => { if (lightbox) e.preventDefault(); }}
             aria-describedby={undefined}
           >
             <div className="dialog-card overlay-card pointer-events-auto w-full max-w-5xl flex flex-col p-5 sm:p-8 outline-none">
@@ -90,6 +91,14 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                 </p>
               </header>
 
+              {/* EMPTY STATE */}
+              {!hasProjects && (
+                <div className="flex-1 flex flex-col items-center justify-center py-16 text-center gap-3">
+                  <p className="text-3xl" aria-hidden="true">🏝️</p>
+                  <p className="text-slate-400 text-sm">Aucun projet à afficher pour l'instant.</p>
+                </div>
+              )}
+
               {/* PROJECT LIST */}
               {hasProjects && (
                 <div
@@ -101,18 +110,11 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                     const mediaCount = project.media?.length ?? 0;
 
                     return (
-                      // div role="button" is correct here — article semantics conflict with button role
-                      <div
+                      <button
                         key={project.id}
-                        role="button"
-                        tabIndex={0}
+                        type="button"
                         onClick={() => toggleProject(project.id)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            toggleProject(project.id);
-                          }
-                        }}
+                        aria-label={`${project.title} - ${isExpanded ? "Masquer" : "Afficher"} les détails`}
                         className="
                           group relative w-full overflow-hidden rounded-2xl
                           border border-[rgba(56,189,248,0.35)]
@@ -139,7 +141,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                   : "w-16 h-16 md:w-20 md:h-20 self-start md:self-center")
                               }
                             >
-                              <img src={project.thumb} alt={project.title} className="w-full h-full object-cover pointer-events-none" />
+                              <img src={project.thumb} alt={project.title} loading="lazy" decoding="async" className="w-full h-full object-cover pointer-events-none" />
                             </div>
                           )}
 
@@ -231,22 +233,16 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                 {project.media?.length > 0 && (
                                   <div className="mt-3 flex flex-wrap gap-3 md:gap-4">
                                     {project.media.map((item, index) => (
-                                      <div
+                                      <button
                                         key={item.id || index}
-                                        role="button"
-                                        tabIndex={0}
+                                        type="button"
                                         onClick={(e) => { e.stopPropagation(); setLightbox({ items: project.media, index }); }}
-                                        onKeyDown={(e) => {
-                                          if (e.key === "Enter" || e.key === " ") {
-                                            e.preventDefault(); e.stopPropagation();
-                                            setLightbox({ items: project.media, index });
-                                          }
-                                        }}
+                                        aria-label={`${item.label || `Média ${index + 1}`} - Cliquez pour agrandir`}
                                         className="group/media flex flex-col gap-1.5 w-24 md:w-32 text-left"
                                       >
                                         <div className="relative w-full h-16 md:h-20 rounded-xl overflow-hidden bg-[rgba(15,23,42,0.9)] border border-[rgba(148,163,184,0.5)] transition-all duration-200 group-hover/media:-translate-y-0.5 group-hover/media:border-[rgba(56,189,248,0.6)] group-hover/media:shadow-[0_0_20px_-6px_rgba(56,189,248,0.5)]">
                                           {item.type === "image" && (
-                                            <img src={item.src} alt={item.label || project.title} className="w-full h-full object-cover pointer-events-none" />
+                                            <img src={item.src} alt={item.label || project.title} loading="lazy" decoding="async" className="w-full h-full object-cover pointer-events-none" />
                                           )}
                                           {item.type === "video" && (
                                             <div className="w-full h-full relative">
@@ -270,7 +266,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                         {item.label && (
                                           <span className="text-xs text-slate-400 truncate">{item.label}</span>
                                         )}
-                                      </div>
+                                      </button>
                                     ))}
                                   </div>
                                 )}
@@ -288,7 +284,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
@@ -326,7 +322,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
 
                   <div className="w-full h-full pointer-events-auto">
                     {current.type === "image" && (
-                      <img src={current.src} alt={current.label || ""} className="w-full h-full object-contain" />
+                      <img src={current.src} alt={current.label || ""} decoding="async" className="w-full h-full object-contain" />
                     )}
                     {current.type === "video" && current.href && (
                       current.href.includes("youtube.com") || current.href.includes("youtu.be")

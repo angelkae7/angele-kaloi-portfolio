@@ -3,13 +3,15 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import CameraRig from "./CameraRig.jsx";
 import IslandsScene from "./IslandsScene.jsx";
-import Fireflies from "./Fireflies.jsx"; // 👈 IMPORTANT
+import Fireflies from "./Fireflies.jsx";
 
 export default function UniverseCanvas({
   onIslandClick,
   cameraTarget,
   activeIslandId,
-  showLabels,
+  steps,
+  onNavArrow,
+  overlayOpen,
 }) {
   return (
     <Canvas
@@ -29,9 +31,11 @@ export default function UniverseCanvas({
         <IslandsScene
           onIslandClick={onIslandClick}
           activeIslandId={activeIslandId}
-          showLabels={showLabels}
+          steps={steps}
+          onNavArrow={onNavArrow}
+          overlayOpen={overlayOpen}
         />
-        <Fireflies /> {/* ✨ lucioles */}
+        <Fireflies />
       </Suspense>
     </Canvas>
   );

@@ -111,7 +111,9 @@ export default function Layout() {
         onIslandClick={handleIslandClick}
         cameraTarget={cameraTarget}
         activeIslandId={selectedIsland.id}
-        showLabels={showLabels}
+        steps={ISLAND_STEPS}
+        onNavArrow={handleArrowNavigate}
+        overlayOpen={!!activeOverlay}
       />
 
       {/* HUD fixe */}

@@ -17,13 +17,13 @@ const TABS_LIST = [
 const PARCOURS_CARDS = [
   {
     label: "Aujourd'hui",
-    title: "Dev web & UX — OPT-NC",
-    body: "Alternance sur la refonte du site institutionnel et sa page d'accueil.",
+    title: "En recherche — Master UX Design",
+    body: "À la recherche d'une alternance en UX Design pour intégrer un Master CODUX / DEDI sur deux ans.",
   },
   {
     label: "Formation",
-    title: "BUT MMI — UNC",
-    body: "Dév web, UX/UI, XR et audiovisuel pour des dispositifs interactifs complets.",
+    title: "BUT MMI — UNC (diplômée 2025)",
+    body: "Dév web, UX/UI, XR et audiovisuel. Socle complet du concept à la mise en production.",
   },
   {
     label: "Terrain de jeu",
@@ -34,28 +34,34 @@ const PARCOURS_CARDS = [
 
 const EVOLUTION_STEPS = [
   { num: "1", title: "Communication & image",  body: "Graphisme, vidéo, habillage et narration visuelle.", active: false },
-  { num: "2", title: "UX & interfaces",         body: "Parcours, maquettes, prototypes centrés sur l'usage.", active: false },
-  { num: "3", title: "Développement & XR",      body: "Implémentation front, 3D, VR et déploiement en ligne.", active: true },
+  { num: "2", title: "Développement & XR",     body: "Implémentation front, 3D, VR et déploiement en ligne.", active: false },
+  { num: "3", title: "UX Design — Master",     body: "Recherche centrée sur l'usage, stratégie d'expérience et conception de services.", active: true },
 ];
 
 const CHRONO_ENTRIES = [
   {
     active: true,
     badge: "Actuellement",
-    meta: "2025–2026 · Alternance — L'Office des postes et télécommunications de Nouvelle-Calédonie (OPT-NC)",
-    title: "Dev web & UX — Refonte du site institutionnel",
+    meta: "2026 · En recherche d'alternance",
+    title: "Alternance UX Design — Master CODUX / DEDI (2 ans)",
+    body: "À la recherche d'une alternance de deux ans en UX Design pour intégrer un Master CODUX / DEDI. Disponible pour échanger avec des équipes qui placent l'expérience utilisateur au cœur de leur produit.",
+  },
+  {
+    active: false,
+    meta: "janv. 2025 – nov. 2025 · Alternance — OPT Nouvelle-Calédonie",
+    title: "Développeuse web — Refonte du site institutionnel",
     body: "Nouvelle page d'accueil, intégration front (Drupal), optimisation accessibilité & performance, co-construction avec la DSI et la communication, mise en place d'un design system réutilisable.",
   },
   {
     active: false,
-    meta: "2024 · Stage (6 mois) — Institut de sciences exactes et appliquées (ISEA)",
+    meta: "sept. – nov. 2024 · Stage (3 mois) — Institut de sciences exactes et appliquées (ISEA)",
     title: "Chargée de communication & création visuelle",
     body: "Conception d'outils visuels pour un projet de recherche scientifique, identité visuelle & supports graphiques pour vulgariser les résultats.",
   },
   {
     active: false,
-    meta: "2023 · Stage (3 mois) — CANAL+ Calédonie",
-    title: "Contenus graphiques & vidéo",
+    meta: "nov. – déc. 2023 · Stage (2 mois) — CANAL+ Calédonie",
+    title: "Créatrice de contenus graphiques & vidéo",
     body: "Communication interne & externe, habillages d'émissions, visuels d'antenne et montages vidéo pour des formats TV.",
   },
 ];
@@ -86,6 +92,7 @@ export default function IslandMeOverlay({ onClose }) {
               <Dialog.Close asChild>
                 <button
                   type="button"
+                  aria-label="Fermer la section À propos"
                   className="absolute right-4 top-4 z-10 rounded-full bg-slate-900/80 border border-slate-600/50 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-red-300 hover:bg-red-900/20 hover:border-red-500/40 transition-all duration-200"
                 >
                   ✕
@@ -116,8 +123,8 @@ export default function IslandMeOverlay({ onClose }) {
 
                 <p className="text-slate-200 leading-relaxed text-base sm:text-lg max-w-3xl mb-7">
                   Je suis <span className="font-semibold text-white">Angèle Kaloï</span>, développeuse web &
-                  créatrice d'expériences interactives. Je navigue entre front, UX/UI, 3D et VR pour concevoir
-                  des expériences qui restent claires même quand la technologie devient complexe.
+                  designer UX. Je navigue entre front-end, UX/UI, 3D et création audiovisuelle pour concevoir
+                  des expériences qui restent humaines même quand la technologie devient complexe.
                 </p>
 
                 {/* Tabs */}
@@ -137,10 +144,10 @@ export default function IslandMeOverlay({ onClose }) {
                   {/* ── À PROPOS ── */}
                   {/* Fix 10: replaced meta-commentary about portfolio with availability statement */}
                   <Tabs.Content value="intro" className="space-y-8">
-                    <div className="max-w-2xl rounded-2xl bg-slate-800/40 border border-slate-600/40 px-5 py-4 text-slate-200 text-sm leading-relaxed">
-                      <p className="font-semibold text-slate-50 mb-1">Disponibilité</p>
-                      Disponible pour des missions freelance ou une opportunité en CDI — Nouvelle-Calédonie ou remote.
-                      Spécialisée développement front-end &amp; UX design.
+                    <div className="max-w-2xl rounded-2xl bg-sky-950/40 border border-sky-500/40 px-5 py-4 text-slate-200 text-sm leading-relaxed">
+                      <p className="font-semibold text-sky-300 mb-1">En recherche d'alternance</p>
+                      À la recherche d'une alternance en UX Design pour intégrer un <span className="font-medium text-white">Master CODUX / DEDI</span> sur deux ans.
+                      Disponible pour échanger dès maintenant.
                     </div>
                     <section>
                       <h2 className="text-xs font-semibold tracking-[0.12em] text-sky-400 uppercase mb-3">CV vidéo</h2>
@@ -187,11 +194,11 @@ export default function IslandMeOverlay({ onClose }) {
                         <div className="rounded-2xl bg-slate-900/70 border border-slate-700/60 px-5 py-4">
                           <p className="text-xs tracking-[0.18em] uppercase text-sky-400/80 font-medium mb-3">Hard skills</p>
                           <ul className="text-sm text-slate-300 space-y-2 leading-relaxed">
-                            <li>• Dév front : JavaScript, React, Vite, Tailwind.</li>
-                            <li>• Intégration web & accessibilité : HTML/CSS, design system, composants réutilisables.</li>
-                            <li>• Drupal : intégration front, templates, mise en page de contenus.</li>
+                            <li>• UX Design : recherche utilisateur, parcours, maquettes, tests.</li>
+                            <li>• Dév front : JavaScript, React, Vite, Tailwind, HTML/CSS.</li>
+                            <li>• Drupal : intégration front, templates, accessibilité, design system.</li>
                             <li>• Expériences 3D & XR : Unity, WebGL, React Three Fiber.</li>
-                            <li>• Audiovisuel : tournage, montage, mise en scène vidéo.</li>
+                            <li>• Audiovisuel : tournage, montage Premiere Pro / After Effects.</li>
                           </ul>
                         </div>
                         <div className="rounded-2xl bg-slate-900/70 border border-slate-700/60 px-5 py-4">
