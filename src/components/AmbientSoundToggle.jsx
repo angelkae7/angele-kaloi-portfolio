@@ -35,11 +35,10 @@ export default function AmbientSoundToggle() {
         px-2.5
         rounded-full
         inline-flex items-center justify-center gap-1.5
-        bg-[rgba(15,23,42,0.96)]
-        border border-[rgba(148,163,184,0.85)]
-        text-slate-300 text-xs font-medium
-        shadow-[0_12px_30px_rgba(15,23,42,0.9)]
-        hover:bg-[rgba(15,23,42,1)] hover:border-sky-500/50 hover:text-sky-200
+        bg-[var(--s-high)]
+        border border-[var(--b-muted)]
+        text-slate-400 text-xs font-medium
+        hover:border-[var(--b-accent-h)] hover:text-sky-300
         transition-all duration-200
       "
       aria-label={ambianceOn ? "Couper la musique" : "Activer la musique"}

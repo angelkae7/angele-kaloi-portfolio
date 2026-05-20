@@ -48,7 +48,7 @@ export default function Fireflies({ count = 40, radius = 35 }) {
       <pointsMaterial
         size={0.25}
         sizeAttenuation
-        color="#38bdf8"
+        color="#D4812A"
         transparent
         opacity={0.9}
       />

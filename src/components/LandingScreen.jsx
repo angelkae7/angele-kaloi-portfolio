@@ -4,7 +4,8 @@ import { useSound } from "../sound/useSound";
 
 export default function LandingScreen({ onEnter }) {
   const containerRef = useRef();
-  const { startAmbiance } = useSound("/sounds/nav.mp3", { volume: 0.35, loop: true });
+  const { startAmbiance } = useSound();
+  const { playFx } = useSound();
 
   const handleEnter = () => {
     startAmbiance();
@@ -42,7 +43,7 @@ export default function LandingScreen({ onEnter }) {
     <div
       ref={containerRef}
       className="relative w-screen h-screen flex items-center justify-center text-slate-50 overflow-hidden"
-      style={{ background: "linear-gradient(168deg, #080720 0%, #141080 38%, #3d3db8 68%, #a0aee8 88%, #d8e3f8 100%)" }}
+      style={{ background: "linear-gradient(168deg, #0E0904 0%, #3D1808 38%, #8B4210 65%, #C8A060 85%, #F5EDE0 100%)" }}
     >
       <main className="relative z-10 flex flex-col items-center text-center px-4">
 
@@ -52,7 +53,7 @@ export default function LandingScreen({ onEnter }) {
           <p lang="mis"
              className="font-extrabold text-white leading-none"
              style={{ fontSize: "clamp(2.8rem,7vw,4.2rem)", letterSpacing: "-1.5px" }}>
-            Bozu së
+            Bozu
           </p>
           <p className="flex items-center justify-center gap-3 mt-2.5 text-[13px] text-white/70 tracking-wide">
             <span aria-hidden="true" className="block w-7 h-px bg-white/30" />
@@ -142,7 +143,7 @@ export default function LandingScreen({ onEnter }) {
 
           <p className="landing-up text-[11px] tracking-[1.8px] uppercase text-white/50"
              style={{ animationDelay: "1.2s" }}>
-            Nouvelle-Calédonie · Pacifique Sud
+            Nouvelle-Calédonie · Ile du Pacifique Sud
           </p>
         </div>
 
@@ -150,13 +151,21 @@ export default function LandingScreen({ onEnter }) {
         <h1 className="landing-up text-white font-semibold leading-snug max-w-md mb-2"
             style={{ fontSize: "clamp(1.1rem,2.8vw,1.45rem)", animationDelay: "1.4s" }}>
           {/* <span> au lieu de <em not-italic> : pas d'emphase vocale voulue ici */}
-          <span className="opacity-75">User</span>, je te présente mon île.<br />
-          Comme celle d'où je viens, celle-ci n'existe pas seule.
+          <span className="opacity-75">Ici, tout pousse sur une île</span>. <br />
+          Même le code.
         </h1>
 
-        <p className="landing-up text-white/60 text-sm tracking-wide mb-8"
+        <p>
+          <span className="text-base text-white opacity-80 leading-relaxed max-w-lg landing-up">
+           Je suis Angèle Kaloï <br />
+           je viens d'un caillou au bout du Pacifique, et <br />
+           j'y ai appris à construire des mondes numériques.
+          </span>
+        </p>
+
+        <p className="landing-up text-white/60 text-sm tracking-wide mt-4 mb-8 "
            style={{ animationDelay: "1.6s" }}>
-          Angèle Kaloï · Développeuse web &amp; UX designer
+          Développeuse web &amp; UX designer
         </p>
 
         {/* CTA — visible rapidement, pas après 4s */}
@@ -164,9 +173,12 @@ export default function LandingScreen({ onEnter }) {
              style={{ animationDelay: "1.8s" }}>
           <button
             type="button"
-            onClick={handleEnter}
+            onClick={() => {
+              handleEnter();
+              playFx("welcome");
+            }}
             className="px-9 py-3.5 rounded-full font-semibold text-sm transition-all duration-150 hover:scale-[1.02] active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-            style={{ background: "rgba(255,255,255,0.95)", color: "#0f0d50" }}
+            style={{ background: "rgba(245,240,232,0.96)", color: "#1F1A12" }}
           >
             Entrer dans l'univers
           </button>

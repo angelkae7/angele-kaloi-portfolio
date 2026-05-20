@@ -18,7 +18,7 @@ export default function IslandMeMesh({
     foliage: new MeshStandardMaterial({ color: dimmed ? "#14532d" : "#3FA34D", flatShading: true }),
     rock:    new MeshStandardMaterial({ color: dimmed ? "#735943" : "#C9A66B", flatShading: true }),
     orb:     new MeshStandardMaterial({ color: dimmed ? "#9ca3af" : "#ffffff", metalness: 0.35, roughness: 0.3 }),
-    halo:    new MeshStandardMaterial({ color: "#38bdf8", transparent: true, opacity: 0.7 }),
+    halo:    new MeshStandardMaterial({ color: "#C8421A", transparent: true, opacity: 0.6 }),
   }), [dimmed]);
 
   return (

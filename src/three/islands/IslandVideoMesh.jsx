@@ -5,10 +5,10 @@ import { Float } from "@react-three/drei";
 
 export default function IslandVideoMesh() {
   const mat = useMemo(() => ({
-    rockDeep:    new MeshStandardMaterial({ color: "#1b2636", flatShading: true }),
-    rockMid:     new MeshStandardMaterial({ color: "#2a3447", flatShading: true }),
-    rockTop:     new MeshStandardMaterial({ color: "#3c4a5f", flatShading: true }),
-    screenFrame: new MeshStandardMaterial({ color: "#0f172a" }),
+    rockDeep:    new MeshStandardMaterial({ color: "#180E04", flatShading: true }),
+    rockMid:     new MeshStandardMaterial({ color: "#221508", flatShading: true }),
+    rockTop:     new MeshStandardMaterial({ color: "#302010", flatShading: true }),
+    screenFrame: new MeshStandardMaterial({ color: "#0E0904" }),
     screenInner: new MeshStandardMaterial({ color: "#fff7cc", emissive: "#fbbf24", emissiveIntensity: 0.085 }),
     accent:      new MeshStandardMaterial({ color: "#fbbf24" }),
     accentGlow:  new MeshStandardMaterial({ color: "#fbbf24", emissive: "#fbbf24", emissiveIntensity: 0.13, transparent: true, opacity: 0.55 }),

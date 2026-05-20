@@ -2,6 +2,7 @@
 import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tabs from "@radix-ui/react-tabs";
+import { useSound } from "../sound/useSound.js";
 
 const VIDEO_URL = "https://www.youtube.com/embed/FV59sY5XE2E";
 
@@ -67,13 +68,14 @@ const CHRONO_ENTRIES = [
 ];
 
 export default function IslandMeOverlay({ onClose }) {
+  const { playFx } = useSound();
   const [open, setOpen] = useState(true);
 
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && setOpen(false)}>
       <Dialog.Portal>
         {/* Backdrop */}
-        <Dialog.Overlay className="dialog-overlay fixed inset-0 z-30 bg-slate-950/60 backdrop-blur-xl" />
+        <Dialog.Overlay className="dialog-overlay fixed inset-0 z-30 bg-slate-950/85" />
 
         {/* Centering wrapper */}
         <div className="fixed inset-0 z-30 flex items-center justify-center pointer-events-none">
@@ -82,7 +84,7 @@ export default function IslandMeOverlay({ onClose }) {
             onCloseAutoFocus={(e) => { e.preventDefault(); onClose(); }}
             aria-describedby={undefined}
           >
-            <div className="dialog-card overlay-card pointer-events-auto relative max-w-5xl w-full mx-4 md:mx-8 rounded-3xl bg-gradient-to-br from-slate-900/95 via-slate-900/85 to-slate-950/95 border border-slate-700/60 shadow-[0_40px_120px_rgba(0,0,0,0.75)] outline-none flex flex-col">
+            <div className="dialog-card overlay-card pointer-events-auto relative max-w-5xl w-full mx-4 md:mx-8 outline-none flex flex-col">
               <Dialog.Title className="sr-only">À propos — Angèle Kaloï</Dialog.Title>
               <Dialog.Description className="sr-only">
                 Présentation d'Angèle Kaloï : parcours, compétences et chronologie.
@@ -93,7 +95,8 @@ export default function IslandMeOverlay({ onClose }) {
                 <button
                   type="button"
                   aria-label="Fermer la section À propos"
-                  className="absolute right-4 top-4 z-10 rounded-full bg-slate-900/80 border border-slate-600/50 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-red-300 hover:bg-red-900/20 hover:border-red-500/40 transition-all duration-200"
+                  className="overlay-close-icon-btn"
+                  onPointerDown={() => playFx("click")}
                 >
                   ✕
                 </button>
@@ -104,7 +107,7 @@ export default function IslandMeOverlay({ onClose }) {
                 <p className="text-xs tracking-[0.14em] uppercase text-sky-400 font-medium mb-3">
                   Île centrale — À propos
                 </p>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-50 leading-tight mb-4">
                   Je crée des expériences numériques qui se ressentent.
                 </h1>
 
@@ -113,6 +116,7 @@ export default function IslandMeOverlay({ onClose }) {
                   href="/cv-angele-kaloi.pdf"
                   download
                   className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-xl border border-sky-500/50 text-sky-300 text-sm font-medium hover:bg-sky-500/10 hover:border-sky-400 transition-colors duration-200"
+                  onClick={() => playFx("click")}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 shrink-0">
                     <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
@@ -122,7 +126,7 @@ export default function IslandMeOverlay({ onClose }) {
                 </a>
 
                 <p className="text-slate-200 leading-relaxed text-base sm:text-lg max-w-3xl mb-7">
-                  Je suis <span className="font-semibold text-white">Angèle Kaloï</span>, développeuse web &
+                  Je suis <span className="font-semibold text-slate-50">Angèle Kaloï</span>, développeuse web &
                   designer UX. Je navigue entre front-end, UX/UI, 3D et création audiovisuelle pour concevoir
                   des expériences qui restent humaines même quand la technologie devient complexe.
                 </p>
@@ -134,6 +138,7 @@ export default function IslandMeOverlay({ onClose }) {
                       <Tabs.Trigger
                         key={id}
                         value={id}
+                        onClick={() => playFx("pop")}
                         className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-slate-800/60 text-slate-300 border border-slate-600/50 hover:border-sky-500/40 hover:text-slate-100 hover:bg-slate-700/60 data-[state=active]:bg-sky-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-sky-500/30 data-[state=active]:border-transparent"
                       >
                         {label}
@@ -146,7 +151,7 @@ export default function IslandMeOverlay({ onClose }) {
                   <Tabs.Content value="intro" className="space-y-8">
                     <div className="max-w-2xl rounded-2xl bg-sky-950/40 border border-sky-500/40 px-5 py-4 text-slate-200 text-sm leading-relaxed">
                       <p className="font-semibold text-sky-300 mb-1">En recherche d'alternance</p>
-                      À la recherche d'une alternance en UX Design pour intégrer un <span className="font-medium text-white">Master CODUX / DEDI</span> sur deux ans.
+                      À la recherche d'une alternance en UX Design pour intégrer un <span className="font-medium text-slate-50">Master CODUX / DEDI</span> sur deux ans.
                       Disponible pour échanger dès maintenant.
                     </div>
                     <section>
@@ -303,6 +308,7 @@ export default function IslandMeOverlay({ onClose }) {
                   <a
                     href="mailto:angelekaloi@gmail.com"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-emerald-500/50 text-emerald-300 text-sm font-medium hover:bg-emerald-500/10 hover:border-emerald-400 transition-colors duration-200"
+                    onClick={() => playFx("click")}
                   >
                     M'écrire
                   </a>
@@ -311,6 +317,7 @@ export default function IslandMeOverlay({ onClose }) {
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-sky-500/50 text-sky-300 text-sm font-medium hover:bg-sky-500/10 hover:border-sky-400 transition-colors duration-200"
+                    onClick={() => playFx("click")}
                   >
                     LinkedIn
                   </a>

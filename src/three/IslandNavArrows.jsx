@@ -1,7 +1,7 @@
 // src/three/IslandNavArrows.jsx
 // Flèches 3D gauche / droite positionnées à côté de l'île active
 // pour naviguer vers l'île précédente ou suivante.
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 
@@ -25,55 +25,43 @@ function Arrow({ worldPos, direction, destLabel, onClick }) {
   // rotZ -π/2 → pointe vers +X (droite)
   const rotZ = direction === "left" ? Math.PI / 2 : -Math.PI / 2;
 
-  const handleClick = (e) => {
+  const handleClick = useCallback((e) => {
     e.stopPropagation();
     onClick();
-  };
+  }, [onClick]);
 
-  const setCursor = (cursor) => () => {
-    document.body.style.cursor = cursor;
-  };
+  const setPointer = useCallback(() => { document.body.style.cursor = "pointer"; }, []);
+  const setDefault = useCallback(() => { document.body.style.cursor = "default"; }, []);
 
   return (
     <group
       ref={groupRef}
       position={[bx, by, bz]}
       onClick={handleClick}
-      onPointerEnter={setCursor("pointer")}
-      onPointerLeave={setCursor("default")}
+      onPointerEnter={setPointer}
+      onPointerLeave={setDefault}
     >
       {/* Rotation appliquée aux meshes — le groupe gère uniquement la position */}
       <group rotation={[0, 0, rotZ]}>
         {/* Pointe de la flèche */}
-        <mesh position={[0, 0.55, 0]}>
+        <mesh position={[0, -0.52, -1]}>
           <coneGeometry args={[0.52, 1.05, 6]} />
           <meshStandardMaterial
-            color="#38bdf8"
-            emissive="#0284c7"
-            emissiveIntensity={6}
+            color="#C8421A"
+            emissive="#C8421A"
+            emissiveIntensity={8}
             transparent
-            opacity={0.88}
+            opacity={0.95}
             toneMapped={false}
           />
         </mesh>
 
-        {/* Tige */}
-        <mesh position={[0, -0.52, 0]}>
-          <cylinderGeometry args={[0.1, 0.1, 1.04, 6]} />
-          <meshStandardMaterial
-            color="#7dd3fc"
-            emissive="#0369a1"
-            emissiveIntensity={4}
-            transparent
-            opacity={0.65}
-            toneMapped={false}
-          />
-        </mesh>
+        
       </group>
 
       {/* Label flottant — nom de la destination */}
       <Html
-        position={[0, -1.6, 0]}
+        position={[0, -1.2, -1]}
         center
         distanceFactor={14}
         occlude={false}
@@ -82,17 +70,16 @@ function Arrow({ worldPos, direction, destLabel, onClick }) {
         <span
           style={{
             display: "inline-block",
-            background: "rgba(15,23,42,0.88)",
-            border: "1px solid rgba(56,189,248,0.45)",
+            background: "rgba(14,9,4,0.92)",
+            border: "1px solid rgba(200,66,26,0.45)",
             borderRadius: "999px",
             padding: "2px 10px",
             fontSize: "11px",
             fontFamily: "system-ui, sans-serif",
-            color: "#bae6fd",
+            color: "#F5EDE0",
             letterSpacing: "0.06em",
             textTransform: "uppercase",
             whiteSpace: "nowrap",
-            backdropFilter: "blur(8px)",
           }}
         >
           {direction === "left" ? "‹ " : ""}{destLabel}{direction === "right" ? " ›" : ""}

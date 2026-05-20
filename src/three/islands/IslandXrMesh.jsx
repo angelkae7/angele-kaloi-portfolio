@@ -5,14 +5,14 @@ import { Float } from "@react-three/drei";
 
 export default function IslandXrMesh() {
   const mat = useMemo(() => ({
-    rockDeep:   new MeshStandardMaterial({ color: "#111827", flatShading: true }),
-    rockMid:    new MeshStandardMaterial({ color: "#1f2937", flatShading: true }),
-    rockTop:    new MeshStandardMaterial({ color: "#273549", flatShading: true }),
-    body:       new MeshStandardMaterial({ color: "#020617" }),
-    detail:     new MeshStandardMaterial({ color: "#0b1120" }),
-    accent:     new MeshStandardMaterial({ color: "#38bdf8", emissive: "#38bdf8", emissiveIntensity: 0.18 }),
-    accentSoft: new MeshStandardMaterial({ color: "#a5f3fc", emissive: "#a5f3fc", emissiveIntensity: 0.35 }),
-    accentRing: new MeshStandardMaterial({ color: "#38bdf8" }),
+    rockDeep:   new MeshStandardMaterial({ color: "#140A02", flatShading: true }),
+    rockMid:    new MeshStandardMaterial({ color: "#211408", flatShading: true }),
+    rockTop:    new MeshStandardMaterial({ color: "#2A1A0A", flatShading: true }),
+    body:       new MeshStandardMaterial({ color: "#0E0904" }),
+    detail:     new MeshStandardMaterial({ color: "#1C0E04" }),
+    accent:     new MeshStandardMaterial({ color: "#C8421A", emissive: "#C8421A", emissiveIntensity: 0.55 }),
+    accentSoft: new MeshStandardMaterial({ color: "#E07040", emissive: "#E07040", emissiveIntensity: 0.65 }),
+    accentRing: new MeshStandardMaterial({ color: "#C8421A" }),
   }), []);
 
   return (

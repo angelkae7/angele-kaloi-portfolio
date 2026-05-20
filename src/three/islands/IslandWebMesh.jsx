@@ -5,13 +5,13 @@ import { Float } from "@react-three/drei";
 
 export default function IslandWebMesh() {
   const mat = useMemo(() => ({
-    haloInner:   new MeshStandardMaterial({ color: "#0b5394", roughness: 0.9, metalness: 0.1 }),
-    haloOuter:   new MeshStandardMaterial({ color: "#60a5fa", roughness: 0.35 }),
-    rockDark:    new MeshStandardMaterial({ color: "#1e293b", flatShading: true }),
-    rockMid:     new MeshStandardMaterial({ color: "#334155", flatShading: true }),
-    screenFrame: new MeshStandardMaterial({ color: "#0f172a" }),
-    screenInner: new MeshStandardMaterial({ color: "#eff6ff" }),
-    accent:      new MeshStandardMaterial({ color: "#38bdf8" }),
+    haloInner:   new MeshStandardMaterial({ color: "#3D1A06", roughness: 0.9, metalness: 0.1 }),
+    haloOuter:   new MeshStandardMaterial({ color: "#C8421A", roughness: 0.35 }),
+    rockDark:    new MeshStandardMaterial({ color: "#1C1008", flatShading: true }),
+    rockMid:     new MeshStandardMaterial({ color: "#2A1A0A", flatShading: true }),
+    screenFrame: new MeshStandardMaterial({ color: "#120900" }),
+    screenInner: new MeshStandardMaterial({ color: "#FAF6EF" }),
+    accent:      new MeshStandardMaterial({ color: "#C8421A" }),
   }), []);
 
   return (

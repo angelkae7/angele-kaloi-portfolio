@@ -1,5 +1,6 @@
 // src/components/ContactDock.jsx
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { useSound } from "../sound/useSound.js";
 
 const IconGitHub = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]" aria-hidden="true">
@@ -22,33 +23,35 @@ const IconMail = () => (
 
 const BASE =
   "w-10 h-10 rounded-full flex items-center justify-center " +
-  "bg-[rgba(15,23,42,0.96)] border border-[rgba(148,163,184,0.7)] " +
-  "text-slate-300 " +
-  "shadow-[0_8px_24px_rgba(15,23,42,0.85)] " +
-  "hover:scale-110 hover:-translate-y-0.5 transition-all duration-200";
+  "bg-[var(--s-high)] border border-[var(--b-muted)] " +
+  "text-slate-400 " +
+  "shadow-[var(--elev-2)] " +
+  "hover:scale-105 hover:-translate-y-0.5 hover:shadow-[var(--elev-3)] transition-all duration-200";
 
 const LINKS = [
   {
     href: "https://github.com/angelkae7",
     label: "Voir mon GitHub",
     Icon: IconGitHub,
-    hover: "hover:bg-slate-700/60 hover:border-slate-300/80 hover:text-white",
+    hover: "hover:bg-slate-700/40 hover:border-[var(--b-strong)] hover:text-slate-100",
   },
   {
     href: "https://www.linkedin.com/in/angele-kaloi",
     label: "Voir mon LinkedIn",
     Icon: IconLinkedIn,
-    hover: "hover:bg-sky-500/20 hover:border-sky-400/80 hover:text-sky-200",
+    hover: "hover:bg-sky-500/15 hover:border-[var(--b-accent-h)] hover:text-sky-300",
   },
   {
     href: "mailto:angelekaloi@gmail.com",
     label: "M'écrire un mail",
     Icon: IconMail,
-    hover: "hover:bg-emerald-500/20 hover:border-emerald-400/70 hover:text-emerald-200",
+    hover: "hover:bg-emerald-500/15 hover:border-emerald-500/50 hover:text-emerald-300",
   },
 ];
 
 export default function ContactDock() {
+  const { playFx } = useSound();
+
   return (
     <Tooltip.Provider delayDuration={300}>
       <div className="pointer-events-none fixed bottom-4 right-3 md:right-6 md:bottom-6 z-20">
@@ -62,6 +65,8 @@ export default function ContactDock() {
                   rel={href.startsWith("mailto") ? undefined : "noreferrer"}
                   className={`${BASE} ${hover}`}
                   aria-label={label}
+                  onMouseEnter={() => playFx("hover")}
+                  onClick={() => playFx("click")}
                 >
                   <Icon />
                 </a>
@@ -73,7 +78,7 @@ export default function ContactDock() {
                   sideOffset={8}
                 >
                   {label}
-                  <Tooltip.Arrow className="fill-[rgba(15,23,42,0.97)]" />
+                  <Tooltip.Arrow className="fill-[var(--s-low)]" />
                 </Tooltip.Content>
               </Tooltip.Portal>
             </Tooltip.Root>
