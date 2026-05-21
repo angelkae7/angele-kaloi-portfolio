@@ -5,11 +5,10 @@ import { useSound } from "../sound/useSound";
 export default function LandingScreen({ onEnter }) {
   const containerRef = useRef();
   const { startAmbiance } = useSound();
-  const { playFx } = useSound();
 
   const handleEnter = () => {
     startAmbiance();
-    onEnter();
+    onEnter(); // déclenche la transition dans App.jsx
   };
 
   // Particules flottantes — purement décoratives

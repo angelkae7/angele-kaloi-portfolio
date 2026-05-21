@@ -1,6 +1,18 @@
 /* src/index.css */
 @import "tailwindcss";
 
+/* ─── Transition landing → univers ─────────────────────────────────────── */
+@keyframes transitionCover {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes transitionReveal {
+  0%   { opacity: 1; }
+  15%  { opacity: 1; }      /* court temps de pause avant la révélation */
+  100% { opacity: 0; }
+}
+
 /* ─── Mode clair — spécificité :root.light (0,2,0) > :root @theme (0,1,0) ── */
 :root.light {
   /* Surfaces */

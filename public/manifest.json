@@ -1,0 +1,22 @@
+{
+  "name": "Angèle Kaloï · Portfolio",
+  "short_name": "A.Kaloï",
+  "description": "Portfolio interactif en 5 îles — développeuse web & UX designer, Nouvelle-Calédonie.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0E0904",
+  "theme_color": "#C8421A",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
