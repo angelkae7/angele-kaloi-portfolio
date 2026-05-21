@@ -1,5 +1,5 @@
 // src/components/Layout.jsx
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useLayoutEffect, useState, useCallback, useRef } from "react";
 import { useSound } from "../sound/useSound.js";
 
 const IconSun = () => (
@@ -130,34 +130,34 @@ export default function Layout() {
 
   const dismissClickHint = useCallback(() => setShowClickHint(false), []);
 
-  // Keyboard handler always current — updated every render, registered once
+  // Keyboard handler always current — updated after every render, registered once
   const keyHandlerRef = useRef(null);
-  keyHandlerRef.current = (e) => {
-    if (activeOverlay) return;
-    const tag = document.activeElement?.tagName;
-    if (tag === "INPUT" || tag === "TEXTAREA") return;
-    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-      e.preventDefault();
-      const idx = ISLAND_STEPS.findIndex((s) => s.id === selectedIsland.id);
-      const delta = e.key === "ArrowLeft" ? -1 : 1;
-      const next = ISLAND_STEPS[(idx + delta + ISLAND_STEPS.length) % ISLAND_STEPS.length];
-      handleArrowNavigate(next.id);
-    } else if (
-      e.key === "Enter" &&
-      (!document.activeElement || document.activeElement === document.body)
-    ) {
-      e.preventDefault();
-      openOverlayForIsland(selectedIsland);
-    }
-  };
+  useLayoutEffect(() => {
+    keyHandlerRef.current = (e) => {
+      if (activeOverlay) return;
+      const tag = document.activeElement?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault();
+        const idx = ISLAND_STEPS.findIndex((s) => s.id === selectedIsland.id);
+        const delta = e.key === "ArrowLeft" ? -1 : 1;
+        const next = ISLAND_STEPS[(idx + delta + ISLAND_STEPS.length) % ISLAND_STEPS.length];
+        handleArrowNavigate(next.id);
+      } else if (
+        e.key === "Enter" &&
+        (!document.activeElement || document.activeElement === document.body)
+      ) {
+        e.preventDefault();
+        openOverlayForIsland(selectedIsland);
+      }
+    };
+  });
 
   useEffect(() => {
     const dispatch = (e) => keyHandlerRef.current?.(e);
     window.addEventListener("keydown", dispatch);
     return () => window.removeEventListener("keydown", dispatch);
   }, []);
-
-  const showLabels = !activeOverlay;
 
   return (
     <div className="relative w-screen h-screen bg-slate-950 overflow-hidden">

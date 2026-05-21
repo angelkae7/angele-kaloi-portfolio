@@ -4,7 +4,7 @@ import { useSound } from "../sound/useSound";
 
 export default function LandingScreen({ onEnter }) {
   const containerRef = useRef();
-  const { startAmbiance } = useSound();
+  const { startAmbiance, playFx } = useSound();
 
   const handleEnter = () => {
     startAmbiance();

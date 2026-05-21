@@ -1,5 +1,5 @@
 // src/three/IslandsScene.jsx
-import { useRef, useCallback, useMemo } from "react";
+import { useRef, useCallback } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useSound } from "../sound/useSound.js";
 import { Html } from "@react-three/drei";
@@ -12,7 +12,7 @@ import IslandXrMesh from "./islands/IslandXrMesh.jsx";
 import IslandVideoMesh from "./islands/IslandVideoMesh.jsx";
 import IslandNavArrows from "./IslandNavArrows.jsx";
 
-export const ISLANDS = [
+const ISLANDS = [
   { id: "me",    type: "me",    label: "Moi",            shortLabel: "À propos", position: [0,    0,   0],  Component: IslandMeMesh    },
   { id: "web",   type: "web",   label: "Web interactif", shortLabel: "Web",       position: [-18,  0,  -6],  Component: IslandWebMesh   },
   { id: "ux",    type: "ux",    label: "UX / UI",        shortLabel: "UX / UI",  position: [16,   0,   8],  Component: IslandUxMesh    },

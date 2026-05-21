@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 // Nouvelle clé — force l'affichage si l'ancienne session avait dismissé
 const SESSION_KEY = "portfolio_tutorial_v2";
@@ -23,14 +23,14 @@ export default function TutorialOverlay() {
     return () => clearTimeout(t);
   }, [seen]);
 
-  const dismiss = () => {
+  const dismiss = useCallback(() => {
     cancelAnimationFrame(rafRef.current);
     setFading(true);
     setTimeout(() => {
       setVisible(false);
       try { sessionStorage.setItem(SESSION_KEY, "1"); } catch { /* noop */ }
     }, 320);
-  };
+  }, []);
 
   // Progress bar animée via RAF
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function TutorialOverlay() {
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [visible]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [visible, dismiss]);
 
   if (seen || !visible) return null;
 
