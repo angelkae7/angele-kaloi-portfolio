@@ -52,11 +52,11 @@ export default function LandingScreen({ onEnter }) {
           <p lang="mis"
              className="font-extrabold text-white leading-none"
              style={{ fontSize: "clamp(2.8rem,7vw,4.2rem)", letterSpacing: "-1.5px" }}>
-            Bozu së
+            Bozu
           </p>
           <p className="flex items-center justify-center gap-3 mt-2.5 text-[13px] text-white/70 tracking-wide">
             <span aria-hidden="true" className="block w-7 h-px bg-white/30" />
-            bonjour en langue kanak
+            Bonjour en langue kanak
             <span aria-hidden="true" className="block w-7 h-px bg-white/30" />
           </p>
         </div>
