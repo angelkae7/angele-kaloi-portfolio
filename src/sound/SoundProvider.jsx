@@ -2,30 +2,34 @@
 import { useEffect, useRef, useState } from "react";
 import { SoundContext } from "./SoundContext";
 
+function makeAudio(src, volume) {
+  const a = new Audio(src);
+  a.volume = volume;
+  return a;
+}
+
 export function SoundProvider({ children }) {
   const ambianceRef = useRef(null);
-  const clickRef = useRef(null);
-  const navRef = useRef(null);
-
+  const refs = useRef({});
   const [ambianceOn, setAmbianceOn] = useState(false);
 
   useEffect(() => {
-    const ambiance = new Audio("/sounds/nav.mp3");
-    ambiance.loop = true;
-    ambiance.volume = 0.35;
-    ambianceRef.current = ambiance;
+    ambianceRef.current = makeAudio("/sounds/nav.mp3", 0.35);
+    ambianceRef.current.loop = true;
 
-    const click = new Audio("/sounds/click.mp3");
-    click.volume = 0.8;
-    clickRef.current = click;
-
-    const nav = new Audio("/sounds/hover.mp3");
-    nav.volume = 0.7;
-    navRef.current = nav;
-
-    return () => {
-      ambiance.pause();
+    refs.current = {
+      click:  makeAudio("/sounds/click.mp3",       0.75),
+      drop:   makeAudio("/sounds/drop.mp3",        0.10),
+      open:   makeAudio("/sounds/open.mp3",        0.10),
+      welcome: makeAudio("/sounds/welcome.mp3",     0.10),
+      pop:     makeAudio("/sounds/pop.mp3",         0.25),
+      nav:    makeAudio("/sounds/hover.mp3",        0.60),
+      woosh:  makeAudio("/sounds/switch.mp3",       0.35),
+      arrow:  makeAudio("/sounds/prev-switch.mp3",  0.42),
+      hover:  makeAudio("/sounds/hover.mp3",        0.18),
     };
+
+    return () => ambianceRef.current?.pause();
   }, []);
 
   const startAmbiance = () => {
@@ -38,33 +42,19 @@ export function SoundProvider({ children }) {
   const toggleAmbiance = () => {
     const a = ambianceRef.current;
     if (!a) return;
-    if (ambianceOn) {
-      a.pause();
-      setAmbianceOn(false);
-    } else {
-      a.play().then(() => setAmbianceOn(true)).catch(() => {});
-    }
+    if (ambianceOn) { a.pause(); setAmbianceOn(false); }
+    else { a.play().then(() => setAmbianceOn(true)).catch(() => {}); }
   };
 
   const playFx = (type = "click") => {
-    let audio;
-    if (type === "nav") audio = navRef.current;
-    else audio = clickRef.current;
-
+    const audio = refs.current[type] ?? refs.current.click;
     if (!audio) return;
     audio.currentTime = 0;
     audio.play().catch(() => {});
   };
 
   return (
-    <SoundContext.Provider
-      value={{
-        ambianceOn,
-        startAmbiance,
-        toggleAmbiance,
-        playFx,
-      }}
-    >
+    <SoundContext.Provider value={{ ambianceOn, startAmbiance, toggleAmbiance, playFx }}>
       {children}
     </SoundContext.Provider>
   );

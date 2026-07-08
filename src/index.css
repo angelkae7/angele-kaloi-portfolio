@@ -1,7 +1,184 @@
 /* src/index.css */
 @import "tailwindcss";
 
-/* Plein écran pour l'app */
+/* ─── Transition landing → univers ─────────────────────────────────────── */
+@keyframes transitionCover {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes transitionReveal {
+  0%   { opacity: 1; }
+  15%  { opacity: 1; }      /* court temps de pause avant la révélation */
+  100% { opacity: 0; }
+}
+
+/* ─── Mode clair — spécificité :root.light (0,2,0) > :root @theme (0,1,0) ── */
+:root.light {
+  /* Surfaces */
+  --s-base:  rgb(250, 246, 239);
+  --s-high:  rgb(237, 230, 216);
+  --s-mid:   rgb(228, 218, 200);
+  --s-low:   rgb(245, 240, 232);
+
+  /* Borders */
+  --b-subtle:  rgba(160, 100, 40, 0.14);
+  --b-muted:   rgba(160, 100, 40, 0.26);
+  --b-default: rgba(160, 100, 40, 0.38);
+  --b-strong:  rgba(160, 100, 40, 0.58);
+  --b-accent:  rgba(200, 66, 26, 0.28);
+  --b-accent-h:rgba(200, 66, 26, 0.60);
+
+  /* Accent lisible sur fond clair */
+  --accent:     #8B2A0C;
+  --accent-deco:#C8421A;
+  --accent-dim: rgba(139, 42, 12, 0.25);
+  --accent-glow:rgba(139, 42, 12, 0.10);
+
+  /* Ombres douces */
+  --elev-1: 0 1px 2px rgba(100,50,10,0.15), 0 2px 4px rgba(100,50,10,0.10);
+  --elev-2: 0 2px 6px rgba(100,50,10,0.18), 0 4px 10px rgba(100,50,10,0.12);
+  --elev-3: 0 4px 12px rgba(100,50,10,0.20), 0 8px 20px rgba(100,50,10,0.14);
+  --elev-4: 0 8px 24px rgba(100,50,10,0.24), 0 16px 40px rgba(100,50,10,0.16);
+
+  /* ── Slate WCAG AA ≥ 4.5:1 sur #EDE6D8 ── */
+  --color-slate-50:  #1C1208;
+  --color-slate-100: #2A1A0A;
+  --color-slate-200: #4A3A26;
+  --color-slate-300: #6E5C42;
+  --color-slate-400: #5A4A32;
+  --color-slate-500: #7A6850;
+  --color-slate-600: #BCA080;
+  --color-slate-700: #D0BEA0;
+  --color-slate-800: #C8B090;
+  --color-slate-900: #E8DCC8;
+  --color-slate-950: #FAF6EF;
+
+  /* ── Sky — 7.07:1 AAA sur beige ── */
+  --color-sky-50:   #3D1005;
+  --color-sky-100:  #8B2A0C;
+  --color-sky-200:  #8B2A0C;
+  --color-sky-300:  #8B2A0C;
+  --color-sky-400:  #8B2A0C;
+  --color-sky-500:  #6E2008;
+  --color-sky-600:  #5A1A06;
+  --color-sky-700:  #3D1005;
+  --color-sky-800:  #2A0A04;
+  --color-sky-900:  #1A0601;
+  --color-sky-950:  #0E0401;
+
+  /* ── Emerald — 5.4:1 AA sur beige ── */
+  --color-emerald-300: #2A6A24;
+  --color-emerald-400: #1E5A1A;
+  --color-emerald-500: #165012;
+
+  /* ── Purple — 10.7:1 AAA sur beige ── */
+  --color-purple-200: #4A2A6E;
+  --color-purple-400: #3A1A5E;
+  --color-purple-500: #2E1248;
+
+  color: #1F1A12;
+  background-color: #F5F0E8;
+}
+
+/* ─── Palette chaude — remplace sky-* (cyan→braise) et slate-* (gris-bleu→terre) ── */
+@theme {
+  /* Sky → braise / orange calédonien */
+  --color-sky-50:   #FFF3E8;
+  --color-sky-100:  #FFE0BF;
+  --color-sky-200:  #FFB880;
+  --color-sky-300:  #E07040;
+  --color-sky-400:  #C8421A;
+  --color-sky-500:  #A83215;
+  --color-sky-600:  #8B2A0C;
+  --color-sky-700:  #6E2008;
+  --color-sky-800:  #4A1505;
+  --color-sky-900:  #2A0E04;
+  --color-sky-950:  #1A0802;
+
+  /* Slate → terre chaude / bois sombre */
+  --color-slate-50:  #FAF6EF;
+  --color-slate-100: #F5EDE0;
+  --color-slate-200: #E8D8B8;
+  --color-slate-300: #C8A87A;
+  --color-slate-400: #A09070;
+  --color-slate-500: #8A7458;
+  --color-slate-600: #6E5C42;
+  --color-slate-700: #4A3A26;
+  --color-slate-800: #2A1A0A;
+  --color-slate-900: #1C1208;
+  --color-slate-950: #0E0904;
+
+  /* Purple → cuivre chaud (liens Figma) */
+  --color-purple-200: #F0C880;
+  --color-purple-400: #D4812A;
+  --color-purple-500: #B86E20;
+
+  /* Emerald → teal chaud (contact dock) */
+  --color-emerald-300: #82C97A;
+  --color-emerald-400: #5AAA52;
+  --color-emerald-500: #3E8A38;
+}
+
+/* ─── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  /* Typography */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color-scheme: dark;
+  color: #F5EDE0;
+  background-color: #0E0904;
+
+  /* Surfaces — terres chaudes (palette Calédonienne) */
+  --s-base:   rgb(14,  9,  4);   /* #0E0904 espace profond */
+  --s-high:   rgb(28, 18,  8);   /* #1C1208 */
+  --s-mid:    rgb(42, 26, 10);   /* #2A1A0A */
+  --s-low:    rgb(36, 22,  8);   /* #241608 */
+
+  /* Borders — brun chaud */
+  --b-subtle:  rgba(200, 100, 30, 0.12);
+  --b-muted:   rgba(200, 100, 30, 0.22);
+  --b-default: rgba(200, 100, 30, 0.35);
+  --b-strong:  rgba(200, 100, 30, 0.55);
+  --b-accent:  rgba(200,  66, 26, 0.32);
+  --b-accent-h:rgba(200,  66, 26, 0.60);
+
+  /* Accent — braise / orange calédonien */
+  --accent:     #E07040;           /* accent-text dark — AA 6.2:1 */
+  --accent-deco:#C8421A;           /* glows, ring, emissive — décoratif */
+  --accent-dim: rgba(200, 66, 26, 0.35);
+  --accent-glow:rgba(200, 66, 26, 0.15);
+
+  /* Radius — échelle Material 3 */
+  --r-xs:   4px;
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-card: 20px;
+  --r-pill: 9999px;
+
+  /* Blur — minimal, surfaces solides */
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 12px;
+  --blur-xl: 16px;
+
+  /* Élévation — ombres directionnelles Material */
+  --elev-0: none;
+  --elev-1: 0 1px 2px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.25);
+  --elev-2: 0 2px 6px rgba(0,0,0,0.55), 0 4px 10px rgba(0,0,0,0.30);
+  --elev-3: 0 4px 12px rgba(0,0,0,0.6), 0 8px 20px rgba(0,0,0,0.35);
+  --elev-4: 0 8px 24px rgba(0,0,0,0.65), 0 16px 40px rgba(0,0,0,0.4);
+}
+
+/* ─── Layout ────────────────────────────────────────────────────────────── */
 html,
 body,
 #root {
@@ -11,21 +188,29 @@ body,
   padding: 0;
 }
 
-/* Thème global */
-:root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: dark;
-  color: #e5e7eb;
-  background-color: #020617; /* slate-950 */
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Skip-to-nav link — visible only on keyboard focus */
+.skip-to-nav {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--r-pill);
+  background: var(--s-base);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backdrop-filter: blur(var(--blur-md));
+  transition: top 0.15s ease;
+}
+.skip-to-nav:focus {
+  top: 0.75rem;
+  outline: none;
 }
 
 body {
@@ -36,35 +221,39 @@ body {
 /* Liens */
 a {
   font-weight: 500;
-  color: #7dd3fc;
+  color: var(--accent);
   text-decoration: none;
 }
 a:hover {
-  color: #38bdf8;
+  color: var(--accent-deco);
 }
 
-/* Boutons généraux */
+/* Boutons généraux — flat par défaut, shadow uniquement sur les flottants */
 button {
-  border-radius: 16px;
+  border-radius: var(--r-md);
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 0.95rem;
+  padding: 0.55em 1.1em;
+  font-size: 0.875rem;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
+  box-shadow: none;
   transition:
-    border-color 0.25s ease,
-    background-color 0.25s ease,
-    transform 0.15s ease;
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.15s ease;
 }
 
-button:focus,
+button:active {
+  opacity: 0.8;
+}
+
 button:focus-visible {
-  outline: 3px solid rgba(56, 189, 248, 0.8);
-  outline-offset: 2px;
+  outline: 2px solid var(--accent-deco);
+  outline-offset: 3px;
 }
 
-/* --------- Bulle de message (type chat) --------- */
+/* ─── Bulle de message ──────────────────────────────────────────────────── */
 
 .message-bubble {
   position: relative;
@@ -72,12 +261,12 @@ button:focus-visible {
   width: 100%;
 
   padding: 0.9rem 1.3rem;
-  border-radius: 1.2rem;
+  border-radius: var(--r-card);
 
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(148, 163, 184, 0.75);
-  box-shadow: 0 5px 24px rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(20px);
+  background: var(--s-mid);
+  border: 1px solid var(--b-default);
+  box-shadow: var(--elev-3);
+  backdrop-filter: blur(var(--blur-sm));
 
   display: flex;
   flex-direction: column;
@@ -95,9 +284,9 @@ button:focus-visible {
 
 .message-bubble:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.7);
-  background: rgba(15, 23, 42, 0.55);
-  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: var(--elev-4);
+  background: var(--s-low);
+  border-color: var(--b-accent-h);
 }
 
 /* petite queue de bulle en bas-centre */
@@ -132,61 +321,57 @@ button:focus-visible {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  color: #7dd3fc;
+  color: var(--accent);
   font-weight: 500;
 }
 
 /* Raised from 0.85rem → 0.9rem */
 .message-bubble-text {
   font-size: 0.9rem;
-  color: #e5e7eb;
+  color: var(--color-slate-500);
   line-height: 1.55;
 }
 
 .message-bubble-cta {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #38bdf8;
+  color: var(--accent);
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgba(56, 189, 248, 0.5);
+  text-decoration-color: var(--accent-dim);
 }
 
-/* ---------- Chip d'aide en bas à gauche ---------- */
+/* ─── Chip d'aide ───────────────────────────────────────────────────────── */
 
 .help-trigger {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   padding: 0.45rem 1rem;
-  border-radius: 999px;
+  border-radius: var(--r-pill);
 
-  background: rgba(15, 23, 42, 0.94);
-  border: 1px solid rgba(148, 163, 184, 0.7);
+  background: var(--s-high);
+  border: 1px solid var(--b-muted);
   color: #e5e7eb;
 
-  /* Raised from 0.7rem; tracking reduced from 0.16em → 0.12em */
   font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 
-  backdrop-filter: blur(14px);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.85);
+  box-shadow: var(--elev-2);
 
   cursor: pointer;
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    background 0.18s ease,
-    border-color 0.18s ease;
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .help-trigger:hover {
-  transform: translateY(-2px);
-  background: rgba(15, 23, 42, 1);
-  border-color: rgba(56, 189, 248, 0.5);
-  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.9);
+  background: var(--s-mid);
+  border-color: var(--b-accent);
+  box-shadow: var(--elev-3);
 }
 
 .help-trigger-icon {
@@ -208,72 +393,65 @@ button:focus-visible {
   margin-top: 0.4rem;
   max-width: 22rem;
   padding: 0.85rem 1.1rem;
-  border-radius: 1rem;
-  background: rgba(15, 23, 42, 0.72);
-  border: 1px solid rgba(148, 163, 184, 0.8);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(20px);
+  border-radius: var(--r-lg);
+  background: var(--s-mid);
+  border: 1px solid var(--b-muted);
+  box-shadow: var(--elev-3);
 }
 
 /* Raised from 0.8rem */
 .help-panel-text {
   font-size: 0.85rem;
   line-height: 1.55;
-  color: #e5e7eb;
+  color: var(--accent-dim);
 }
 
-/* ---------- Nom de l'île en bas-centre ---------- */
+/* ─── Nom de l'île ──────────────────────────────────────────────────────── */
 
 .island-name-pill {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.5rem 1.2rem;
-  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--r-pill);
 
-  background: rgba(15, 23, 42, 0.96);
-  border: 1px solid rgba(148, 163, 184, 0.7);
-  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.9);
-  backdrop-filter: blur(18px);
+  background: var(--s-high);
+  border: 1px solid var(--b-muted);
+  box-shadow: var(--elev-2);
 
-  /* Raised from 0.75rem; tracking reduced from 0.16em → 0.12em */
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #e5e7eb;
+  color: var(--accent);
 }
 
 .island-name-dot {
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 999px;
-  background: #38bdf8;
-  box-shadow: 0 0 6px rgba(56, 189, 248, 0.9);
+  background: var(--accent-deco);
+  box-shadow: 0 0 6px rgba(200, 66, 26, 0.9);
   animation: dotPulse 2.4s ease-in-out infinite;
 }
 
 @keyframes dotPulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(56, 189, 248, 0.9); }
-  50%       { opacity: 0.6; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(200, 66, 26, 0.9); }
+  50%       { opacity: 0.6; box-shadow: 0 0 12px rgba(200, 66, 26, 0.4); }
 }
 
 .island-name-text {
   white-space: nowrap;
 }
 
-/* ---------- Carte overlay ---------- */
+/* ─── Carte overlay ─────────────────────────────────────────────────────── */
 
 .overlay-card {
   position: relative;
-  border-radius: 28px;
-  border: 1px solid rgba(148, 163, 184, 0.6);
-  background:
-    radial-gradient(circle at 0% 0%, rgba(251, 191, 36, 0.18), transparent 50%),
-    radial-gradient(circle at 80% 0%, rgba(45, 212, 191, 0.12), transparent 50%),
-    rgba(15, 23, 42, 0.96);
-  box-shadow: 0 32px 90px rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(28px);
+  border-radius: var(--r-card);
+  border: 1px solid var(--b-muted);
+  background: var(--s-high);
+  box-shadow: var(--elev-4);
 
   max-height: 82vh;
   overflow: hidden;
@@ -331,22 +509,6 @@ button:focus-visible {
   transform-origin: top center;
 }
 
-/* ---------- Radix Tooltip ---------- */
-
-.tooltip-content {
-  z-index: 50;
-  padding: 0.35rem 0.7rem;
-  border-radius: 8px;
-  background: rgba(15, 23, 42, 0.97);
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  color: #e2e8f0;
-  font-size: 0.75rem;
-  font-weight: 500;
-  white-space: nowrap;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(12px);
-}
-
 .tooltip-content[data-state="delayed-open"],
 .tooltip-content[data-state="instant-open"] {
   animation: tooltipIn 0.12s ease both;
@@ -366,7 +528,7 @@ button:focus-visible {
 .overlay-scroll::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.75); }
 .overlay-scroll { scrollbar-width: thin; scrollbar-color: rgba(148, 163, 184, 0.4) transparent; }
 
-/* bouton fermer — signals destructive/dismiss action on hover */
+/* ─── Bouton fermer overlay ─────────────────────────────────────────────── */
 .overlay-close-icon-btn {
   position: absolute;
   top: 0.9rem;
@@ -374,60 +536,71 @@ button:focus-visible {
 
   height: 2rem;
   width: 2rem;
-  border-radius: 9999px;
+  border-radius: var(--r-pill);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: rgba(15, 23, 42, 0.98);
-  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: var(--s-mid);
+  border: 1px solid var(--b-muted);
   color: #94a3b8;
 
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   line-height: 1;
   font-weight: 500;
 
-  backdrop-filter: blur(16px);
-  box-shadow: 0 6px 24px rgba(15, 23, 42, 0.6);
-
+  box-shadow: var(--elev-1);
   cursor: pointer;
   transition:
-    transform 0.18s ease,
-    background 0.18s ease,
-    border-color 0.18s ease,
-    color 0.18s ease;
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .overlay-close-icon-btn:hover {
-  transform: translateY(-1px);
-  background: rgba(239, 68, 68, 0.12);
-  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
   color: #fca5a5;
+  box-shadow: var(--elev-2);
 }
 
 .overlay-close-icon-btn:active {
-  transform: translateY(0);
+  box-shadow: var(--elev-0);
 }
 
-/* petite carte mise en avant dans l'overlay */
+/* ─── Chips & panneaux ──────────────────────────────────────────────────── */
 .overlay-chip {
-  border-radius: 12px;
+  border-radius: var(--r-md);
   padding: 0.8rem 1.1rem;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(148, 163, 184, 0.5);
+  background: var(--s-mid);
+  border: 1px solid var(--b-subtle);
 }
 
-/* top bar glassmorph simple */
 .glass-panel {
-  border-radius: 9px;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(148, 163, 184, 0.6);
-  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.9);
-  backdrop-filter: blur(20px);
+  border-radius: var(--r-md);
+  background: var(--s-high);
+  border: 1px solid var(--b-muted);
+  box-shadow: var(--elev-2);
 }
 
-/* ---- Scroll interne du parcours ---- */
+/* ─── Tooltip ───────────────────────────────────────────────────────────── */
+
+.tooltip-content {
+  z-index: 50;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--r-sm);
+  background: var(--s-low);
+  border: 1px solid var(--b-subtle);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: var(--elev-3);
+}
+
+/* ─── Scroll interne du parcours ────────────────────────────────────────── */
 .parcours-scroll {
   max-height: 58vh;
   overflow-y: auto;
@@ -465,8 +638,8 @@ button:focus-visible {
   width: 2px;
   background: linear-gradient(
     to bottom,
-    rgba(56, 189, 248, 0.6),
-    rgba(148, 163, 184, 0.15)
+    rgba(200, 66, 26, 0.7),
+    rgba(160, 100, 30, 0.12)
   );
 }
 
@@ -483,8 +656,8 @@ button:focus-visible {
   width: 0.6rem;
   height: 0.6rem;
   border-radius: 999px;
-  background: #0ea5e9;
-  box-shadow: 0 0 10px rgba(56, 189, 248, 0.85);
+  background: var(--accent-deco);
+  box-shadow: 0 0 10px rgba(200, 66, 26, 0.85);
 }
 
 /* Raised from 0.78rem */
@@ -498,7 +671,7 @@ button:focus-visible {
 .timeline-title {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #bfdbfe;
+  color: #F5EDE0;
 }
 
 /* Raised from 0.8rem */
@@ -525,8 +698,8 @@ button:focus-visible {
 }
 
 .tag-chip:hover {
-  border-color: rgba(56, 189, 248, 0.5);
-  color: #e0f2fe;
+  border-color: rgba(200, 66, 26, 0.5);
+  color: #F5EDE0;
 }
 
 /* --- Layout des cartes projets dans DomainOverlay --- */
@@ -595,9 +768,9 @@ button:focus-visible {
 
 .particle {
   position: absolute;
-  width: 8px;
-  height: 16px;
-  background: rgba(255, 255, 255, 0.9);
+  width: 6px;
+  height: 14px;
+  background: rgba(212, 160, 60, 0.85);
   border-radius: 4px;
   opacity: 0;
   transform: translate3d(var(--x), 100vh, 0) scale(var(--scale));

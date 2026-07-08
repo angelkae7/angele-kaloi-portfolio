@@ -5,15 +5,15 @@ import { Float } from "@react-three/drei";
 
 export default function IslandUxMesh() {
   const mat = useMemo(() => ({
-    rockDeep:   new MeshStandardMaterial({ color: "#111827", flatShading: true }),
-    rockMid:    new MeshStandardMaterial({ color: "#1f2937", flatShading: true }),
-    rockTop:    new MeshStandardMaterial({ color: "#273549", flatShading: true }),
-    frame:      new MeshStandardMaterial({ color: "#020617" }),
-    board:      new MeshStandardMaterial({ color: "#e5e7eb" }),
-    line:       new MeshStandardMaterial({ color: "#cbd5e1" }),
-    postit:     new MeshStandardMaterial({ color: "#fb923c" }),
-    postitSoft: new MeshStandardMaterial({ color: "#fed7aa" }),
-    cursor:     new MeshStandardMaterial({ color: "#38bdf8", flatShading: true }),
+    rockDeep:   new MeshStandardMaterial({ color: "#140A02", flatShading: true }),
+    rockMid:    new MeshStandardMaterial({ color: "#211408", flatShading: true }),
+    rockTop:    new MeshStandardMaterial({ color: "#2A1A0A", flatShading: true }),
+    frame:      new MeshStandardMaterial({ color: "#0E0904" }),
+    board:      new MeshStandardMaterial({ color: "#FAF6EF" }),
+    line:       new MeshStandardMaterial({ color: "#E8D8B8" }),
+    postit:     new MeshStandardMaterial({ color: "#C8421A" }),
+    postitSoft: new MeshStandardMaterial({ color: "#E07040" }),
+    cursor:     new MeshStandardMaterial({ color: "#D4812A", flatShading: true }),
   }), []);
 
   return (

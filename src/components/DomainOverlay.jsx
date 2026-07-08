@@ -1,15 +1,17 @@
 // src/components/DomainOverlay.jsx
 import { useState, useEffect, useRef } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
+import { useSound } from "../sound/useSound.js";
 
 // Shared class for lightbox prev/next navigation buttons
 const LIGHTBOX_NAV_BTN =
   "absolute top-1/2 -translate-y-1/2 h-9 w-9 md:h-10 md:w-10 rounded-full " +
-  "bg-[rgba(15,23,42,0.8)] border border-[rgba(148,163,184,0.7)] " +
+  "bg-[var(--s-mid)] border border-[var(--b-muted)] " +
   "text-slate-100 flex items-center justify-center text-lg shadow-lg z-10 " +
-  "hover:bg-[rgba(15,23,42,0.95)] hover:border-sky-400/60 hover:text-sky-200 transition-colors";
+  "hover:bg-[var(--s-low)] hover:border-sky-400/60 hover:text-sky-200 transition-colors";
 
 export default function DomainOverlay({ title, tagline, projects, onClose }) {
+  const { playFx } = useSound();
   const [open, setOpen] = useState(true);
   const [expandedId, setExpandedId] = useState(null);
   const [lightbox, setLightbox] = useState(null);
@@ -50,13 +52,14 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
     <Dialog.Root open={open} onOpenChange={(v) => !v && setOpen(false)}>
       <Dialog.Portal>
         {/* Backdrop */}
-        <Dialog.Overlay className="dialog-overlay fixed inset-0 z-30 bg-[rgba(2,6,23,0.72)] backdrop-blur-sm" />
+        <Dialog.Overlay className="dialog-overlay fixed inset-0 z-30 bg-[rgba(8,4,2,0.85)]" />
 
         {/* Centering wrapper — pointer-events-none so clicking backdrop shows through */}
         <div className="fixed inset-0 z-30 flex items-center justify-center px-4 pointer-events-none">
           <Dialog.Content
             asChild
             onCloseAutoFocus={(e) => { e.preventDefault(); onClose(); }}
+            onInteractOutside={(e) => { if (lightbox) e.preventDefault(); }}
             aria-describedby={undefined}
           >
             <div className="dialog-card overlay-card pointer-events-auto w-full max-w-5xl flex flex-col p-5 sm:p-8 outline-none">
@@ -70,6 +73,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                   type="button"
                   className="overlay-close-icon-btn"
                   aria-label="Fermer la section"
+                  onPointerDown={() => playFx("click")}
                 >
                   ✕
                 </button>
@@ -90,6 +94,14 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                 </p>
               </header>
 
+              {/* EMPTY STATE */}
+              {!hasProjects && (
+                <div className="flex-1 flex flex-col items-center justify-center py-16 text-center gap-3">
+                  <p className="text-3xl" aria-hidden="true">🏝️</p>
+                  <p className="text-slate-400 text-sm">Aucun projet à afficher pour l'instant.</p>
+                </div>
+              )}
+
               {/* PROJECT LIST */}
               {hasProjects && (
                 <div
@@ -101,32 +113,22 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                     const mediaCount = project.media?.length ?? 0;
 
                     return (
-                      // div role="button" is correct here — article semantics conflict with button role
-                      <div
+                      <button
                         key={project.id}
-                        role="button"
-                        tabIndex={0}
-                        onClick={() => toggleProject(project.id)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            toggleProject(project.id);
-                          }
-                        }}
+                        type="button"
+                        onClick={() => { toggleProject(project.id); playFx("drop"); }}
+                        aria-label={`${project.title} - ${isExpanded ? "Masquer" : "Afficher"} les détails`}
                         className="
                           group relative w-full overflow-hidden rounded-2xl
-                          border border-[rgba(56,189,248,0.35)]
-                          bg-[rgba(15,23,42,0.75)] backdrop-blur-xl
+                          border border-[var(--b-subtle)]
+                          bg-[var(--s-mid)]
                           px-4 py-4 md:px-6 md:py-5 text-left
-                          transition-all duration-300
-                          hover:border-[rgba(56,189,248,0.75)] hover:bg-[rgba(15,23,42,0.9)]
-                          shadow-[0_0_28px_-16px_rgba(56,189,248,0.4)]
-                          hover:shadow-[0_0_36px_-10px_rgba(56,189,248,0.4)]
+                          transition-all duration-200
+                          hover:border-[var(--b-accent)] hover:bg-[var(--s-low)]
+                          shadow-[var(--elev-1)] hover:shadow-[var(--elev-2)]
                           cursor-pointer
                         "
                       >
-                        {/* Hover halo */}
-                        <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.12),transparent_70%)]" />
 
                         <div className="project-row relative">
                           {/* Thumbnail */}
@@ -139,7 +141,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                   : "w-16 h-16 md:w-20 md:h-20 self-start md:self-center")
                               }
                             >
-                              <img src={project.thumb} alt={project.title} className="w-full h-full object-cover pointer-events-none" />
+                              <img src={project.thumb} alt={project.title} loading="lazy" decoding="async" className="w-full h-full object-cover pointer-events-none" />
                             </div>
                           )}
 
@@ -200,11 +202,10 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                     {project.link && (
                                       <a href={project.link} target="_blank" rel="noreferrer"
                                         className="inline-flex items-center rounded-full border border-sky-400/60 px-3 py-1 text-sky-300 hover:bg-sky-500/15 hover:border-sky-400 transition-colors"
-                                        onClick={(e) => e.stopPropagation()}>
+                                        onClick={(e) => { e.stopPropagation(); playFx("click"); }}>
                                         {project.linkLabel || "Voir le projet"}
                                       </a>
                                     )}
-                                    {/* Fix 15 — missing link explanation */}
                                     {!project.link && project.linkNote && (
                                       <span className="text-xs text-slate-500 italic self-center">
                                         {project.linkNote}
@@ -213,14 +214,14 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                     {project.github && (
                                       <a href={project.github} target="_blank" rel="noreferrer"
                                         className="inline-flex items-center rounded-full border border-slate-500/60 px-3 py-1 text-slate-300 hover:bg-slate-500/15 hover:border-slate-400 transition-colors"
-                                        onClick={(e) => e.stopPropagation()}>
+                                        onClick={(e) => { e.stopPropagation(); playFx("click"); }}>
                                         Code source GitHub
                                       </a>
                                     )}
                                     {project.figmaLink && (
                                       <a href={project.figmaLink} target="_blank" rel="noreferrer"
                                         className="inline-flex items-center rounded-full border border-purple-400/60 px-3 py-1 text-purple-200 hover:bg-purple-500/15 hover:border-purple-400 transition-colors"
-                                        onClick={(e) => e.stopPropagation()}>
+                                        onClick={(e) => { e.stopPropagation(); playFx("click"); }}>
                                         Prototype Figma
                                       </a>
                                     )}
@@ -231,22 +232,16 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                 {project.media?.length > 0 && (
                                   <div className="mt-3 flex flex-wrap gap-3 md:gap-4">
                                     {project.media.map((item, index) => (
-                                      <div
+                                      <button
                                         key={item.id || index}
-                                        role="button"
-                                        tabIndex={0}
-                                        onClick={(e) => { e.stopPropagation(); setLightbox({ items: project.media, index }); }}
-                                        onKeyDown={(e) => {
-                                          if (e.key === "Enter" || e.key === " ") {
-                                            e.preventDefault(); e.stopPropagation();
-                                            setLightbox({ items: project.media, index });
-                                          }
-                                        }}
+                                        type="button"
+                                        onClick={(e) => { e.stopPropagation(); playFx("click"); setLightbox({ items: project.media, index }); }}
+                                        aria-label={`${item.label || `Média ${index + 1}`} - Cliquez pour agrandir`}
                                         className="group/media flex flex-col gap-1.5 w-24 md:w-32 text-left"
                                       >
                                         <div className="relative w-full h-16 md:h-20 rounded-xl overflow-hidden bg-[rgba(15,23,42,0.9)] border border-[rgba(148,163,184,0.5)] transition-all duration-200 group-hover/media:-translate-y-0.5 group-hover/media:border-[rgba(56,189,248,0.6)] group-hover/media:shadow-[0_0_20px_-6px_rgba(56,189,248,0.5)]">
                                           {item.type === "image" && (
-                                            <img src={item.src} alt={item.label || project.title} className="w-full h-full object-cover pointer-events-none" />
+                                            <img src={item.src} alt={item.label || project.title} loading="lazy" decoding="async" className="w-full h-full object-cover pointer-events-none" />
                                           )}
                                           {item.type === "video" && (
                                             <div className="w-full h-full relative">
@@ -270,7 +265,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                                         {item.label && (
                                           <span className="text-xs text-slate-400 truncate">{item.label}</span>
                                         )}
-                                      </div>
+                                      </button>
                                     ))}
                                   </div>
                                 )}
@@ -288,7 +283,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
@@ -303,30 +298,30 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
         const current = lightbox.items[lightbox.index];
         return (
           <div
-            className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(15,23,42,0.92)] backdrop-blur-md pointer-events-auto"
+            className="fixed inset-0 z-40 flex items-center justify-center bg-[rgba(8,4,2,0.94)] pointer-events-auto"
             onClick={closeLightbox}
           >
             <div className="relative max-w-5xl w-full px-4" role="presentation" onClick={(e) => e.stopPropagation()}>
               <button
                 type="button"
-                onClick={closeLightbox}
-                className="absolute right-4 top-4 z-20 h-9 w-9 rounded-full border border-[rgba(148,163,184,0.6)] bg-[rgba(15,23,42,0.95)] text-slate-400 flex items-center justify-center text-sm shadow-lg hover:text-red-300 hover:bg-red-900/20 hover:border-red-500/40 transition-all duration-200"
+                onClick={() => { closeLightbox(); playFx("click"); }}
+                className="absolute right-4 top-4 z-20 h-9 w-9 rounded-full border border-[var(--b-muted)] bg-[var(--s-high)] text-slate-400 flex items-center justify-center text-sm shadow-lg hover:text-red-300 hover:bg-red-900/20 hover:border-red-500/40 transition-all duration-200"
                 aria-label="Fermer le média"
               >
                 ✕
               </button>
 
-              <div className="bg-[rgba(15,23,42,0.97)] border border-[rgba(148,163,184,0.6)] rounded-3xl shadow-2xl overflow-hidden">
+              <div className="bg-[var(--s-high)] border border-[var(--b-default)] rounded-3xl shadow-2xl overflow-hidden">
                 <div className="relative w-full aspect-video bg-black flex items-center justify-center">
                   {lightbox.items.length > 1 && (
-                    <button type="button" onClick={showPrevMedia}
+                    <button type="button" onClick={() => { showPrevMedia(); playFx("nav"); }}
                       className={`${LIGHTBOX_NAV_BTN} left-3 md:left-4`}
                       aria-label="Média précédent">‹</button>
                   )}
 
                   <div className="w-full h-full pointer-events-auto">
                     {current.type === "image" && (
-                      <img src={current.src} alt={current.label || ""} className="w-full h-full object-contain" />
+                      <img src={current.src} alt={current.label || ""} decoding="async" className="w-full h-full object-contain" />
                     )}
                     {current.type === "video" && current.href && (
                       current.href.includes("youtube.com") || current.href.includes("youtu.be")
@@ -339,7 +334,7 @@ export default function DomainOverlay({ title, tagline, projects, onClose }) {
                   </div>
 
                   {lightbox.items.length > 1 && (
-                    <button type="button" onClick={showNextMedia}
+                    <button type="button" onClick={() => { showNextMedia(); playFx("nav"); }}
                       className={`${LIGHTBOX_NAV_BTN} right-3 md:right-4`}
                       aria-label="Média suivant">›</button>
                   )}

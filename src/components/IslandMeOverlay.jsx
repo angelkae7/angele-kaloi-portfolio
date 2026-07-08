@@ -2,6 +2,7 @@
 import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tabs from "@radix-ui/react-tabs";
+import { useSound } from "../sound/useSound.js";
 
 const VIDEO_URL = "https://www.youtube.com/embed/FV59sY5XE2E";
 
@@ -17,13 +18,13 @@ const TABS_LIST = [
 const PARCOURS_CARDS = [
   {
     label: "Aujourd'hui",
-    title: "Dev web & UX — OPT-NC",
-    body: "Alternance sur la refonte du site institutionnel et sa page d'accueil.",
+    title: "En recherche — Master UX Design",
+    body: "À la recherche d'une alternance en UX Design pour intégrer un Master CODUX / DEDI sur deux ans.",
   },
   {
     label: "Formation",
-    title: "BUT MMI — UNC",
-    body: "Dév web, UX/UI, XR et audiovisuel pour des dispositifs interactifs complets.",
+    title: "BUT MMI — UNC (diplômée 2025)",
+    body: "Dév web, UX/UI, XR et audiovisuel. Socle complet du concept à la mise en production.",
   },
   {
     label: "Terrain de jeu",
@@ -34,40 +35,47 @@ const PARCOURS_CARDS = [
 
 const EVOLUTION_STEPS = [
   { num: "1", title: "Communication & image",  body: "Graphisme, vidéo, habillage et narration visuelle.", active: false },
-  { num: "2", title: "UX & interfaces",         body: "Parcours, maquettes, prototypes centrés sur l'usage.", active: false },
-  { num: "3", title: "Développement & XR",      body: "Implémentation front, 3D, VR et déploiement en ligne.", active: true },
+  { num: "2", title: "Développement & XR",     body: "Implémentation front, 3D, VR et déploiement en ligne.", active: false },
+  { num: "3", title: "UX Design — Master",     body: "Recherche centrée sur l'usage, stratégie d'expérience et conception de services.", active: true },
 ];
 
 const CHRONO_ENTRIES = [
   {
     active: true,
     badge: "Actuellement",
-    meta: "2025–2026 · Alternance — L'Office des postes et télécommunications de Nouvelle-Calédonie (OPT-NC)",
-    title: "Dev web & UX — Refonte du site institutionnel",
+    meta: "2026 · En recherche d'alternance",
+    title: "Alternance UX Design — Master CODUX / DEDI (2 ans)",
+    body: "À la recherche d'une alternance de deux ans en UX Design pour intégrer un Master CODUX / DEDI. Disponible pour échanger avec des équipes qui placent l'expérience utilisateur au cœur de leur produit.",
+  },
+  {
+    active: false,
+    meta: "janv. 2025 – nov. 2025 · Alternance — OPT Nouvelle-Calédonie",
+    title: "Développeuse web — Refonte du site institutionnel",
     body: "Nouvelle page d'accueil, intégration front (Drupal), optimisation accessibilité & performance, co-construction avec la DSI et la communication, mise en place d'un design system réutilisable.",
   },
   {
     active: false,
-    meta: "2024 · Stage (6 mois) — Institut de sciences exactes et appliquées (ISEA)",
+    meta: "sept. – nov. 2024 · Stage (3 mois) — Institut de sciences exactes et appliquées (ISEA)",
     title: "Chargée de communication & création visuelle",
     body: "Conception d'outils visuels pour un projet de recherche scientifique, identité visuelle & supports graphiques pour vulgariser les résultats.",
   },
   {
     active: false,
-    meta: "2023 · Stage (3 mois) — CANAL+ Calédonie",
-    title: "Contenus graphiques & vidéo",
+    meta: "nov. – déc. 2023 · Stage (2 mois) — CANAL+ Calédonie",
+    title: "Créatrice de contenus graphiques & vidéo",
     body: "Communication interne & externe, habillages d'émissions, visuels d'antenne et montages vidéo pour des formats TV.",
   },
 ];
 
 export default function IslandMeOverlay({ onClose }) {
+  const { playFx } = useSound();
   const [open, setOpen] = useState(true);
 
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && setOpen(false)}>
       <Dialog.Portal>
         {/* Backdrop */}
-        <Dialog.Overlay className="dialog-overlay fixed inset-0 z-30 bg-slate-950/60 backdrop-blur-xl" />
+        <Dialog.Overlay className="dialog-overlay fixed inset-0 z-30 bg-slate-950/85" />
 
         {/* Centering wrapper */}
         <div className="fixed inset-0 z-30 flex items-center justify-center pointer-events-none">
@@ -76,7 +84,7 @@ export default function IslandMeOverlay({ onClose }) {
             onCloseAutoFocus={(e) => { e.preventDefault(); onClose(); }}
             aria-describedby={undefined}
           >
-            <div className="dialog-card overlay-card pointer-events-auto relative max-w-5xl w-full mx-4 md:mx-8 rounded-3xl bg-gradient-to-br from-slate-900/95 via-slate-900/85 to-slate-950/95 border border-slate-700/60 shadow-[0_40px_120px_rgba(0,0,0,0.75)] outline-none flex flex-col">
+            <div className="dialog-card overlay-card pointer-events-auto relative max-w-5xl w-full mx-4 md:mx-8 outline-none flex flex-col">
               <Dialog.Title className="sr-only">À propos — Angèle Kaloï</Dialog.Title>
               <Dialog.Description className="sr-only">
                 Présentation d'Angèle Kaloï : parcours, compétences et chronologie.
@@ -86,7 +94,9 @@ export default function IslandMeOverlay({ onClose }) {
               <Dialog.Close asChild>
                 <button
                   type="button"
-                  className="absolute right-4 top-4 z-10 rounded-full bg-slate-900/80 border border-slate-600/50 w-8 h-8 flex items-center justify-center text-slate-400 hover:text-red-300 hover:bg-red-900/20 hover:border-red-500/40 transition-all duration-200"
+                  aria-label="Fermer la section À propos"
+                  className="overlay-close-icon-btn"
+                  onPointerDown={() => playFx("click")}
                 >
                   ✕
                 </button>
@@ -97,7 +107,7 @@ export default function IslandMeOverlay({ onClose }) {
                 <p className="text-xs tracking-[0.14em] uppercase text-sky-400 font-medium mb-3">
                   Île centrale — À propos
                 </p>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight mb-4">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-50 leading-tight mb-4">
                   Je crée des expériences numériques qui se ressentent.
                 </h1>
 
@@ -106,6 +116,7 @@ export default function IslandMeOverlay({ onClose }) {
                   href="/cv-angele-kaloi.pdf"
                   download
                   className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-xl border border-sky-500/50 text-sky-300 text-sm font-medium hover:bg-sky-500/10 hover:border-sky-400 transition-colors duration-200"
+                  onClick={() => playFx("click")}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 shrink-0">
                     <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
@@ -115,9 +126,9 @@ export default function IslandMeOverlay({ onClose }) {
                 </a>
 
                 <p className="text-slate-200 leading-relaxed text-base sm:text-lg max-w-3xl mb-7">
-                  Je suis <span className="font-semibold text-white">Angèle Kaloï</span>, développeuse web &
-                  créatrice d'expériences interactives. Je navigue entre front, UX/UI, 3D et VR pour concevoir
-                  des expériences qui restent claires même quand la technologie devient complexe.
+                  Je suis <span className="font-semibold text-slate-50">Angèle Kaloï</span>, développeuse web &
+                  designer UX. Je navigue entre front-end, UX/UI, 3D et création audiovisuelle pour concevoir
+                  des expériences qui restent humaines même quand la technologie devient complexe.
                 </p>
 
                 {/* Tabs */}
@@ -127,6 +138,7 @@ export default function IslandMeOverlay({ onClose }) {
                       <Tabs.Trigger
                         key={id}
                         value={id}
+                        onClick={() => playFx("pop")}
                         className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 bg-slate-800/60 text-slate-300 border border-slate-600/50 hover:border-sky-500/40 hover:text-slate-100 hover:bg-slate-700/60 data-[state=active]:bg-sky-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-sky-500/30 data-[state=active]:border-transparent"
                       >
                         {label}
@@ -137,10 +149,10 @@ export default function IslandMeOverlay({ onClose }) {
                   {/* ── À PROPOS ── */}
                   {/* Fix 10: replaced meta-commentary about portfolio with availability statement */}
                   <Tabs.Content value="intro" className="space-y-8">
-                    <div className="max-w-2xl rounded-2xl bg-slate-800/40 border border-slate-600/40 px-5 py-4 text-slate-200 text-sm leading-relaxed">
-                      <p className="font-semibold text-slate-50 mb-1">Disponibilité</p>
-                      Disponible pour des missions freelance ou une opportunité en CDI — Nouvelle-Calédonie ou remote.
-                      Spécialisée développement front-end &amp; UX design.
+                    <div className="max-w-2xl rounded-2xl bg-sky-950/40 border border-sky-500/40 px-5 py-4 text-slate-200 text-sm leading-relaxed">
+                      <p className="font-semibold text-sky-300 mb-1">En recherche d'alternance</p>
+                      À la recherche d'une alternance en UX Design pour intégrer un <span className="font-medium text-slate-50">Master CODUX / DEDI</span> sur deux ans.
+                      Disponible pour échanger dès maintenant.
                     </div>
                     <section>
                       <h2 className="text-xs font-semibold tracking-[0.12em] text-sky-400 uppercase mb-3">CV vidéo</h2>
@@ -187,11 +199,11 @@ export default function IslandMeOverlay({ onClose }) {
                         <div className="rounded-2xl bg-slate-900/70 border border-slate-700/60 px-5 py-4">
                           <p className="text-xs tracking-[0.18em] uppercase text-sky-400/80 font-medium mb-3">Hard skills</p>
                           <ul className="text-sm text-slate-300 space-y-2 leading-relaxed">
-                            <li>• Dév front : JavaScript, React, Vite, Tailwind.</li>
-                            <li>• Intégration web & accessibilité : HTML/CSS, design system, composants réutilisables.</li>
-                            <li>• Drupal : intégration front, templates, mise en page de contenus.</li>
+                            <li>• UX Design : recherche utilisateur, parcours, maquettes, tests.</li>
+                            <li>• Dév front : JavaScript, React, Vite, Tailwind, HTML/CSS.</li>
+                            <li>• Drupal : intégration front, templates, accessibilité, design system.</li>
                             <li>• Expériences 3D & XR : Unity, WebGL, React Three Fiber.</li>
-                            <li>• Audiovisuel : tournage, montage, mise en scène vidéo.</li>
+                            <li>• Audiovisuel : tournage, montage Premiere Pro / After Effects.</li>
                           </ul>
                         </div>
                         <div className="rounded-2xl bg-slate-900/70 border border-slate-700/60 px-5 py-4">
@@ -296,6 +308,7 @@ export default function IslandMeOverlay({ onClose }) {
                   <a
                     href="mailto:angelekaloi@gmail.com"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-emerald-500/50 text-emerald-300 text-sm font-medium hover:bg-emerald-500/10 hover:border-emerald-400 transition-colors duration-200"
+                    onClick={() => playFx("click")}
                   >
                     M'écrire
                   </a>
@@ -304,6 +317,7 @@ export default function IslandMeOverlay({ onClose }) {
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-sky-500/50 text-sky-300 text-sm font-medium hover:bg-sky-500/10 hover:border-sky-400 transition-colors duration-200"
+                    onClick={() => playFx("click")}
                   >
                     LinkedIn
                   </a>
